@@ -12,29 +12,29 @@ onetime_do(expr, id = calling_package(), path = lockfile_dir())
 \item{id}{Unique ID. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles. By default, a per-user configuration
-directory `"onetime-lockfiles"` beneath [rappdirs::user_config_dir()].}
+directory \code{"onetime-lockfiles"} beneath \code{\link[rappdirs:user_config_dir]{rappdirs::user_config_dir()}}.}
 }
 \value{
-The value of `expr`, invisibly; or `NULL` if called the second time.
+The value of \code{expr}, invisibly; or \code{NULL} if called the second time.
 }
 \description{
 This function runs an expression just once. It then creates a lockfile
 recording a unique ID which will prevent the expression being run again.
 }
 \details{
-Calls are identified by `id`. If you use the same value of `id` across
-different calls to `onetime_do()`, only the first call will get made.
+Calls are identified by \code{id}. If you use the same value of \code{id} across
+different calls to \code{onetime_do()}, only the first call will get made.
 
-By default, `id` is just the name of the calling package. This is for the
+By default, \code{id} is just the name of the calling package. This is for the
 common use case of a single call within a package (e.g. at first startup). If
 you want to use multiple calls, or if the calling code is not within a
-package, then you must set `id` explicitly.
+package, then you must set \code{id} explicitly.
 
 If the lockfile cannot be written, then the call will still be run, so it
 may be run repeatedly.
 
-The default directory for lockfiles is `"onetime-lockfiles"` within
-`rappdirs::user_config_dir()`.
+The default directory for lockfiles is \code{"onetime-lockfiles"} within
+\code{rappdirs::user_config_dir()}.
 }
 \examples{
 \dontrun{

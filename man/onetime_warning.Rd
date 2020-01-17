@@ -10,19 +10,19 @@ onetime_warning(..., id = calling_package(), path = lockfile_dir())
 onetime_message(..., id = calling_package(), path = lockfile_dir())
 }
 \arguments{
-\item{...}{Passed to [warning()] or [message()].}
+\item{...}{Passed to \code{\link[=warning]{warning()}} or \code{\link[=message]{message()}}.}
 
 \item{id}{Unique ID. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles. By default, a per-user configuration
-directory `"onetime-lockfiles"` beneath [rappdirs::user_config_dir()].}
+directory \code{"onetime-lockfiles"} beneath \code{\link[rappdirs:user_config_dir]{rappdirs::user_config_dir()}}.}
 }
 \value{
-The return value of `warning()/message()`, or `NULL` if
-  called a second time.
+The return value of \code{warning()/message()}, or \code{NULL} if
+called a second time.
 }
 \description{
-These functions use [onetime_do()] to print a warning or message just
+These functions use \code{\link[=onetime_do]{onetime_do()}} to print a warning or message just
 once.
 }
 \examples{

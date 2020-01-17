@@ -10,10 +10,10 @@ onetime_reset(id, path = lockfile_dir())
 \item{id}{Unique ID. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles. By default, a per-user configuration
-directory `"onetime-lockfiles"` beneath [rappdirs::user_config_dir()].}
+directory \code{"onetime-lockfiles"} beneath \code{\link[rappdirs:user_config_dir]{rappdirs::user_config_dir()}}.}
 }
 \value{
-The result of `file.remove()`, invisibly.
+The result of \code{file.remove()}, invisibly.
 }
 \description{
 Reset a onetime call by ID

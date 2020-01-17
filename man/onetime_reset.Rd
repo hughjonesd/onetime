@@ -9,8 +9,8 @@ onetime_reset(id, path = system.file("lockfiles", package = "onetime"))
 \arguments{
 \item{id}{Unique ID. By default, name of the calling package.}
 
-\item{path}{Path to store lockfiles. By default,
-`system.file("lockfiles", package = "onetime")`.}
+\item{path}{Directory to store lockfiles. By default, a per-user configuration
+directory `"onetime-lockfiles"` beneath [rappdirs::user_config_dir()].}
 }
 \value{
 The result of `file.remove()`.

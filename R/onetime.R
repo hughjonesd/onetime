@@ -1,12 +1,16 @@
 
 #' @name common-params
 #' @param id Unique ID. By default, name of the calling package.
-#' @param path Path to store lockfiles. By default,
-#'   `system.file("lockfiles", package = "onetime")`.
+#' @param path Directory to store lockfiles. By default, a per-user configuration
+#'   directory `"onetime-lockfiles"` beneath [rappdirs::user_config_dir()].
+#'
 NULL
 
 
 #' Print a warning or message only once
+#'
+#' These functions use [onetime_do()] to print a warning or message just
+#' once.
 #'
 #' @param ... Passed to [warning()] or [message()].
 #' @inherit common-params
@@ -42,8 +46,27 @@ onetime_message <- function (...,
 
 #' Run code only once
 #'
+#' This function runs an expression just once. It then creates a lockfile
+#' recording a unique ID which will prevent the expression being run again.
+#'
+#'
 #' @param expr The code to evaluate
 #' @inherit common-params
+#'
+#' @details
+#' Calls are identified by `id`. If you use the same value of `id` across
+#' different calls to `onetime_do()`, only the first call will get made.
+#'
+#' By default, `id` is just the name of the calling package. This is for the
+#' common use case of a single call within a package (e.g. at first startup). If
+#' you want to use multiple calls, or if the calling code is not within a
+#' package, then you must set `id` explicitly.
+#'
+#' If the lockfile cannot be written, then the call will still be run, so it
+#' may be run repeatedly.
+#'
+#' The default directory for lockfiles is `"onetime-lockfiles"` within
+#' `rappdirs::user_config_dir()`.
 #'
 #' @return The value of `expr`, or `NULL` if called the second time.
 #'
@@ -105,5 +128,6 @@ onetime_filepath <- function (id, path) {
 calling_package <- function () getNamespaceName(topenv(parent.frame(n = 2)))
 
 
-lockfile_dir <- function () getOption("onetime.lockfile_dir",
-      system.file("lockfiles", package = "onetime"))
+lockfile_dir <- function () {
+  file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
+}

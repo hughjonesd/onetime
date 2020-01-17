@@ -14,15 +14,16 @@ onetime_message(..., id = calling_package(), path = lockfile_dir())
 
 \item{id}{Unique ID. By default, name of the calling package.}
 
-\item{path}{Path to store lockfiles. By default,
-`system.file("lockfiles", package = "onetime")`.}
+\item{path}{Directory to store lockfiles. By default, a per-user configuration
+directory `"onetime-lockfiles"` beneath [rappdirs::user_config_dir()].}
 }
 \value{
 The return value of `warning()/message()`, or `NULL` if
   called a second time.
 }
 \description{
-Print a warning or message only once
+These functions use [onetime_do()] to print a warning or message just
+once.
 }
 \examples{
 \dontrun{

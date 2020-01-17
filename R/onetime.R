@@ -58,9 +58,12 @@ onetime_message <- function (...,
 #' different calls to `onetime_do()`, only the first call will get made.
 #'
 #' By default, `id` is just the name of the calling package. This is for the
-#' common use case of a single call within a package (e.g. at first startup). If
-#' you want to use multiple calls, or if the calling code is not within a
-#' package, then you must set `id` explicitly.
+#' common use case of a single call within a package (e.g. at first startup).
+#'
+#' If you want to use multiple calls, or if the calling code is not within a
+#' package, then you must set `id` explicitly. Responsible package owners
+#' should use their package name as a prefix, e.g. `id = "mypackage-myid"`,
+#' to avoid trampling on other packages' lockfiles.
 #'
 #' If the lockfile cannot be written, then the call will still be run, so it
 #' may be run repeatedly.

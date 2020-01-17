@@ -2,13 +2,21 @@ Package: onetime
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Authors@R:
+    person(given = "David",
+           family = "Hugh-Jones",
+           role = c("aut", "cre"),
+           email = "davidhughjones@gmail.com")
+Author: David Hugh-Jones [aut, cre]
+Maintainer: David Hugh-Jones <davidhughjones@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
 Imports: 
     rappdirs
+URL: https://github.com/hughjonesd/onetime
+BugReports: https://github.com/hughjonesd/onetime/issues

@@ -68,7 +68,7 @@ onetime_message <- function (...,
 #' The default directory for lockfiles is `"onetime-lockfiles"` within
 #' `rappdirs::user_config_dir()`.
 #'
-#' @return The value of `expr`, or `NULL` if called the second time.
+#' @return The value of `expr`, invisibly; or `NULL` if called the second time.
 #'
 #' @export
 #'
@@ -96,7 +96,7 @@ onetime_do <- function(
 #'
 #' @inherit common-params
 #'
-#' @return The result of `file.remove()`.
+#' @return The result of `file.remove()`, invisibly.
 #'
 #'
 #' @export
@@ -111,10 +111,10 @@ onetime_do <- function(
 #' }
 onetime_reset <- function (
         id,
-        path = system.file("lockfiles", package = "onetime")
+        path = lockfile_dir()
 ) {
   fp <- onetime_filepath(id, path)
-  file.remove(fp)
+  invisible(file.remove(fp))
 }
 
 
@@ -130,4 +130,14 @@ calling_package <- function () getNamespaceName(topenv(parent.frame(n = 2)))
 
 lockfile_dir <- function () {
   file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
+}
+
+
+.onLoad <- function (libname, pkgname) {
+  lfd <- lockfile_dir()
+  if (! dir.exists(lfd)) {
+    lfd_created <- dir.create(lockfile_dir())
+    if (! lfd_created) warning(
+          "Could not create onetime lockfile directory at ", lfd)
+  }
 }

@@ -4,7 +4,7 @@
 \alias{onetime_reset}
 \title{Reset a onetime call by ID}
 \usage{
-onetime_reset(id, path = system.file("lockfiles", package = "onetime"))
+onetime_reset(id, path = lockfile_dir())
 }
 \arguments{
 \item{id}{Unique ID. By default, name of the calling package.}
@@ -13,7 +13,7 @@ onetime_reset(id, path = system.file("lockfiles", package = "onetime"))
 directory `"onetime-lockfiles"` beneath [rappdirs::user_config_dir()].}
 }
 \value{
-The result of `file.remove()`.
+The result of `file.remove()`, invisibly.
 }
 \description{
 Reset a onetime call by ID

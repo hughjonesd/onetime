@@ -15,7 +15,7 @@ onetime_do(expr, id = calling_package(), path = lockfile_dir())
 directory `"onetime-lockfiles"` beneath [rappdirs::user_config_dir()].}
 }
 \value{
-The value of `expr`, or `NULL` if called the second time.
+The value of `expr`, invisibly; or `NULL` if called the second time.
 }
 \description{
 This function runs an expression just once. It then creates a lockfile

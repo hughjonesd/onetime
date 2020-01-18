@@ -1,8 +1,10 @@
 
 #' @name common-params
 #' @param id Unique ID. By default, name of the calling package.
-#' @param path Directory to store lockfiles. By default, a per-user configuration
-#'   directory `"onetime-lockfiles"` beneath [rappdirs::user_config_dir()].
+#' @param path Directory to store lockfiles. By default, a
+#'   subdirectory based on the calling package, within a
+#'   directory `"onetime-lockfiles"`, which is itself within
+#'   [rappdirs::user_config_dir()].
 #'
 NULL
 
@@ -29,7 +31,7 @@ NULL
 #' }
 onetime_warning <- function(...,
         id   = calling_package(),
-        path = lockfile_dir()
+        path = lockfile_dir(calling_package())
       ) {
   onetime_do(warning(...), id, path)
 }
@@ -38,7 +40,7 @@ onetime_warning <- function(...,
 #' @export
 onetime_message <- function (...,
         id   = calling_package(),
-        path = lockfile_dir()
+        path = lockfile_dir(calling_package())
       ) {
   onetime_do(message(...), id, path)
 }
@@ -61,15 +63,20 @@ onetime_message <- function (...,
 #' common use case of a single call within a package (e.g. at first startup).
 #'
 #' If you want to use multiple calls, or if the calling code is not within a
-#' package, then you must set `id` explicitly. Responsible package owners
-#' should use their package name as a prefix, e.g. `id = "mypackage-myid"`,
-#' to avoid trampling on other packages' lockfiles.
+#' package, then you must set `id` explicitly.
+#'
+#'
+#' The default `path`, where lockfiles are stored, is
+#' `file.path(rappdirs::user_config_dir(), "onetime-lockfiles", mypackage)`.
+#' `mypackage` is the calling package. If the calling code is not
+#' within a package, then you must set `path` explicitly.
 #'
 #' If the lockfile cannot be written, then the call will still be run, so it
 #' may be run repeatedly.
 #'
-#' The default directory for lockfiles is `"onetime-lockfiles"` within
-#' `rappdirs::user_config_dir()`.
+#' The mechanism is vulnerable to race conditions from multiple R sessions.
+#' If you want to be absolutely sure that code never runs twice, you must
+#' do something else.
 #'
 #' @return The value of `expr`, invisibly; or `NULL` if called the second time.
 #'
@@ -85,11 +92,11 @@ onetime_message <- function (...,
 onetime_do <- function(
         expr,
         id   = calling_package(),
-        path = lockfile_dir()
+        path = lockfile_dir(calling_package())
       ) {
   fp <- onetime_filepath(id, path)
-  on.exit(file.create(fp))
   if (! file.exists(fp)) {
+    file.create(fp)
     return(invisible(eval.parent(expr)))
   }
 }
@@ -114,7 +121,7 @@ onetime_do <- function(
 #' }
 onetime_reset <- function (
         id,
-        path = lockfile_dir()
+        path = lockfile_dir(calling_package())
 ) {
   fp <- onetime_filepath(id, path)
   invisible(file.remove(fp))
@@ -131,8 +138,10 @@ onetime_filepath <- function (id, path) {
 calling_package <- function () getNamespaceName(topenv(parent.frame(n = 2)))
 
 
-lockfile_dir <- function () {
-  file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
+lockfile_dir <- function (package = NULL) {
+  lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
+  if (! is.null(package)) lfd <- file.path(lfd, package)
+  return(lfd)
 }
 
 

@@ -4,15 +4,21 @@
 \alias{onetime_do}
 \title{Run code only once}
 \usage{
-onetime_do(expr, id = calling_package(), path = lockfile_dir())
+onetime_do(
+  expr,
+  id = calling_package(),
+  path = lockfile_dir(calling_package())
+)
 }
 \arguments{
 \item{expr}{The code to evaluate}
 
 \item{id}{Unique ID. By default, name of the calling package.}
 
-\item{path}{Directory to store lockfiles. By default, a per-user configuration
-directory \code{"onetime-lockfiles"} beneath \code{\link[rappdirs:user_config_dir]{rappdirs::user_config_dir()}}.}
+\item{path}{Directory to store lockfiles. By default, a
+subdirectory based on the calling package, within a
+directory \code{"onetime-lockfiles"}, which is itself within
+\code{\link[rappdirs:user_config_dir]{rappdirs::user_config_dir()}}.}
 }
 \value{
 The value of \code{expr}, invisibly; or \code{NULL} if called the second time.
@@ -29,15 +35,15 @@ By default, \code{id} is just the name of the calling package. This is for the
 common use case of a single call within a package (e.g. at first startup).
 
 If you want to use multiple calls, or if the calling code is not within a
-package, then you must set \code{id} explicitly. Responsible package owners
-should use their package name as a prefix, e.g. \code{id = "mypackage-myid"},
-to avoid trampling on other packages' lockfiles.
+package, then you must set \code{id} explicitly.
+
+The default \code{path}, where lockfiles are stored, is
+\code{file.path(rappdirs::user_config_dir(), "onetime-lockfiles", mypackage)}.
+\code{mypackage} is the calling package. If the calling code is not
+within a package, then you must set \code{path} explicitly.
 
 If the lockfile cannot be written, then the call will still be run, so it
 may be run repeatedly.
-
-The default directory for lockfiles is \code{"onetime-lockfiles"} within
-\code{rappdirs::user_config_dir()}.
 }
 \examples{
 \dontrun{

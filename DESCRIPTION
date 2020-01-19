@@ -1,6 +1,6 @@
 Package: onetime
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Run Code Only Once
 Version: 0.1.0
 Authors@R:
     person(given = "David",
@@ -9,8 +9,9 @@ Authors@R:
            email = "davidhughjones@gmail.com")
 Author: David Hugh-Jones [aut, cre]
 Maintainer: David Hugh-Jones <davidhughjones@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Allows code to be run only once on a given computer, using
+  lockfiles. Typical use cases include startup messages shown only when a
+  package is first loaded.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

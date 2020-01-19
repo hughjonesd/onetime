@@ -1,11 +1,14 @@
 
+
 setup({
   withr::with_libpaths("onetimeTestLibrary", {
-    devtools::install("onetimeTestPackage",
-          args = c(quiet = TRUE, verbose = FALSE))
+    got_external <- try(devtools::install("onetimeTestPackage",
+          args = c(quiet = TRUE, verbose = FALSE)))
+    skip_if(inherits(got_external, "try-error"))
     library(onetimeTestPackage)
   })
 })
+
 
 
 test_that("Calling from external package", {
@@ -31,6 +34,7 @@ test_that("Calling from external package", {
 teardown({
   test_onetime_reset()
   test_onetime_reset("foo")
+  detach(package:onetimeTestPackage)
   withr::with_libpaths("onetimeTestLibrary", {
     remove.packages("onetimeTestPackage")
   })

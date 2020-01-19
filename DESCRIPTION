@@ -21,5 +21,7 @@ Imports:
     rappdirs
 URL: https://github.com/hughjonesd/onetime
 BugReports: https://github.com/hughjonesd/onetime/issues
-Suggests: 
-    testthat (>= 2.1.0)
+Suggests:
+    devtools,
+    testthat (>= 2.1.0),
+    withr

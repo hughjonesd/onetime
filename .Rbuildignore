@@ -5,4 +5,3 @@
 ^README\.Rmd$
 ^appveyor\.yml$
 onetimeTestPackage
-onetimeTestLibrary

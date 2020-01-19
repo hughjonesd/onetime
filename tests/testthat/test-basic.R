@@ -1,5 +1,11 @@
 
 
+test_that(".onLoad", {
+  lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
+  expect_true(dir.exists(lfd))
+})
+
+
 test_that("basic functionality", {
   ctr <- 0
   onetime_do(ctr <- ctr + 1, id = "test-id-1")

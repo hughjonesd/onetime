@@ -5,22 +5,9 @@
 \alias{onetime}
 \title{Run code only once}
 \description{
-For more details, see \code{\link[=onetime_do]{onetime_do()}}.
+Run code only once
 }
-\section{onetime}{\if{html}{\out{
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-}}
-\if{html}{\out{
-<!-- badges: start -->
-}}
-
-
-\href{https://travis-ci.org/hughjonesd/onetime}{\figure{https://travis-ci.org/hughjonesd/onetime.svg?branch=master}{}}
-\href{https://ci.appveyor.com/project/hughjonesd/onetime}{\figure{https://ci.appveyor.com/api/projects/status/github/hughjonesd/onetime?branch=master&svg=true}{}}\if{html}{\out{
-<!-- badges: end -->
-}}
-
-
+\details{
 \code{onetime} provides convenience functions to run R code only once on a
 given computer. For example, you can show a startup message only the
 first time a package is loaded.
@@ -35,26 +22,17 @@ for (i in 1:5) \{
       id = ids[2])
   onetime_message("This message will only be shown once.", id = ids[3])
 \}
-#> Loop  1  of 5
-#> You will only see this once.
-#> Warning in eval(expr, p): This warning will only be shown once.
-#> This message will only be shown once.
-#> Loop  2  of 5
-#> Loop  3  of 5
-#> Loop  4  of 5
-#> Loop  5  of 5
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\preformatted{## Loop  1  of 5
+## You will only see this once.
+
+## Warning in eval(expr, p): This warning will only be shown once.
+
+## This message will only be shown once.
+
+## Loop  2  of 5
+## Loop  3  of 5
+## Loop  4  of 5
+## Loop  5  of 5
 }
-
-\subsection{Installation}{
-
-You can install the released version of onetime from
-\href{https://CRAN.R-project.org}{CRAN} with:\if{html}{\out{<div class="r">}}\preformatted{install.packages("onetime")
-}\if{html}{\out{</div>}}
-
-And the development version from \href{https://github.com/}{GitHub} with:\if{html}{\out{<div class="r">}}\preformatted{# install.packages("devtools")
-devtools::install_github("hughjonesd/onetime")
-}\if{html}{\out{</div>}}
 }
-
 }

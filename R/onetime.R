@@ -1,18 +1,18 @@
 
+#' Run code only once
+#'
+#' @name onetime
+#' @docType package
+#' @includeRmd example.Rmd
+NULL
+
+
 #' @name common-params
 #' @param id Unique ID. By default, name of the calling package.
 #' @param path Directory to store lockfiles.
 #'
 NULL
 
-#' Run code only once
-#'
-#' For more details, see [onetime_do()].
-#'
-#' @name onetime
-#' @docType package
-#' @includeRmd README.Rmd
-NULL
 
 #' Print a warning or message only once
 #'

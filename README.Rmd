@@ -28,7 +28,7 @@ package is loaded.
 
 ```{r example}
 library(onetime)
-ids  <- replicate(3, paste0("onetime-readme-", sample(10000L, 1)))
+ids  <- replicate(3, paste0("onetime-readme-", sample(1e9, 1)))
 
 
 for (i in 1:5) {

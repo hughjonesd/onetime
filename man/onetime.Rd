@@ -5,7 +5,7 @@
 \alias{onetime}
 \title{Run code only once}
 \description{
-For more details, see \code{\link[=onetime_do]{onetime_do()}}.
+Run code only once
 }
 \details{
 \code{onetime} provides convenience functions to run R code only once on a

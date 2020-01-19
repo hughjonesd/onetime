@@ -5,6 +5,14 @@
 #'
 NULL
 
+#' Run code only once
+#'
+#' For more details, see [onetime_do()].
+#'
+#' @name onetime
+#' @docType package
+#' @includeRmd README.Rmd
+NULL
 
 #' Print a warning or message only once
 #'

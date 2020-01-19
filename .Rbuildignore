@@ -3,6 +3,7 @@
 ^LICENSE\.md$
 ^\.travis\.yml$
 ^README\.Rmd$
+^example.Rmd$
 ^appveyor\.yml$
 onetimeTestPackage
 ^codecov\.yml$

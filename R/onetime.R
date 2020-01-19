@@ -11,7 +11,7 @@ NULL
 #'
 #' @name onetime
 #' @docType package
-#' @includeRmd README.Rmd
+#' @includeRmd example.Rmd
 NULL
 
 #' Print a warning or message only once

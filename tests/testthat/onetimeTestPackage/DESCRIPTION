@@ -1,0 +1,14 @@
+Package: onetimeTestPackage
+Title: Testing for onetime
+Version: 0.1.0
+Authors@R:
+    person(given = "David",
+           family = "Hugh-Jones",
+           role = c("aut", "cre"),
+           email = "davidhughjones@gmail.com")
+Author: David Hugh-Jones [aut, cre]
+Maintainer: David Hugh-Jones <davidhughjones@gmail.com>
+Description: Purely for internal tests.
+License: MIT
+Encoding: UTF-8
+LazyData: true

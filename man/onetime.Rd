@@ -7,12 +7,10 @@
 \description{
 For more details, see \code{\link[=onetime_do]{onetime_do()}}.
 }
-\details{
-\if{html}{\out{
+\section{onetime}{\if{html}{\out{
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 }}
-}
-\section{onetime}{\if{html}{\out{
+\if{html}{\out{
 <!-- badges: start -->
 }}
 
@@ -27,7 +25,7 @@ For more details, see \code{\link[=onetime_do]{onetime_do()}}.
 given computer. For example, you can show a startup message only the
 first time a package is loaded.
 \subsection{Example}{\if{html}{\out{<div class="r">}}\preformatted{library(onetime)
-ids  <- replicate(3, paste0("onetime-readme-", sample(10000L, 1)))
+ids  <- replicate(3, paste0("onetime-readme-", sample(1e9, 1)))
 
 
 for (i in 1:5) \{

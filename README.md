@@ -1,7 +1,7 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # onetime
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <!-- badges: start -->
 
@@ -11,14 +11,15 @@ status](https://travis-ci.org/hughjonesd/onetime.svg?branch=master)](https://tra
 status](https://ci.appveyor.com/api/projects/status/github/hughjonesd/onetime?branch=master&svg=true)](https://ci.appveyor.com/project/hughjonesd/onetime)
 <!-- badges: end -->
 
-`onetime` provides convenience functions to run R code only once.
-Typical use cases are one-off startup messages.
+`onetime` provides convenience functions to run R code only once on a
+given computer. For example, you can show a startup message only the
+first time a package is loaded.
 
 ## Example
 
 ``` r
 library(onetime)
-ids  <- replicate(3, paste0("onetime-readme-", sample(10000L, 1)))
+ids  <- replicate(3, paste0("onetime-readme-", sample(1e9, 1)))
 
 
 for (i in 1:5) {

@@ -4,21 +4,14 @@
 \alias{onetime_do}
 \title{Run code only once}
 \usage{
-onetime_do(
-  expr,
-  id = calling_package(),
-  path = lockfile_dir(calling_package())
-)
+onetime_do(expr, id = calling_package(), path = default_lockfile_dir())
 }
 \arguments{
 \item{expr}{The code to evaluate}
 
 \item{id}{Unique ID. By default, name of the calling package.}
 
-\item{path}{Directory to store lockfiles. By default, a
-subdirectory based on the calling package, within a
-directory \code{"onetime-lockfiles"}, which is itself within
-\code{\link[rappdirs:user_config_dir]{rappdirs::user_config_dir()}}.}
+\item{path}{Directory to store lockfiles.}
 }
 \value{
 The value of \code{expr}, invisibly; or \code{NULL} if called the second time.
@@ -33,17 +26,21 @@ different calls to \code{onetime_do()}, only the first call will get made.
 
 By default, \code{id} is just the name of the calling package. This is for the
 common use case of a single call within a package (e.g. at first startup).
-
 If you want to use multiple calls, or if the calling code is not within a
 package, then you must set \code{id} explicitly.
 
 The default \code{path}, where lockfiles are stored, is
 \code{file.path(rappdirs::user_config_dir(), "onetime-lockfiles", mypackage)}.
 \code{mypackage} is the calling package. If the calling code is not
-within a package, then you must set \code{path} explicitly.
+within a package, then the default path is
+\code{file.path(rappdirs::user_config_dir(), "onetime-lockfiles")}.
 
 If the lockfile cannot be written, then the call will still be run, so it
 may be run repeatedly.
+
+The mechanism is vulnerable to race conditions from multiple R sessions.
+If you want to be absolutely sure that code never runs twice, you must
+do something else.
 }
 \examples{
 \dontrun{

@@ -5,27 +5,16 @@
 \alias{onetime_message}
 \title{Print a warning or message only once}
 \usage{
-onetime_warning(
-  ...,
-  id = calling_package(),
-  path = lockfile_dir(calling_package())
-)
+onetime_warning(..., id = calling_package(), path = default_lockfile_dir())
 
-onetime_message(
-  ...,
-  id = calling_package(),
-  path = lockfile_dir(calling_package())
-)
+onetime_message(..., id = calling_package(), path = default_lockfile_dir())
 }
 \arguments{
 \item{...}{Passed to \code{\link[=warning]{warning()}} or \code{\link[=message]{message()}}.}
 
 \item{id}{Unique ID. By default, name of the calling package.}
 
-\item{path}{Directory to store lockfiles. By default, a
-subdirectory based on the calling package, within a
-directory \code{"onetime-lockfiles"}, which is itself within
-\code{\link[rappdirs:user_config_dir]{rappdirs::user_config_dir()}}.}
+\item{path}{Directory to store lockfiles.}
 }
 \value{
 The return value of \code{warning()/message()}, or \code{NULL} if

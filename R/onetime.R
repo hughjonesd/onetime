@@ -1,10 +1,7 @@
 
 #' @name common-params
 #' @param id Unique ID. By default, name of the calling package.
-#' @param path Directory to store lockfiles. By default, a
-#'   subdirectory based on the calling package, within a
-#'   directory `"onetime-lockfiles"`, which is itself within
-#'   [rappdirs::user_config_dir()].
+#' @param path Directory to store lockfiles.
 #'
 NULL
 
@@ -31,7 +28,7 @@ NULL
 #' }
 onetime_warning <- function(...,
         id   = calling_package(),
-        path = lockfile_dir(calling_package())
+        path = default_lockfile_dir()
       ) {
   onetime_do(warning(...), id, path)
 }
@@ -40,7 +37,7 @@ onetime_warning <- function(...,
 #' @export
 onetime_message <- function (...,
         id   = calling_package(),
-        path = lockfile_dir(calling_package())
+        path = default_lockfile_dir()
       ) {
   onetime_do(message(...), id, path)
 }
@@ -61,15 +58,14 @@ onetime_message <- function (...,
 #'
 #' By default, `id` is just the name of the calling package. This is for the
 #' common use case of a single call within a package (e.g. at first startup).
-#'
 #' If you want to use multiple calls, or if the calling code is not within a
 #' package, then you must set `id` explicitly.
-#'
 #'
 #' The default `path`, where lockfiles are stored, is
 #' `file.path(rappdirs::user_config_dir(), "onetime-lockfiles", mypackage)`.
 #' `mypackage` is the calling package. If the calling code is not
-#' within a package, then you must set `path` explicitly.
+#' within a package, then the default path is
+#' `file.path(rappdirs::user_config_dir(), "onetime-lockfiles")`.
 #'
 #' If the lockfile cannot be written, then the call will still be run, so it
 #' may be run repeatedly.
@@ -92,8 +88,9 @@ onetime_message <- function (...,
 onetime_do <- function(
         expr,
         id   = calling_package(),
-        path = lockfile_dir(calling_package())
+        path = default_lockfile_dir()
       ) {
+  dir.create(path, showWarnings = FALSE, recursive = TRUE)
   fp <- onetime_filepath(id, path)
   if (! file.exists(fp)) {
     file.create(fp)
@@ -120,8 +117,8 @@ onetime_do <- function(
 #' onetime_do(print("will be shown"),  id = id)
 #' }
 onetime_reset <- function (
-        id,
-        path = lockfile_dir(calling_package())
+        id   = calling_package(),
+        path = default_lockfile_dir()
 ) {
   fp <- onetime_filepath(id, path)
   invisible(file.remove(fp))
@@ -135,20 +132,21 @@ onetime_filepath <- function (id, path) {
 }
 
 
-calling_package <- function () getNamespaceName(topenv(parent.frame(n = 2)))
+calling_package <- function () getNamespaceName(topenv(parent.frame(n = 3)))
 
 
-lockfile_dir <- function (package = NULL) {
+default_lockfile_dir <- function () {
   lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
-  if (! is.null(package)) lfd <- file.path(lfd, package)
+  package <- try(calling_package(), silent = TRUE)
+  if (! inherits(package, "try-error")) lfd <- file.path(lfd, package)
   return(lfd)
 }
 
 
 .onLoad <- function (libname, pkgname) {
-  lfd <- lockfile_dir()
+  lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
   if (! dir.exists(lfd)) {
-    lfd_created <- dir.create(lockfile_dir())
+    lfd_created <- dir.create(lfd)
     if (! lfd_created) warning(
           "Could not create onetime lockfile directory at ", lfd)
   }

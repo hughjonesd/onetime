@@ -11,6 +11,8 @@ status](https://travis-ci.org/hughjonesd/onetime.svg?branch=master)](https://tra
 status](https://ci.appveyor.com/api/projects/status/github/hughjonesd/onetime?branch=master&svg=true)](https://ci.appveyor.com/project/hughjonesd/onetime)
 [![Codecov test
 coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg)](https://codecov.io/gh/hughjonesd/onetime?branch=master)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 `onetime` provides convenience functions to run R code only once per

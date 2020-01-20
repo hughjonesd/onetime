@@ -13,15 +13,15 @@ status](https://ci.appveyor.com/api/projects/status/github/hughjonesd/onetime?br
 coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg)](https://codecov.io/gh/hughjonesd/onetime?branch=master)
 <!-- badges: end -->
 
-`onetime` provides convenience functions to run R code only once on a
-given computer. For example, you can show a startup message only the
-first time a package is loaded.
+`onetime` provides convenience functions to run R code only once per
+user. For example, you can show a startup message only the first time
+(ever) that a package is loaded.
 
 ## Example
 
 ``` r
 library(onetime)
-ids  <- replicate(3, paste0("onetime-readme-", sample(1e9, 1)))
+ids  <- paste0("onetime-readme-", sample(1e9, 3))
 
 
 for (i in 1:5) {

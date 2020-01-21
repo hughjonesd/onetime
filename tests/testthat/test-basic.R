@@ -32,18 +32,25 @@ test_that("basic functionality", {
 })
 
 
+test_that("onetime_only", {
+  cat_once <- onetime_only(cat, id = "test-id-5")
+  expect_output(cat_once("foo"), "foo")
+  expect_silent(cat_once("foo"))
+})
+
+
 test_that("onetime_reset", {
   ctr <- 0
-  onetime_do(ctr <- ctr + 1, id = "test-id-5")
+  onetime_do(ctr <- ctr + 1, id = "test-id-6")
   expect_equal(ctr, 1)
-  onetime_reset(id = "test-id-5")
-  onetime_do(ctr <- ctr + 1, id = "test-id-5")
+  onetime_reset(id = "test-id-6")
+  onetime_do(ctr <- ctr + 1, id = "test-id-6")
   expect_equal(ctr, 2)
 })
 
 
 teardown({
-  for (test_id in paste0("test-id-", 1:5)) {
+  for (test_id in paste0("test-id-", 1:6)) {
     onetime_reset(test_id)
   }
 })

@@ -95,6 +95,8 @@ onetime_do <- function(
         id   = calling_package(),
         path = default_lockfile_dir()
       ) {
+  force(id)
+  force(path)
   dir.create(path, showWarnings = FALSE, recursive = TRUE)
   fp <- onetime_filepath(id, path)
 
@@ -106,6 +108,41 @@ onetime_do <- function(
     file.create(fp)
     return(invisible(eval.parent(expr)))
   }
+}
+
+
+#' Wrap a function to be called only once
+#'
+#' This takes a function and returns the same function wrapped by [onetime_do()].
+#' Use it for code which should run only once, but which may be called from
+#' multiple locations. This frees you from having to use the same `id` multiple
+#' times.
+#'
+#' @param .f A function
+#' @inherit common-params
+#'
+#' @return A wrapped function.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' id <- sample(10000L, 1)
+#'
+#' cat_once <- onetime_only(cat, id = id)
+#' cat_once("Purrr!")
+#' cat_once("Miaow!")
+#'
+#' onetime_reset(id)
+#' }
+onetime_only <- function (
+        .f,
+        id   = calling_package(),
+        path = default_lockfile_dir()
+      ) {
+  force(id)
+  force(path)
+  function (...) onetime_do(.f(...), id = id, path = path)
 }
 
 
@@ -130,6 +167,8 @@ onetime_reset <- function (
         id   = calling_package(),
         path = default_lockfile_dir()
 ) {
+  force(id)
+  force(path)
   fp <- onetime_filepath(id, path)
 
   lfp <- paste0(fp, ".lock")
@@ -141,18 +180,23 @@ onetime_reset <- function (
 
 
 onetime_filepath <- function (id, path) {
-  stopifnot(is.character(id), length(id) == 1, nchar(id) > 0,
+  stopifnot(length(id) == 1, nchar(id) > 0,
         length(path) == 1, file.access(path, 2) == 0)
   file.path(path, id)
 }
 
 
-calling_package <- function () getNamespaceName(topenv(parent.frame(n = 3)))
+calling_package <- function (n = 2) {
+  p <- parent.frame(n = n)
+  d <- getNamespaceName(topenv(p))
+  # warning("calling_package was ", d)
+  d
+}
 
 
 default_lockfile_dir <- function () {
   lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
-  package <- try(calling_package(), silent = TRUE)
+  package <- try(calling_package(n = 3), silent = TRUE)
   if (inherits(package, "try-error")) package <- "NO_PACKAGE"
   lfd <- file.path(lfd, package)
   return(lfd)

@@ -1,7 +1,10 @@
 
 
 test_that(".onLoad", {
+  unloadNamespace(getNamespace("onetime"))
   lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
+  unlink(lfd, recursive = TRUE)
+  library(onetime)
   expect_true(dir.exists(lfd))
 })
 

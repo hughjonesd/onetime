@@ -23,6 +23,7 @@ Imports:
 URL: https://github.com/hughjonesd/onetime
 BugReports: https://github.com/hughjonesd/onetime/issues
 Suggests:
+    callr,
     devtools,
     testthat (>= 2.1.0),
     withr,

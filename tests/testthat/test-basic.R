@@ -54,23 +54,16 @@ test_that("onetime_reset", {
 
 
 test_that("multiprocess and command line", {
-  x <- system2(R_path, c("-q", "-e",
-        "'onetime::onetime_do(cat(\"foo\\n\"), id = \"test-id-7\")'"),
-        stdout = TRUE
-      )
-  expect_match(x, "^foo$", perl = TRUE, all = FALSE)
-
-  x <- system2(R_path, c("-q", "-e",
-          "'onetime::onetime_do(cat(\"foo\\n\"), id = \"test-id-7\")'"),
-          stdout = TRUE
-        )
-  expect_false(any(grepl("^foo$", x, perl = TRUE)))
+  x <- callr::r(function (...) onetime::onetime_do(1, id = "test-id-7"))
+  expect_equal(x, 1)
+  x <- callr::r(function (...) onetime::onetime_do(1, id = "test-id-7"))
+  expect_null(x)
 })
 
 teardown({
   for (test_id in paste0("test-id-", 1:6)) {
     onetime_reset(test_id)
   }
-  system2(R_path, c("-q", "-e", "'onetime::onetime_reset(id = \"test-id-7\")'"),
-        stdout = FALSE)
+  # reset from new process to use NO_PACKAGE directory
+  x <- callr::r(function (...) onetime::onetime_reset("test-id-7"))
 })

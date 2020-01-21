@@ -1,5 +1,9 @@
 
 
+R_path <- file.path(R.home("bin"), "R")
+
+
+
 test_that(".onLoad", {
   unloadNamespace(getNamespace("onetime"))
   lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
@@ -50,13 +54,13 @@ test_that("onetime_reset", {
 
 
 test_that("multiprocess and command line", {
-  x <- system2("R", c("-q", "-e",
+  x <- system2(R_path, c("-q", "-e",
         "'onetime::onetime_do(cat(\"foo\\n\"), id = \"test-id-7\")'"),
         stdout = TRUE
       )
   expect_match(x, "^foo$", perl = TRUE, all = FALSE)
 
-  x <- system2("R", c("-q", "-e",
+  x <- system2(R_path, c("-q", "-e",
           "'onetime::onetime_do(cat(\"foo\\n\"), id = \"test-id-7\")'"),
           stdout = TRUE
         )
@@ -67,6 +71,6 @@ teardown({
   for (test_id in paste0("test-id-", 1:6)) {
     onetime_reset(test_id)
   }
-  system2("R", c("-q", "-e", "'onetime::onetime_reset(id = \"test-id-7\")'"),
+  system2(R_path, c("-q", "-e", "'onetime::onetime_reset(id = \"test-id-7\")'"),
         stdout = FALSE)
 })

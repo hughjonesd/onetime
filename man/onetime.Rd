@@ -8,11 +8,11 @@
 Run code only once
 }
 \details{
-\code{onetime} provides convenience functions to run R code only once on a
-given computer. For example, you can show a startup message only the
-first time a package is loaded.
+\code{onetime} provides convenience functions to run R code only once per
+user. For example, you can show a startup message only the first time
+(ever) that a package is loaded.
 \subsection{Example}{\if{html}{\out{<div class="r">}}\preformatted{library(onetime)
-ids  <- replicate(3, paste0("onetime-readme-", sample(1e9, 1)))
+ids  <- paste0("onetime-readme-", sample(1e9, 3))
 
 
 for (i in 1:5) \{

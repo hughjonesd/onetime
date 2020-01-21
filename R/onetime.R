@@ -153,7 +153,8 @@ calling_package <- function () getNamespaceName(topenv(parent.frame(n = 3)))
 default_lockfile_dir <- function () {
   lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
   package <- try(calling_package(), silent = TRUE)
-  if (! inherits(package, "try-error")) lfd <- file.path(lfd, package)
+  if (inherits(package, "try-error")) package <- "NO_PACKAGE"
+  lfd <- file.path(lfd, package)
   return(lfd)
 }
 

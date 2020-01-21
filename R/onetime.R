@@ -8,7 +8,7 @@ NULL
 
 
 #' @name common-params
-#' @param id Unique ID. By default, name of the calling package.
+#' @param id Unique ID string. By default, name of the calling package.
 #' @param path Directory to store lockfiles.
 #'
 NULL
@@ -67,7 +67,7 @@ onetime_message <- function (...,
 #' By default, `id` is just the name of the calling package. This is for the
 #' common use case of a single call within a package (e.g. at first startup).
 #' If you want to use multiple calls, or if the calling code is not within a
-#' package, then you must set `id` explicitly.
+#' package, then you *must* set `id` explicitly.
 #'
 #' The default `path`, where lockfiles are stored, is
 #' `file.path(rappdirs::user_config_dir(), "onetime-lockfiles", mypackage)`.

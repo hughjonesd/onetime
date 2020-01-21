@@ -7,7 +7,7 @@
 onetime_reset(id = calling_package(), path = default_lockfile_dir())
 }
 \arguments{
-\item{id}{Unique ID. By default, name of the calling package.}
+\item{id}{Unique ID string. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles.}
 }

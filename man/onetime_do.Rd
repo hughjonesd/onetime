@@ -9,7 +9,7 @@ onetime_do(expr, id = calling_package(), path = default_lockfile_dir())
 \arguments{
 \item{expr}{The code to evaluate}
 
-\item{id}{Unique ID. By default, name of the calling package.}
+\item{id}{Unique ID string. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles.}
 }
@@ -27,7 +27,7 @@ different calls to \code{onetime_do()}, only the first call will get made.
 By default, \code{id} is just the name of the calling package. This is for the
 common use case of a single call within a package (e.g. at first startup).
 If you want to use multiple calls, or if the calling code is not within a
-package, then you must set \code{id} explicitly.
+package, then you \emph{must} set \code{id} explicitly.
 
 The default \code{path}, where lockfiles are stored, is
 \code{file.path(rappdirs::user_config_dir(), "onetime-lockfiles", mypackage)}.

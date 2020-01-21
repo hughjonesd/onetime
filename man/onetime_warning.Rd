@@ -12,7 +12,7 @@ onetime_message(..., id = calling_package(), path = default_lockfile_dir())
 \arguments{
 \item{...}{Passed to \code{\link[=warning]{warning()}} or \code{\link[=message]{message()}}.}
 
-\item{id}{Unique ID. By default, name of the calling package.}
+\item{id}{Unique ID string. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles.}
 }

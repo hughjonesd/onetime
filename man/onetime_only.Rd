@@ -33,3 +33,6 @@ cat_once("Miaow!")
 onetime_reset(id)
 }
 }
+\seealso{
+\code{\link[=onetime_do]{onetime_do()}}
+}

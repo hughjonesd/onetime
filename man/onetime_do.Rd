@@ -22,21 +22,25 @@ recording a unique ID which will prevent the expression being run again.
 }
 \details{
 Calls are identified by \code{id}. If you use the same value of \code{id} across
-different calls to \code{onetime_do()}, only the first call will get made.
+different calls to \code{onetime_do()} and similar functions, only the first
+call will get made.
 
 By default, \code{id} is just the name of the calling package. This is for the
 common use case of a single call within a package (e.g. at first startup).
 If you want to use multiple calls, or if the calling code is not within a
-package, then you \emph{must} set \code{id} explicitly.
+package, then you \emph{must} set \code{id} explicitly. If you are working in a
+large project with many contributors, it is \emph{strongly recommended to set}
+\code{id } \emph{explicitly}.
 
 The default \code{path}, where lockfiles are stored, is
 \code{file.path(rappdirs::user_config_dir(), "onetime-lockfiles", mypackage)}.
 \code{mypackage} is the calling package. If the calling code is not
 within a package, then the default path is
-\code{file.path(rappdirs::user_config_dir(), "onetime-lockfiles")}.
+\code{file.path(rappdirs::user_config_dir(), "onetime-lockfiles", "NO_PACKAGE")}.
 
 If the lockfile cannot be written, then the call will still be run, so it
-may be run repeatedly.
+may be run repeatedly. Conversely, if the call gives an error, the lockfile
+is still written.
 }
 \examples{
 \dontrun{

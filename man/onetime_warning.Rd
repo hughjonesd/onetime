@@ -32,3 +32,6 @@ for (n in 1:3) {
 }
 }
 }
+\seealso{
+\code{\link[=onetime_do]{onetime_do()}}
+}

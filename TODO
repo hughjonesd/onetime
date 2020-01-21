@@ -1,5 +1,7 @@
 
 TODO
 
-* What to do about multi-user installations? Is there a per-user R directory?
-*
+QUESTIONS
+* Is it CRAN-OK to write in the rappdirs config directory?
+* Would it be OK to make examples runnable?
+* Should I make `id` compulsory to avoid footguns in large projects?

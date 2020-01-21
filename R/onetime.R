@@ -78,9 +78,6 @@ onetime_message <- function (...,
 #' If the lockfile cannot be written, then the call will still be run, so it
 #' may be run repeatedly.
 #'
-#' The mechanism is vulnerable to race conditions from multiple R sessions.
-#' If you want to be absolutely sure that code never runs twice, you must
-#' do something else.
 #'
 #' @return The value of `expr`, invisibly; or `NULL` if called the second time.
 #'
@@ -100,6 +97,11 @@ onetime_do <- function(
       ) {
   dir.create(path, showWarnings = FALSE, recursive = TRUE)
   fp <- onetime_filepath(id, path)
+
+  lfp <- paste0(fp, ".lock")
+  lck <- filelock::lock(lfp)
+  on.exit(filelock::unlock(lck))
+
   if (! file.exists(fp)) {
     file.create(fp)
     return(invisible(eval.parent(expr)))
@@ -129,6 +131,11 @@ onetime_reset <- function (
         path = default_lockfile_dir()
 ) {
   fp <- onetime_filepath(id, path)
+
+  lfp <- paste0(fp, ".lock")
+  lck <- filelock::lock(lfp)
+  on.exit(filelock::unlock(lck))
+
   invisible(file.remove(fp))
 }
 

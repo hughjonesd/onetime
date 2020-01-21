@@ -37,10 +37,6 @@ within a package, then the default path is
 
 If the lockfile cannot be written, then the call will still be run, so it
 may be run repeatedly.
-
-The mechanism is vulnerable to race conditions from multiple R sessions.
-If you want to be absolutely sure that code never runs twice, you must
-do something else.
 }
 \examples{
 \dontrun{

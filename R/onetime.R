@@ -4,6 +4,9 @@
 #' @name onetime
 #' @docType package
 #' @includeRmd example.Rmd
+#'
+#' @details
+#' For more details, see [onetime_do()].
 NULL
 
 
@@ -26,6 +29,8 @@ NULL
 #'   called a second time.
 #'
 #' @export
+#'
+#' @seealso [onetime_do()]
 #'
 #' @examples
 #' \dontrun{
@@ -62,7 +67,8 @@ onetime_message <- function (...,
 #'
 #' @details
 #' Calls are identified by `id`. If you use the same value of `id` across
-#' different calls to `onetime_do()`, only the first call will get made.
+#' different calls to `onetime_do()` and similar functions, only the first
+#' call will get made.
 #'
 #' By default, `id` is just the name of the calling package. This is for the
 #' common use case of a single call within a package (e.g. at first startup).
@@ -75,10 +81,11 @@ onetime_message <- function (...,
 #' `file.path(rappdirs::user_config_dir(), "onetime-lockfiles", mypackage)`.
 #' `mypackage` is the calling package. If the calling code is not
 #' within a package, then the default path is
-#' `file.path(rappdirs::user_config_dir(), "onetime-lockfiles")`.
+#' `file.path(rappdirs::user_config_dir(), "onetime-lockfiles", "NO_PACKAGE")`.
 #'
 #' If the lockfile cannot be written, then the call will still be run, so it
-#' may be run repeatedly.
+#' may be run repeatedly. Conversely, if the call gives an error, the lockfile
+#' is still written.
 #'
 #'
 #' @return The value of `expr`, invisibly; or `NULL` if called the second time.
@@ -126,6 +133,8 @@ onetime_do <- function(
 #' @return A wrapped function.
 #'
 #' @export
+#'
+#' @seealso [onetime_do()]
 #'
 #' @examples
 #' \dontrun{

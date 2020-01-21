@@ -35,4 +35,6 @@ for (i in 1:5) \{
 ## Loop  5  of 5
 }
 }
+
+For more details, see \code{\link[=onetime_do]{onetime_do()}}.
 }

@@ -199,9 +199,16 @@ onetime_filepath <- function (id, path) {
 
 calling_package <- function (n = 2) {
   p <- parent.frame(n = n)
-  d <- getNamespaceName(topenv(p))
-  # warning("calling_package was ", d)
-  d
+  tryCatch(
+          getNamespaceName(topenv(p)),
+          error = function (e) {
+            if (grepl("not a namespace", e$message)) {
+              stop("Could not identify calling package. Try setting `id` explicitly.")
+            } else {
+              e
+            }
+          }
+        )
 }
 
 

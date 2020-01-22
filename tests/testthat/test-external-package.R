@@ -37,6 +37,10 @@ test_that("onetime_warning/message from external", {
   expect_message((test_onetime_message("foo")), "foo")
   expect_silent((test_onetime_message("foo")))
   test_onetime_reset()
+
+  expect_message((test_onetime_startup_message("foo")), "foo")
+  expect_silent((test_onetime_startup_message("foo")))
+  test_onetime_reset()
 })
 
 test_that("onetime_only from external", {

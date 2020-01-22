@@ -22,10 +22,10 @@ NULL
 #' These functions use [onetime_do()] to print a warning or message just
 #' once.
 #'
-#' @param ... Passed to [warning()] or [message()].
+#' @param ... Passed to [warning()], [message()] or [packageStartupMessage()].
 #' @inherit common-params
 #'
-#' @return The return value of `warning()/message()`, or `NULL` if
+#' @return The return value of the underlying call, or `NULL` if
 #'   called a second time.
 #'
 #' @export
@@ -54,6 +54,17 @@ onetime_message <- function (...,
       ) {
   onetime_do(message(...), id, path)
 }
+
+
+#' @rdname onetime_warning
+#' @export
+onetime_startup_message <- function (...,
+  id   = calling_package(),
+  path = default_lockfile_dir()
+) {
+  onetime_do(packageStartupMessage(...), id, path)
+}
+
 
 
 #' Run code only once

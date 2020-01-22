@@ -3,21 +3,28 @@
 \name{onetime_warning}
 \alias{onetime_warning}
 \alias{onetime_message}
+\alias{onetime_startup_message}
 \title{Print a warning or message only once}
 \usage{
 onetime_warning(..., id = calling_package(), path = default_lockfile_dir())
 
 onetime_message(..., id = calling_package(), path = default_lockfile_dir())
+
+onetime_startup_message(
+  ...,
+  id = calling_package(),
+  path = default_lockfile_dir()
+)
 }
 \arguments{
-\item{...}{Passed to \code{\link[=warning]{warning()}} or \code{\link[=message]{message()}}.}
+\item{...}{Passed to \code{\link[=warning]{warning()}}, \code{\link[=message]{message()}} or \code{\link[=packageStartupMessage]{packageStartupMessage()}}.}
 
 \item{id}{Unique ID string. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles.}
 }
 \value{
-The return value of \code{warning()/message()}, or \code{NULL} if
+The return value of the underlying call, or \code{NULL} if
 called a second time.
 }
 \description{

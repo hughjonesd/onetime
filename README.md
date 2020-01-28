@@ -23,14 +23,13 @@ user. For example, you can show a startup message only the first time
 
 ``` r
 library(onetime)
-ids  <- paste0("onetime-readme-", sample(1e9, 3))
+ids  <- paste0("onetime-readme-", sample(1e9, 4))
 
 
 for (i in 1:5) {
   cat("Loop ", i, " of 5\n")
   onetime_do(cat("You will only see this once.\n"), id = ids[1])
-  onetime_warning("This warning will only be shown once.", 
-      id = ids[2])
+  onetime_warning("This warning will only be shown once.", id = ids[2])
   onetime_message("This message will only be shown once.", id = ids[3])
 }
 #> Loop  1  of 5
@@ -41,18 +40,21 @@ for (i in 1:5) {
 #> Loop  3  of 5
 #> Loop  4  of 5
 #> Loop  5  of 5
+
+# Meanwhile, in a separate process:
+library(callr)
+callr::r(function (ids) {
+  onetime::onetime_do(cat("This message will not be shown."), id = ids[1])
+  onetime::onetime_do(cat("This message with a new id will be shown."), id = ids[4])
+}, show = TRUE, args = list(ids = ids))
+#> This message with a new id will be shown.
+#> NULL
 ```
 
 ## Installation
 
-You can install the released version of onetime from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("onetime")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the development version from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")

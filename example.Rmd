@@ -11,14 +11,22 @@ package is loaded.
 
 ```{r example}
 library(onetime)
-ids  <- paste0("onetime-readme-", sample(1e9, 3))
+ids  <- paste0("onetime-readme-", sample(1e9, 4))
 
 
 for (i in 1:5) {
   cat("Loop ", i, " of 5\n")
   onetime_do(cat("You will only see this once.\n"), id = ids[1])
-  onetime_warning("This warning will only be shown once.", 
-      id = ids[2])
+  onetime_warning("This warning will only be shown once.", id = ids[2])
   onetime_message("This message will only be shown once.", id = ids[3])
 }
+
+# Meanwhile, in a separate process:
+library(callr)
+callr::r(function (ids) {
+  onetime::onetime_do(cat("This message will not be shown."), id = ids[1])
+  onetime::onetime_do(cat("This message with a new id will be shown."), id = ids[4])
+}, show = TRUE, args = list(ids = ids))
 ```
+
+

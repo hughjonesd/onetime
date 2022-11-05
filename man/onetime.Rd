@@ -5,24 +5,29 @@
 \alias{onetime}
 \title{Run code only once}
 \description{
-Run code only once
+Onetime allows package authors to run code only once (ever) for a given
+user. It does so by writing a file, typically to the user's configuration
+directory as given by \code{\link[rappdirs:user_data_dir]{rappdirs::user_config_dir()}}.
 }
 \details{
 \code{onetime} provides convenience functions to run R code only once per
 user. For example, you can show a startup message only the first time
 (ever) that a package is loaded.
-\subsection{Example}{\if{html}{\out{<div class="r">}}\preformatted{library(onetime)
-ids  <- paste0("onetime-readme-", sample(1e9, 3))
+\subsection{Example}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(onetime)
+ids  <- paste0("onetime-readme-", sample(1e9, 4))
 
 
 for (i in 1:5) \{
   cat("Loop ", i, " of 5\n")
   onetime_do(cat("You will only see this once.\n"), id = ids[1])
-  onetime_warning("This warning will only be shown once.", 
-      id = ids[2])
+  onetime_warning("This warning will only be shown once.", id = ids[2])
   onetime_message("This message will only be shown once.", id = ids[3])
 \}
-}\if{html}{\out{</div>}}\preformatted{## Loop  1  of 5
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Loop  1  of 5
 ## You will only see this once.
 
 ## Warning in eval(expr, p): This warning will only be shown once.
@@ -33,7 +38,20 @@ for (i in 1:5) \{
 ## Loop  3  of 5
 ## Loop  4  of 5
 ## Loop  5  of 5
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Meanwhile, in a separate process:
+library(callr)
+callr::r(function (ids) \{
+  onetime::onetime_do(cat("This message will not be shown."), id = ids[1])
+  onetime::onetime_do(cat("This message with a new id will be shown."), id = ids[4])
+\}, show = TRUE, args = list(ids = ids))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## This message will not be shown.This message with a new id will be shown.
+
+## NULL
+}\if{html}{\out{</div>}}
 }
 
 For more details, see \code{\link[=onetime_do]{onetime_do()}}.

@@ -1,6 +1,10 @@
 
 #' Run code only once
 #'
+#' Onetime allows package authors to run code only once (ever) for a given
+#' user. It does so by writing a file, typically to the user's configuration
+#' directory as given by [rappdirs::user_config_dir()].
+#'
 #' @name onetime
 #' @docType package
 #' @includeRmd example.Rmd
@@ -46,6 +50,7 @@ onetime_warning <- function(...,
   onetime_do(warning(...), id, path)
 }
 
+
 #' @rdname onetime_warning
 #' @export
 onetime_message <- function (...,
@@ -66,6 +71,61 @@ onetime_startup_message <- function (...,
 }
 
 
+#' Print a message, and ask if it should be printed again
+#'
+#' This uses [readline()] to ask the user if the message should
+#' be shown again in future. In a non-interactive session, it does
+#' nothing.
+#'
+#' By default, the message will be hidden if the user answers
+#' "n", "No", or "N", or just presses return to the prompt question.
+#'
+#' @param message Message to print
+#' @inherit common-params
+#' @param confirm_prompt Question to prompt the user to hide the
+#'   message in future
+#' @param hide_answers Character vector. Answers which will cause
+#'   the message to be hidden in future.
+#' @param default_answer Character string. Default answer if user
+#'   simply presses return.
+#'
+#' @return `NULL` if the message was not shown (shown already or non-interactive
+#' session). `TRUE` if the user asked to show the message again.
+#' `FALSE` if the user asked to hide the message.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' id <- sample(10000L, 1)
+#' onetime_message_confirm("A message to show one or more times", id = id)
+#' }
+onetime_message_confirm <- function (message,
+  id   = calling_package(),
+  path = default_lockfile_dir(),
+  confirm_prompt = "Show this message again? [yN]",
+  hide_answers = c("N", "n", "No", "no"),
+  default_answer = "N"
+) {
+  if (! interactive()) return(NULL)
+
+  confirmation <- expression({
+    message(message)
+    answer <- readline(confirm_prompt)
+    answer
+  })
+
+  answer <- onetime_do(confirmation, id = id, path = path)
+  if (is.null(answer)) return(NULL)
+
+  if (answer == "") answer <- default_answer
+  if (! answer %in% hide_answers) {
+    onetime_reset(id, path)
+  }
+
+  return(! answer %in% hide_answers)
+}
+
 
 #' Run code only once
 #'
@@ -75,6 +135,8 @@ onetime_startup_message <- function (...,
 #'
 #' @param expr The code to evaluate
 #' @inherit common-params
+#' @param default Value to return if the code has been called a second or
+#'   subsequent times.
 #'
 #' @details
 #' Calls are identified by `id`. If you use the same value of `id` across
@@ -113,7 +175,8 @@ onetime_startup_message <- function (...,
 onetime_do <- function(
         expr,
         id   = calling_package(),
-        path = default_lockfile_dir()
+        path = default_lockfile_dir(),
+        default = NULL
       ) {
   force(id)
   force(path)
@@ -127,6 +190,8 @@ onetime_do <- function(
   if (! file.exists(fp)) {
     file.create(fp)
     return(invisible(eval.parent(expr)))
+  } else {
+    return(default)
   }
 }
 
@@ -226,7 +291,7 @@ calling_package <- function (n = 2) {
 default_lockfile_dir <- function () {
   lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
   package <- try(calling_package(n = 3), silent = TRUE)
-  if (inherits(package, "try-error")) package <- "NO_PACKAGE"
+  if (inherits(package, "try-error")) package <- "NO-PACKAGE"
   lfd <- file.path(lfd, package)
   return(lfd)
 }

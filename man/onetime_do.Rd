@@ -4,7 +4,12 @@
 \alias{onetime_do}
 \title{Run code only once}
 \usage{
-onetime_do(expr, id = calling_package(), path = default_lockfile_dir())
+onetime_do(
+  expr,
+  id = calling_package(),
+  path = default_lockfile_dir(),
+  default = NULL
+)
 }
 \arguments{
 \item{expr}{The code to evaluate}
@@ -12,6 +17,9 @@ onetime_do(expr, id = calling_package(), path = default_lockfile_dir())
 \item{id}{Unique ID string. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles.}
+
+\item{default}{Value to return if the code has been called a second or
+subsequent times.}
 }
 \value{
 The value of \code{expr}, invisibly; or \code{NULL} if called the second time.

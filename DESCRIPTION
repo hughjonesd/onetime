@@ -11,10 +11,9 @@ Author: David Hugh-Jones [aut, cre]
 Maintainer: David Hugh-Jones <davidhughjones@gmail.com>
 Description: Allows code to be run only once on a given computer, using
   lockfiles. Typical use cases include startup messages shown only when a
-  package is first loaded.
+  package is loaded for the very first time.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Imports: 

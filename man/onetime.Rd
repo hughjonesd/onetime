@@ -6,8 +6,9 @@
 \title{Run code only once}
 \description{
 Onetime allows package authors to run code only once (ever) for a given
-user. It does so by writing a file, typically to the user's configuration
-directory as given by \code{\link[rappdirs:user_data_dir]{rappdirs::user_config_dir()}}.
+user. It does so by writing a file, typically to a folder in the user's
+configuration directory as given by \code{\link[rappdirs:user_data_dir]{rappdirs::user_config_dir()}}. The
+user can set an alternative filepath using \code{options("onetime.dir")}.
 }
 \details{
 \code{onetime} provides convenience functions to run R code only once per
@@ -48,7 +49,7 @@ callr::r(function (ids) \{
 \}, show = TRUE, args = list(ids = ids))
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## This message will not be shown.This message with a new id will be shown.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## This message with a new id will be shown.
 
 ## NULL
 }\if{html}{\out{</div>}}

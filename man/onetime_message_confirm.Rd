@@ -2,14 +2,14 @@
 % Please edit documentation in R/onetime.R
 \name{onetime_message_confirm}
 \alias{onetime_message_confirm}
-\title{Print a message, and ask if it should be printed again}
+\title{Print a message, and ask for confirmation to hide it in future}
 \usage{
 onetime_message_confirm(
   message,
   id = calling_package(),
   path = default_lockfile_dir(),
   confirm_prompt = "Show this message again? [yN]",
-  hide_answers = c("N", "n", "No", "no"),
+  confirm_answers = c("N", "n", "No", "no"),
   default_answer = "N"
 )
 }
@@ -20,28 +20,33 @@ onetime_message_confirm(
 
 \item{path}{Directory to store lockfiles.}
 
-\item{confirm_prompt}{Question to prompt the user to hide the
-message in future}
+\item{confirm_prompt}{Character string. Question to prompt the user to hide
+the message in future}
 
-\item{hide_answers}{Character vector. Answers which will cause
-the message to be hidden in future.}
+\item{confirm_answers}{Character vector. Answers which will cause
+the message to be hidden in future. By default these are "no",
+because the question is phrased "Show this message again?".}
 
 \item{default_answer}{Character string. Default answer if user
 simply presses return.}
 }
 \value{
 \code{NULL} if the message was not shown (shown already or non-interactive
-session). \code{TRUE} if the user asked to show the message again.
-\code{FALSE} if the user asked to hide the message.
+session). \code{TRUE} if the user confirmed (i.e. asked to hide the message).
+\code{FALSE} if the user asked to show the message again.
 }
 \description{
 This uses \code{\link[=readline]{readline()}} to ask the user if the message should
 be shown again in future. In a non-interactive session, it does
 nothing.
 }
+\details{
+By default, the message will be hidden if the user answers
+"n", "No", or "N", or just presses return to the prompt question.
+}
 \examples{
 \dontrun{
-id <- sample(10000L, 1)
+id <- sample(10000L, 1L)
 onetime_message_confirm("A message to show one or more times", id = id)
 }
 }

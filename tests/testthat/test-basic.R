@@ -13,7 +13,10 @@ test_id <- function (id) {
 test_that(".onLoad", {
   unloadNamespace(getNamespace("onetime"))
   lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
-  unlink(lfd, recursive = TRUE)
+  unlink(shQuote(lfd), recursive = TRUE)
+
+  withr::local_options(onetime.dir = NULL)
+
   library(onetime)
   expect_true(dir.exists(lfd))
 })
@@ -55,6 +58,11 @@ test_that("onetime_warning/message/startup_message", {
     "foo"
   )
   expect_silent(onetime_startup_message("foo", id = test_id("test-id-5")))
+})
+
+
+test_that("onetime_message_confirm", {
+  skip("Interactive testing is too hard for now")
 })
 
 

@@ -2,8 +2,9 @@
 #' Run code only once
 #'
 #' Onetime allows package authors to run code only once (ever) for a given
-#' user. It does so by writing a file, typically to the user's configuration
-#' directory as given by [rappdirs::user_config_dir()].
+#' user. It does so by writing a file, typically to a folder in the user's
+#' configuration directory as given by [rappdirs::user_config_dir()]. The
+#' user can set an alternative filepath using `options("onetime.dir")`.
 #'
 #' @name onetime
 #' @docType package
@@ -71,7 +72,7 @@ onetime_startup_message <- function (...,
 }
 
 
-#' Print a message, and ask if it should be printed again
+#' Print a message, and ask for confirmation to hide it in future
 #'
 #' This uses [readline()] to ask the user if the message should
 #' be shown again in future. In a non-interactive session, it does
@@ -82,29 +83,30 @@ onetime_startup_message <- function (...,
 #'
 #' @param message Message to print
 #' @inherit common-params
-#' @param confirm_prompt Question to prompt the user to hide the
-#'   message in future
-#' @param hide_answers Character vector. Answers which will cause
-#'   the message to be hidden in future.
+#' @param confirm_prompt Character string. Question to prompt the user to hide
+#' the message in future
+#' @param confirm_answers Character vector. Answers which will cause
+#'   the message to be hidden in future. By default these are "no",
+#'   because the question is phrased "Show this message again?".
 #' @param default_answer Character string. Default answer if user
 #'   simply presses return.
 #'
 #' @return `NULL` if the message was not shown (shown already or non-interactive
-#' session). `TRUE` if the user asked to show the message again.
-#' `FALSE` if the user asked to hide the message.
+#' session). `TRUE` if the user confirmed (i.e. asked to hide the message).
+#' `FALSE` if the user asked to show the message again.
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' id <- sample(10000L, 1)
+#' id <- sample(10000L, 1L)
 #' onetime_message_confirm("A message to show one or more times", id = id)
 #' }
 onetime_message_confirm <- function (message,
   id   = calling_package(),
   path = default_lockfile_dir(),
   confirm_prompt = "Show this message again? [yN]",
-  hide_answers = c("N", "n", "No", "no"),
+  confirm_answers = c("N", "n", "No", "no"),
   default_answer = "N"
 ) {
   if (! interactive()) return(NULL)
@@ -119,11 +121,11 @@ onetime_message_confirm <- function (message,
   if (is.null(answer)) return(NULL)
 
   if (answer == "") answer <- default_answer
-  if (! answer %in% hide_answers) {
+  if (! answer %in% confirm_answers) {
     onetime_reset(id, path)
   }
 
-  return(! answer %in% hide_answers)
+  return(answer %in% confirm_answers)
 }
 
 
@@ -289,19 +291,52 @@ calling_package <- function (n = 2) {
 
 
 default_lockfile_dir <- function () {
-  lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
+  lfd <- onetime_base_dir()
   package <- try(calling_package(n = 3), silent = TRUE)
   if (inherits(package, "try-error")) package <- "NO-PACKAGE"
   lfd <- file.path(lfd, package)
   return(lfd)
 }
 
+onetime_base_dir <- function () {
+  lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
+  getOption("onetime.dir", lfd)
+}
+
 
 .onLoad <- function (libname, pkgname) {
-  lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
-  if (! dir.exists(lfd)) {
-    lfd_created <- dir.create(lfd)
-    if (! lfd_created) warning(
-          "Could not create onetime lockfile directory at ", lfd)
+  lfd <- onetime_base_dir()
+
+  if (is.null(getOption("onetime.dir"))) {
+    msg <- paste0("The 'onetime' package needs to save configuration files",
+                  "on disk at'", lfd, "'. ")
+    prompt <- "Create this folder and store files there? [Yn]"
+    ok <- onetime_message_confirm(
+            message         = msg,
+            id              = "onetime-basic-confirmation",
+            path            = rappdirs::user_config_dir(),
+            confirm_prompt  = prompt,
+            confirm_answers = c("Y", "y", "Yes", "yes", "YES"),
+            default_answer  = "Y"
+          )
+  } else {
+    # if options('onetime.dir') has been set explicitly,
+    # we assume we have permission to use it
+    ok <- TRUE
+  }
+
+  helpful_info <-  paste0("Some functions may not work as expected. ",
+                          "Set options('onetime.dir') to an existing directory ",
+                          "to use a non-standard location.")
+  if (isTRUE(ok) || is.null(ok)) {
+    if (! dir.exists(lfd)) {
+      lfd_created <- dir.create(lfd)
+      if (! lfd_created) {
+        warning("Could not create onetime directory at '", lfd, "'. ",
+                helpful_info)
+      }
+    }
+  } else {
+    message("onetime directory not created. ", helpful_info)
   }
 }

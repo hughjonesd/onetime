@@ -11,6 +11,13 @@ configuration directory as given by \code{\link[rappdirs:user_data_dir]{rappdirs
 user can set an alternative filepath using \code{options("onetime.dir")}.
 }
 \details{
+If loaded in an interactive session, the onetime package confirms
+(once only) whether it has permission to write files to the
+configuration directory. In a non-interactive session, it warns
+the user that files will be written using \code{\link[=packageStartupMessage]{packageStartupMessage()}}.
+
+For more details, see \code{\link[=onetime_do]{onetime_do()}}.
+
 \code{onetime} provides convenience functions to run R code only once per
 user. For example, you can show a startup message only the first time
 (ever) that a package is loaded.
@@ -49,11 +56,11 @@ callr::r(function (ids) \{
 \}, show = TRUE, args = list(ids = ids))
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## This message with a new id will be shown.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## CAN YOU HEAR ME
+## 'onetime' package saving configuration files at '~/Library/Application Support/onetime-lockfiles'.Set options('onetime.dir') to an existing directory to use a non-standard location.
+## This message with a new id will be shown.
 
 ## NULL
 }\if{html}{\out{</div>}}
 }
-
-For more details, see \code{\link[=onetime_do]{onetime_do()}}.
 }

@@ -11,14 +11,26 @@ test_id <- function (id) {
 }
 
 test_that(".onLoad", {
-  unloadNamespace(getNamespace("onetime"))
-  lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
-  unlink(shQuote(lfd), recursive = TRUE)
+
+  # unloadNamespace(getNamespace("onetime"))
+  detach(package:onetime, unload = TRUE)
+  if (isNamespaceLoaded("onetime")) {
+    skip("Couldn't unload onetime namespace")
+  }
 
   withr::local_options(onetime.dir = NULL)
+  # don't use onetime_base_dir(), that will prematurely reload the namespace!
+  obd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
+  unlink(obd, recursive = TRUE)
 
+  if (interactive()) {
+    loadNamespace("onetime")
+  } else {
+    expect_message(loadNamespace("onetime"))
+  }
+
+  expect_true(dir.exists(obd))
   library(onetime)
-  expect_true(dir.exists(lfd))
 })
 
 
@@ -62,7 +74,23 @@ test_that("onetime_warning/message/startup_message", {
 
 
 test_that("onetime_message_confirm", {
-  skip("Interactive testing is too hard for now")
+  if (! interactive()) {
+    skip("Test needs interaction: run `devtools::test()` from the command line.")
+  } else {
+    expect_message(
+      onetime_message_confirm("Say Y",
+                              confirm_prompt = "Please say Y",
+                              id = test_id("test-id-omc"))
+    )
+    expect_message(
+      onetime_message_confirm("Say N",
+                              confirm_prompt = "Now say N",
+                              id = test_id("test-id-omc"))
+    )
+    expect_silent(
+      onetime_message_confirm("Should be hidden", id = test_id("test-id-omc"))
+    )
+  }
 })
 
 

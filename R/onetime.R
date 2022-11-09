@@ -6,6 +6,11 @@
 #' configuration directory as given by [rappdirs::user_config_dir()]. The
 #' user can set an alternative filepath using `options("onetime.dir")`.
 #'
+#' If loaded in an interactive session, the onetime package confirms
+#' (once only) whether it has permission to write files to the
+#' configuration directory. In a non-interactive session, it warns
+#' the user that files will be written using [packageStartupMessage()].
+#'
 #' @name onetime
 #' @docType package
 #' @includeRmd example.Rmd
@@ -306,12 +311,19 @@ onetime_base_dir <- function () {
 
 .onLoad <- function (libname, pkgname) {
   lfd <- onetime_base_dir()
+  options_info <- paste0("Set options('onetime.dir') to an existing directory ",
+                          "to use a non-standard location.")
 
-  if (is.null(getOption("onetime.dir"))) {
-    msg <- paste0("The 'onetime' package needs to save configuration files",
-                  "on disk at'", lfd, "'. ")
+  ok <- if (! is.null(getOption("onetime.dir"))) {
+    # if option has been set explicitly,
+    # we assume we have permission to use it
+    TRUE
+  } else {
+    if (interactive()) {
+    msg <- paste0("The 'onetime' package needs to save configuration files ",
+                  "on disk at '", lfd, "'. ")
     prompt <- "Create this folder and store files there? [Yn]"
-    ok <- onetime_message_confirm(
+    onetime_message_confirm(
             message         = msg,
             id              = "onetime-basic-confirmation",
             path            = rappdirs::user_config_dir(),
@@ -319,24 +331,25 @@ onetime_base_dir <- function () {
             confirm_answers = c("Y", "y", "Yes", "yes", "YES"),
             default_answer  = "Y"
           )
-  } else {
-    # if options('onetime.dir') has been set explicitly,
-    # we assume we have permission to use it
-    ok <- TRUE
+    } else {
+      packageStartupMessage("'onetime' package saving configuration files ",
+                            "at '", lfd, "'.", options_info)
+      TRUE
+    }
   }
 
-  helpful_info <-  paste0("Some functions may not work as expected. ",
-                          "Set options('onetime.dir') to an existing directory ",
-                          "to use a non-standard location.")
   if (isTRUE(ok) || is.null(ok)) {
     if (! dir.exists(lfd)) {
       lfd_created <- dir.create(lfd)
       if (! lfd_created) {
         warning("Could not create onetime directory at '", lfd, "'. ",
-                helpful_info)
+                "Some functions may not work as expected. ",
+                options_info)
       }
     }
   } else {
-    message("onetime directory not created. ", helpful_info)
+    warning("Onetime directory not created. ",
+            "Some functions may not work as expected. ",
+            options_info)
   }
 }

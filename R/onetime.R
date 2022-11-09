@@ -323,21 +323,27 @@ onetime_base_dir <- function () {
     # we assume we have permission to use it
     TRUE
   } else {
+    id <- "onetime-basic-confirmation"
+    path <- rappdirs::user_config_dir()
     if (interactive()) {
-    msg <- paste0("The 'onetime' package needs to save configuration files ",
+      msg <- paste0("The 'onetime' package needs to save configuration files ",
                   "on disk at '", lfd, "'. ")
-    prompt <- "Create this folder and store files there? [Yn]"
-    onetime_message_confirm(
-            message         = msg,
-            id              = "onetime-basic-confirmation",
-            path            = rappdirs::user_config_dir(),
-            confirm_prompt  = prompt,
-            confirm_answers = c("Y", "y", "Yes", "yes", "YES"),
-            default_answer  = "Y"
-          )
+      prompt <- "Create this folder and store files there? [Yn]"
+      onetime_message_confirm(
+        message         = msg,
+        id              = id,
+        path            = path,
+        confirm_prompt  = prompt,
+        confirm_answers = c("Y", "y", "Yes", "yes", "YES"),
+        default_answer  = "Y"
+      )
     } else {
-      packageStartupMessage("'onetime' package saving configuration files ",
-                            "at '", lfd, "'.", options_info)
+      onetime_startup_message(paste0(
+                              "'onetime' package saving configuration files ",
+                              "in '", lfd, "'. ", options_info),
+                              id   = id,
+                              path = path
+                            )
       TRUE
     }
   }
@@ -352,6 +358,7 @@ onetime_base_dir <- function () {
       }
     }
   } else {
+    # ok FALSE: user explicitly said NOT to create the default directory
     warning("Onetime directory not created. ",
             "Some functions may not work as expected. ",
             options_info)

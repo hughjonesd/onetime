@@ -120,6 +120,8 @@ onetime_message_confirm <- function (message,
 ) {
   if (! interactive()) return(NULL)
 
+  # adding a space makes the readline nicer:
+  confirm_prompt <- paste0(confirm_prompt, " ")
   confirmation <- expression({
     message(message)
     answer <- readline(confirm_prompt)

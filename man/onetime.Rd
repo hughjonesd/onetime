@@ -62,9 +62,7 @@ callr::r(function (ids) \{
 \}, show = TRUE, args = list(ids = ids))
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## CAN YOU HEAR ME
-## 'onetime' package saving configuration files at '~/Library/Application Support/onetime-lockfiles'.Set options('onetime.dir') to an existing directory to use a non-standard location.
-## This message with a new id will be shown.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## This message with a new id will be shown.
 
 ## NULL
 }\if{html}{\out{</div>}}

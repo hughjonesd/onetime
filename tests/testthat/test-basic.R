@@ -22,6 +22,9 @@ test_that(".onLoad", {
   # don't use onetime_base_dir(), that will prematurely reload the namespace!
   obd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
   unlink(obd, recursive = TRUE)
+  basic_confirmation_file <- file.path(rappdirs::user_config_dir(),
+                                       "onetime-basic-confirmation")
+  unlink(basic_confirmation_file)
 
   if (interactive()) {
     loadNamespace("onetime")

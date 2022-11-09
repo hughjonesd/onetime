@@ -16,7 +16,12 @@
 #' @includeRmd example.Rmd
 #'
 #' @details
-#' For more details, see [onetime_do()].
+#' * [onetime_do()] runs arbitrary code only once.
+#' * [onetime_warning()] and friends print a warning or message only once.
+#' * [onetime_message_confirm()] prints a message and asks
+#'   "Show this message again?"
+#' * [onetime_only()] returns a function that runs only once.
+#' * [onetime_reset()] resets a inetime call using a string ID.
 NULL
 
 

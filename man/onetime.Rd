@@ -15,8 +15,14 @@ If loaded in an interactive session, the onetime package confirms
 (once only) whether it has permission to write files to the
 configuration directory. In a non-interactive session, it warns
 the user that files will be written using \code{\link[=packageStartupMessage]{packageStartupMessage()}}.
-
-For more details, see \code{\link[=onetime_do]{onetime_do()}}.
+\itemize{
+\item \code{\link[=onetime_do]{onetime_do()}} runs arbitrary code only once.
+\item \code{\link[=onetime_warning]{onetime_warning()}} and friends print a warning or message only once.
+\item \code{\link[=onetime_message_confirm]{onetime_message_confirm()}} prints a message and asks
+"Show this message again?"
+\item \code{\link[=onetime_only]{onetime_only()}} returns a function that runs only once.
+\item \code{\link[=onetime_reset]{onetime_reset()}} resets a inetime call using a string ID.
+}
 
 \code{onetime} provides convenience functions to run R code only once per
 user. For example, you can show a startup message only the first time

@@ -7,3 +7,5 @@
 ^appveyor\.yml$
 onetimeTestPackage
 ^codecov\.yml$
+^\.github$
+^cran-comments\.md$

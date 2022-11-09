@@ -28,7 +28,6 @@ NULL
 #' @name common-params
 #' @param id Unique ID string. By default, name of the calling package.
 #' @param path Directory to store lockfiles.
-#'
 NULL
 
 

@@ -5,13 +5,11 @@
 
 <!-- badges: start -->
 
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/hughjonesd/onetime?branch=master&svg=true)](https://ci.appveyor.com/project/hughjonesd/onetime)
-[![Codecov test
-coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg)](https://app.codecov.io/gh/hughjonesd/onetime?branch=master)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/hughjonesd/onetime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hughjonesd/onetime/actions/workflows/R-CMD-check.yaml)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/hughjonesd/onetime?branch=master&svg=true)](https://ci.appveyor.com/project/hughjonesd/onetime)
 [![Codecov test
 coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg)](https://app.codecov.io/gh/hughjonesd/onetime?branch=master)
 <!-- badges: end -->

@@ -2,6 +2,7 @@
 # onetime
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 [![AppVeyor build
@@ -11,6 +12,8 @@ coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![R-CMD-check](https://github.com/hughjonesd/onetime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hughjonesd/onetime/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg)](https://app.codecov.io/gh/hughjonesd/onetime?branch=master)
 <!-- badges: end -->
 
 `onetime` provides convenience functions to run R code only once per
@@ -21,7 +24,6 @@ user. For example, you can show a startup message only the first time
 
 ``` r
 library(onetime)
-#> 'onetime' package saving configuration files at '~/Library/Application Support/onetime-lockfiles'.Set options('onetime.dir') to an existing directory to use a non-standard location.
 ids  <- paste0("onetime-readme-", sample(1e9, 4))
 
 
@@ -46,7 +48,6 @@ callr::r(function (ids) {
   onetime::onetime_do(cat("This message will not be shown."), id = ids[1])
   onetime::onetime_do(cat("This message with a new id will be shown."), id = ids[4])
 }, show = TRUE, args = list(ids = ids))
-#> 'onetime' package saving configuration files at '~/Library/Application Support/onetime-lockfiles'.Set options('onetime.dir') to an existing directory to use a non-standard location.
 #> This message with a new id will be shown.
 #> NULL
 ```

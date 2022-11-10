@@ -21,13 +21,15 @@
 #' * [onetime_message_confirm()] prints a message and asks
 #'   "Show this message again?"
 #' * [onetime_only()] returns a function that runs only once.
-#' * [onetime_reset()] resets a inetime call using a string ID.
+#' * [onetime_reset()] resets a onetime call using a string ID.
 NULL
 
 
 #' @name common-params
 #' @param id Unique ID string. By default, name of the calling package.
 #' @param path Directory to store lockfiles.
+#' @param expiry [difftime()] or e.g. [lubridate::duration()]) object.
+#'   After this length of time, code will be run again.
 NULL
 
 
@@ -54,30 +56,33 @@ NULL
 #' }
 #' }
 onetime_warning <- function(...,
-        id   = calling_package(),
-        path = default_lockfile_dir()
+        id     = calling_package(),
+        path   = default_lockfile_dir(),
+        expiry = NULL
       ) {
-  onetime_do(warning(...), id, path)
+  onetime_do(warning(...), id = id, path = path, expiry = expiry)
 }
 
 
 #' @rdname onetime_warning
 #' @export
 onetime_message <- function (...,
-        id   = calling_package(),
-        path = default_lockfile_dir()
+        id     = calling_package(),
+        path   = default_lockfile_dir(),
+        expiry = NULL
       ) {
-  onetime_do(message(...), id, path)
+  onetime_do(message(...),  id = id, path = path, expiry = expiry)
 }
 
 
 #' @rdname onetime_warning
 #' @export
 onetime_startup_message <- function (...,
-  id   = calling_package(),
-  path = default_lockfile_dir()
+  id     = calling_package(),
+  path   = default_lockfile_dir(),
+  expiry = NULL
 ) {
-  onetime_do(packageStartupMessage(...), id, path)
+  onetime_do(packageStartupMessage(...), id = id, path = path, expiry = expiry)
 }
 
 
@@ -112,11 +117,12 @@ onetime_startup_message <- function (...,
 #' onetime_message_confirm("A message to show one or more times", id = id)
 #' }
 onetime_message_confirm <- function (message,
-  id   = calling_package(),
-  path = default_lockfile_dir(),
-  confirm_prompt = "Show this message again? [yN]",
+  id              = calling_package(),
+  path            = default_lockfile_dir(),
+  expiry          = NULL,
+  confirm_prompt  = "Show this message again? [yN]",
   confirm_answers = c("N", "n", "No", "no"),
-  default_answer = "N"
+  default_answer  = "N"
 ) {
   if (! interactive()) return(NULL)
 
@@ -128,7 +134,7 @@ onetime_message_confirm <- function (message,
     answer
   })
 
-  answer <- onetime_do(confirmation, id = id, path = path)
+  answer <- onetime_do(confirmation, id = id, path = path, expiry = expiry)
   if (is.null(answer)) return(NULL)
 
   if (answer == "") answer <- default_answer
@@ -174,21 +180,22 @@ onetime_message_confirm <- function (message,
 #' is still written.
 #'
 #'
-#' @return The value of `expr`, invisibly; or `NULL` if called the second time.
+#' @return The value of `expr`, invisibly; or `default` if called the second time.
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' id <- sample(10000L, 1)
+#' id <- sample(10000L, 1L)
 #' for (n in 1:3) {
 #'   onetime_do(print("printed once"), id = id)
 #' }
 #' }
 onetime_do <- function(
         expr,
-        id   = calling_package(),
-        path = default_lockfile_dir(),
+        id      = calling_package(),
+        path    = default_lockfile_dir(),
+        expiry  = NULL,
         default = NULL
       ) {
   force(id)
@@ -200,7 +207,13 @@ onetime_do <- function(
   lck <- filelock::lock(lfp)
   on.exit(filelock::unlock(lck))
 
-  if (! file.exists(fp)) {
+  file_exists <- file.exists(fp)
+  file_expired <- if (file_exists && ! is.null(expiry)) {
+    file.mtime(fp) + expiry < Sys.time()
+  } else {
+    FALSE
+  }
+  if (! file_exists || file_expired) {
     file.create(fp)
     return(invisible(eval.parent(expr)))
   } else {

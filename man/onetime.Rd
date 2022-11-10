@@ -21,7 +21,7 @@ the user that files will be written using \code{\link[=packageStartupMessage]{pa
 \item \code{\link[=onetime_message_confirm]{onetime_message_confirm()}} prints a message and asks
 "Show this message again?"
 \item \code{\link[=onetime_only]{onetime_only()}} returns a function that runs only once.
-\item \code{\link[=onetime_reset]{onetime_reset()}} resets a inetime call using a string ID.
+\item \code{\link[=onetime_reset]{onetime_reset()}} resets a onetime call using a string ID.
 }
 
 \code{onetime} provides convenience functions to run R code only once per

@@ -114,6 +114,21 @@ test_that("onetime_reset", {
 })
 
 
+test_that("expiry", {
+  expiry <- as.difftime(1, units = "secs")
+  expect_message(
+    onetime_message("Not expired", id = test_id("expiry"), expiry = expiry)
+  )
+  expect_silent(
+    onetime_message("Not expired", id = test_id("expiry"), expiry = expiry)
+  )
+  Sys.sleep(2)
+  expect_message(
+    onetime_message("Not expired", id = test_id("expiry"), expiry = expiry)
+  )
+})
+
+
 test_that("multiprocess", {
   myid <- test_id("test-id-8")
   x <- callr::r(function (...) onetime::onetime_do(1, id = "test-id-8"))

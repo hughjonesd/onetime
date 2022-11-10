@@ -8,6 +8,7 @@ onetime_do(
   expr,
   id = calling_package(),
   path = default_lockfile_dir(),
+  expiry = NULL,
   default = NULL
 )
 }
@@ -18,11 +19,14 @@ onetime_do(
 
 \item{path}{Directory to store lockfiles.}
 
+\item{expiry}{\code{\link[=difftime]{difftime()}} or e.g. \code{\link[lubridate:duration]{lubridate::duration()}}) object.
+After this length of time, code will be run again.}
+
 \item{default}{Value to return if the code has been called a second or
 subsequent times.}
 }
 \value{
-The value of \code{expr}, invisibly; or \code{NULL} if called the second time.
+The value of \code{expr}, invisibly; or \code{default} if called the second time.
 }
 \description{
 This function runs an expression just once. It then creates a lockfile
@@ -52,7 +56,7 @@ is still written.
 }
 \examples{
 \dontrun{
-id <- sample(10000L, 1)
+id <- sample(10000L, 1L)
 for (n in 1:3) {
   onetime_do(print("printed once"), id = id)
 }

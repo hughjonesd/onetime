@@ -8,6 +8,7 @@ onetime_message_confirm(
   message,
   id = calling_package(),
   path = default_lockfile_dir(),
+  expiry = NULL,
   confirm_prompt = "Show this message again? [yN]",
   confirm_answers = c("N", "n", "No", "no"),
   default_answer = "N"
@@ -19,6 +20,9 @@ onetime_message_confirm(
 \item{id}{Unique ID string. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles.}
+
+\item{expiry}{\code{\link[=difftime]{difftime()}} or e.g. \code{\link[lubridate:duration]{lubridate::duration()}}) object.
+After this length of time, code will be run again.}
 
 \item{confirm_prompt}{Character string. Question to prompt the user to hide
 the message in future}

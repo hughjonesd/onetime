@@ -6,14 +6,25 @@
 \alias{onetime_startup_message}
 \title{Print a warning or message only once}
 \usage{
-onetime_warning(..., id = calling_package(), path = default_lockfile_dir())
+onetime_warning(
+  ...,
+  id = calling_package(),
+  path = default_lockfile_dir(),
+  expiry = NULL
+)
 
-onetime_message(..., id = calling_package(), path = default_lockfile_dir())
+onetime_message(
+  ...,
+  id = calling_package(),
+  path = default_lockfile_dir(),
+  expiry = NULL
+)
 
 onetime_startup_message(
   ...,
   id = calling_package(),
-  path = default_lockfile_dir()
+  path = default_lockfile_dir(),
+  expiry = NULL
 )
 }
 \arguments{
@@ -22,6 +33,9 @@ onetime_startup_message(
 \item{id}{Unique ID string. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles.}
+
+\item{expiry}{\code{\link[=difftime]{difftime()}} or e.g. \code{\link[lubridate:duration]{lubridate::duration()}}) object.
+After this length of time, code will be run again.}
 }
 \value{
 The return value of the underlying call, or \code{NULL} if

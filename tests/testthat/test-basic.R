@@ -57,22 +57,28 @@ test_that("onetime_do", {
 
 test_that("onetime_warning/message/startup_message", {
   expect_warning(
-          onetime_warning("foo", id = test_id("test-id-3")),
+          rv <- onetime_warning("foo", id = test_id("test-id-3")),
           "foo"
         )
-  expect_silent(onetime_warning("foo", id = test_id("test-id-3")))
+  expect_true(rv)
+  expect_silent(rv <- onetime_warning("foo", id = test_id("test-id-3")))
+  expect_false(rv)
 
   expect_message(
-    onetime_message("foo", id = test_id("test-id-4")),
+    rv <- onetime_message("foo", id = test_id("test-id-4")),
     "foo"
   )
-  expect_silent(onetime_message("foo", id = test_id("test-id-4")))
+  expect_true(rv)
+  expect_silent(rv <- onetime_message("foo", id = test_id("test-id-4")))
+  expect_false(rv)
 
   expect_message(
-    onetime_startup_message("foo", id = test_id("test-id-5")),
+    rv <- onetime_startup_message("foo", id = test_id("test-id-5")),
     "foo"
   )
-  expect_silent(onetime_startup_message("foo", id = test_id("test-id-5")))
+  expect_true(rv)
+  expect_silent(rv <- onetime_startup_message("foo", id = test_id("test-id-5")))
+  expect_false(rv)
 })
 
 
@@ -81,18 +87,24 @@ test_that("onetime_message_confirm", {
     skip("Test needs interaction: run `devtools::test()` from the command line.")
   } else {
     expect_message(
-      onetime_message_confirm("Say Y",
-                              confirm_prompt = "Please say Y",
-                              id = test_id("test-id-omc"))
+      rv <- onetime_message_confirm("Say Y",
+                                    confirm_prompt = "Please say Y",
+                                    id = test_id("test-id-omc"))
     )
+    expect_false(rv) # because user did not confirm to hide the message
+
     expect_message(
-      onetime_message_confirm("Say N",
-                              confirm_prompt = "Now say N",
-                              id = test_id("test-id-omc"))
+      rv <- onetime_message_confirm("Say N",
+                                    confirm_prompt = "Now say N",
+                                    id = test_id("test-id-omc"))
     )
+    expect_true(rv)
+
     expect_silent(
-      onetime_message_confirm("Should be hidden", id = test_id("test-id-omc"))
+      rv <- onetime_message_confirm("Should be hidden",
+                                    id = test_id("test-id-omc"))
     )
+    expect_null(rv)
   }
 })
 

@@ -21,7 +21,7 @@ onetime_message_confirm(
 
 \item{path}{Directory to store lockfiles.}
 
-\item{expiry}{\code{\link[=difftime]{difftime()}} or e.g. \code{\link[lubridate:duration]{lubridate::duration()}}) object.
+\item{expiry}{\code{\link[=difftime]{difftime()}} or e.g. \code{\link[lubridate:duration]{lubridate::duration()}} object.
 After this length of time, code will be run again.}
 
 \item{confirm_prompt}{Character string. Question to prompt the user to hide
@@ -37,7 +37,8 @@ simply presses return.}
 \value{
 \code{NULL} if the message was not shown (shown already or non-interactive
 session). \code{TRUE} if the user confirmed (i.e. asked to hide the message).
-\code{FALSE} if the user asked to show the message again.
+\code{FALSE} if the user did not confirm. Note that by default,
+\code{TRUE} is returned if the user answers "no" to "Show this message again?"
 }
 \description{
 This uses \code{\link[=readline]{readline()}} to ask the user if the message should

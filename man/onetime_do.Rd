@@ -13,20 +13,19 @@ onetime_do(
 )
 }
 \arguments{
-\item{expr}{The code to evaluate}
+\item{expr}{The code to evaluate. An R statement or \code{\link[=expression]{expression()}} object.}
 
 \item{id}{Unique ID string. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles.}
 
-\item{expiry}{\code{\link[=difftime]{difftime()}} or e.g. \code{\link[lubridate:duration]{lubridate::duration()}}) object.
+\item{expiry}{\code{\link[=difftime]{difftime()}} or e.g. \code{\link[lubridate:duration]{lubridate::duration()}} object.
 After this length of time, code will be run again.}
 
-\item{default}{Value to return if the code has been called a second or
-subsequent times.}
+\item{default}{Value to return if \code{expr} was not executed.}
 }
 \value{
-The value of \code{expr}, invisibly; or \code{default} if called the second time.
+The value of \code{expr}, invisibly; or \code{default} if \code{expr} was not run.
 }
 \description{
 This function runs an expression just once. It then creates a lockfile

@@ -28,7 +28,7 @@ NULL
 #' @name common-params
 #' @param id Unique ID string. By default, name of the calling package.
 #' @param path Directory to store lockfiles.
-#' @param expiry [difftime()] or e.g. [lubridate::duration()]) object.
+#' @param expiry [difftime()] or e.g. [lubridate::duration()] object.
 #'   After this length of time, code will be run again.
 NULL
 
@@ -41,8 +41,7 @@ NULL
 #' @param ... Passed to [warning()], [message()] or [packageStartupMessage()].
 #' @inherit common-params
 #'
-#' @return The return value of the underlying call, or `NULL` if
-#'   called a second time.
+#' @return `TRUE` if the message/warning was shown, `FALSE` otherwise.
 #'
 #' @export
 #'
@@ -60,7 +59,9 @@ onetime_warning <- function(...,
         path   = default_lockfile_dir(),
         expiry = NULL
       ) {
-  onetime_do(warning(...), id = id, path = path, expiry = expiry)
+  ret_val <- onetime_do(warning(...), id = id, path = path, expiry = expiry,
+                  default = FALSE)
+  return(! isFALSE(ret_val))
 }
 
 
@@ -71,7 +72,9 @@ onetime_message <- function (...,
         path   = default_lockfile_dir(),
         expiry = NULL
       ) {
-  onetime_do(message(...),  id = id, path = path, expiry = expiry)
+  ret_val <- onetime_do(message(...),  id = id, path = path, expiry = expiry,
+                        default = FALSE)
+  return(! isFALSE(ret_val))
 }
 
 
@@ -82,7 +85,9 @@ onetime_startup_message <- function (...,
   path   = default_lockfile_dir(),
   expiry = NULL
 ) {
-  onetime_do(packageStartupMessage(...), id = id, path = path, expiry = expiry)
+  ret_val <- onetime_do(packageStartupMessage(...), id = id, path = path,
+                        expiry = expiry, default = FALSE)
+  return(! isFALSE(ret_val))
 }
 
 
@@ -107,7 +112,8 @@ onetime_startup_message <- function (...,
 #'
 #' @return `NULL` if the message was not shown (shown already or non-interactive
 #' session). `TRUE` if the user confirmed (i.e. asked to hide the message).
-#' `FALSE` if the user asked to show the message again.
+#' `FALSE` if the user did not confirm. Note that by default,
+#' `TRUE` is returned if the user answers "no" to "Show this message again?"
 #'
 #' @export
 #'
@@ -152,10 +158,9 @@ onetime_message_confirm <- function (message,
 #' recording a unique ID which will prevent the expression being run again.
 #'
 #'
-#' @param expr The code to evaluate
+#' @param expr The code to evaluate. An R statement or [expression()] object.
 #' @inherit common-params
-#' @param default Value to return if the code has been called a second or
-#'   subsequent times.
+#' @param default Value to return if `expr` was not executed.
 #'
 #' @details
 #' Calls are identified by `id`. If you use the same value of `id` across
@@ -180,7 +185,7 @@ onetime_message_confirm <- function (message,
 #' is still written.
 #'
 #'
-#' @return The value of `expr`, invisibly; or `default` if called the second time.
+#' @return The value of `expr`, invisibly; or `default` if `expr` was not run.
 #'
 #' @export
 #'

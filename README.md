@@ -42,12 +42,11 @@ for (i in 1:5) {
 
 # Meanwhile, in a separate process:
 library(callr)
-callr::r(function (ids) {
-  onetime::onetime_do(cat("This message will not be shown."), id = ids[1])
-  onetime::onetime_do(cat("This message with a new id will be shown."), id = ids[4])
+result <- callr::r(function (ids) {
+  onetime::onetime_message("This message with an existing ID will not be shown.", id = ids[1])
+  onetime::onetime_message("This message with a new ID will be shown.", id = ids[4])
 }, show = TRUE, args = list(ids = ids))
-#> This message with a new id will be shown.
-#> NULL
+#> This message with a new ID will be shown.
 ```
 
 ## Installation

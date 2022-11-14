@@ -17,7 +17,8 @@ configuration directory. In a non-interactive session, it warns
 the user that files will be written using \code{\link[=packageStartupMessage]{packageStartupMessage()}}.
 This warning can be turned off by confirming permission interactively,
 setting \code{options("onetime.dir")}, or setting
-\code{options("onetime.ok_to_store" = TRUE)}.
+\code{options("onetime.ok_to_store" = TRUE)}. As a package author, you should
+\emph{only} set these options if you are sure you have the user's permission.
 \itemize{
 \item \code{\link[=onetime_do]{onetime_do()}} runs arbitrary code only once.
 \item \code{\link[=onetime_warning]{onetime_warning()}} and friends print a warning or message only once.

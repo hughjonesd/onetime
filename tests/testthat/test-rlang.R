@@ -9,6 +9,8 @@ test_id <- function (id) {
   return(id)
 }
 
+oo <- options("onetime.ok_to_store" = TRUE)
+
 
 test_that("onetime_rlang_warn", {
     expect_warning(
@@ -52,7 +54,10 @@ test_that("Fallbacks", {
 
 
 teardown({
-  for (test_id in IDS) {
-    suppressWarnings(onetime_reset(test_id))
+  for (id in IDS) {
+    suppressWarnings(onetime_reset(id))
   }
+  rm(IDS)
+
+  options(oo)
 })

@@ -164,10 +164,12 @@ test_that("multiprocess", {
 
 
 teardown({
-  for (test_id in IDS) {
-    suppressWarnings(onetime_reset(test_id))
+  for (id in IDS) {
+    suppressWarnings(onetime_reset(id))
   }
+  rm(IDS)
+
   options(oo)
   # reset from new process to use NO_PACKAGE directory
-  x <- callr::r(function (...) onetime::onetime_reset("test-id-8"))
+  callr::r(function (...) onetime::onetime_reset("test-id-8"))
 })

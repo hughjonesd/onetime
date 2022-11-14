@@ -12,7 +12,8 @@
 #' the user that files will be written using [packageStartupMessage()].
 #' This warning can be turned off by confirming permission interactively,
 #' setting `options("onetime.dir")`, or setting
-#' `options("onetime.ok_to_store" = TRUE)`.
+#' `options("onetime.ok_to_store" = TRUE)`. As a package author, you should
+#' *only* set these options if you are sure you have the user's permission.
 #'
 #' @name onetime
 #' @docType package

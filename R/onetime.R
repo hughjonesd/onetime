@@ -59,7 +59,7 @@ onetime_warning <- function(...,
         path   = default_lockfile_dir(),
         expiry = NULL
       ) {
-  ret_val <- onetime_do(warning(...), id = id, path = path, expiry = expiry,
+  ret_val <- onetime_do(warning(..., call. = FALSE), id = id, path = path, expiry = expiry,
                   default = FALSE)
   return(! isFALSE(ret_val))
 }

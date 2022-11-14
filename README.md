@@ -33,7 +33,7 @@ for (i in 1:5) {
 }
 #> Loop  1  of 5
 #> You will only see this once.
-#> Warning in eval(expr, p): This warning will only be shown once.
+#> Warning: This warning will only be shown once.
 #> This message will only be shown once.
 #> Loop  2  of 5
 #> Loop  3  of 5

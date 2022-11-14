@@ -8,6 +8,7 @@ setup({
   })
 })
 
+oo <- options("onetime.ok_to_store" = TRUE)
 
 
 test_that("Calling from external package", {
@@ -52,6 +53,7 @@ test_that("onetime_only from external", {
   test_onetime_reset()
 })
 
+options(oo)
 
 teardown({
   detach(package:onetimeTestPackage)

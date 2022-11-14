@@ -35,6 +35,7 @@ test_that("onetime_rlang_inform", {
 
 
 test_that("Fallbacks", {
+  local({
   mockr::local_mock(
     require_rlang = function() FALSE
   )
@@ -49,15 +50,14 @@ test_that("Fallbacks", {
           "rlang"
         )
   expect_true(rv)
+  })
 })
 
 
+for (id in IDS) {
+  suppressWarnings(onetime_reset(id))
+}
+rm(IDS)
 
-teardown({
-  for (id in IDS) {
-    suppressWarnings(onetime_reset(id))
-  }
-  rm(IDS)
+options(oo)
 
-  options(oo)
-})

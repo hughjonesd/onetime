@@ -163,13 +163,11 @@ test_that("multiprocess", {
 })
 
 
-teardown({
-  for (id in IDS) {
-    suppressWarnings(onetime_reset(id))
-  }
-  rm(IDS)
+for (id in IDS) {
+  suppressWarnings(onetime_reset(id))
+}
+rm(IDS)
 
-  options(oo)
-  # reset from new process to use NO_PACKAGE directory
-  callr::r(function (...) onetime::onetime_reset("test-id-8"))
-})
+options(oo)
+# reset from new process to use NO_PACKAGE directory
+callr::r(function (...) onetime::onetime_reset("test-id-8"))

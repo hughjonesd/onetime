@@ -29,11 +29,9 @@ default_lockfile_dir <- function () {
   return(lfd)
 }
 
-onetime_base_dir <- function () {
-  lfd <- file.path(
-    tools::R_user_dir(package = "onetime", which = "config"),
-    "onetime-lockfiles"
-  )
+onetime_base_dir <- function (bottom_dir = "onetime-lockfiles") {
+  lfd <- rappdirs::user_config_dir("onetime")
+  if (! bottom_dir == "") lfd <- file.path(lfd, bottom_dir)
   getOption("onetime.dir", lfd)
 }
 
@@ -94,7 +92,7 @@ confirm_ok_to_store <- function () {
       omc_result <- onetime_message_confirm(
                       message         = msg,
                       id              = "onetime-basic-confirmation",
-                      path            = tools::R_user_dir("onetime", "config"),
+                      path            = onetime_base_dir(""),
                       confirm_prompt  = prompt,
                       confirm_answers = c("Y", "y", "Yes", "yes", "YES"),
                       default_answer  = "Y"
@@ -106,7 +104,7 @@ confirm_ok_to_store <- function () {
     } else {
       already_confirmed <- onetime_been_done(
                              id   = "onetime-basic-confirmation",
-                             path = tools::R_user_dir("onetime", "config")
+                             path = onetime_base_dir("")
                            )
       # we don't use onetime_message() here because it's not enough
       # to message the user once - they must explicitly confirm they are OK

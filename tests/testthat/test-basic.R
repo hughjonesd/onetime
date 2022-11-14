@@ -15,7 +15,7 @@ test_that(".onLoad", {
   # unloadNamespace(getNamespace("onetime"))
   obd <- onetime:::onetime_base_dir()
   unlink(obd, recursive = TRUE)
-  basic_confirmation_file <- file.path(tools::R_user_dir("onetime", "config"),
+  basic_confirmation_file <- file.path(onetime_base_dir(""),
                                        "onetime-basic-confirmation")
   unlink(basic_confirmation_file)
 

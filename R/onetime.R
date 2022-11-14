@@ -3,7 +3,7 @@
 #'
 #' Onetime allows package authors to run code only once (ever) for a given
 #' user. It does so by writing a file, typically to a folder in the user's
-#' configuration directory as given by [rappdirs::user_config_dir()]. The
+#' configuration directory as given by [tools::R_user_dir()]. The
 #' user can set an alternative filepath using `options("onetime.dir")`.
 #'
 #' If loaded in an interactive session, the onetime package confirms
@@ -184,16 +184,12 @@ onetime_message_confirm <- function (message,
 #' large project with many contributors, it is *strongly recommended to set*
 #' `id ` *explicitly*.
 #'
-#' The default `path`, where lockfiles are stored, is
-#' `file.path(rappdirs::user_config_dir(), "onetime-lockfiles", mypackage)`.
-#' `mypackage` is the calling package. If the calling code is not
-#' within a package, then the default path is
-#' `file.path(rappdirs::user_config_dir(), "onetime-lockfiles", "NO_PACKAGE")`.
-#'
-#' If the lockfile cannot be written (e.g. because the user has not given
-#' permission to store files on his or her computer), then the call will still
-#' be run, so it may be run repeatedly. Conversely, if the call gives an error,
-#' the lockfile is still written.
+#' The default `path`, where lockfiles are stored, is given by
+#' [tools::R_user_dir()] or by `options("onetime.dir")`. If the lockfile cannot
+#' be written (e.g. because the user has not given permission to store files on
+#' his or her computer), then the call will still be run, so it may be run
+#' repeatedly. Conversely, if the call gives an error, the lockfile is still
+#' written.
 #'
 #' @return The value of `expr`, invisibly; or `default` if `expr` was not run
 #' because it had been run already.

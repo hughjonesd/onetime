@@ -13,25 +13,23 @@ oo <- NULL
 
 test_that(".onLoad", {
   # unloadNamespace(getNamespace("onetime"))
+  obd <- onetime:::onetime_base_dir()
+  unlink(obd, recursive = TRUE)
+  basic_confirmation_file <- file.path(tools::R_user_dir("onetime", "config"),
+                                       "onetime-basic-confirmation")
+  unlink(basic_confirmation_file)
+
   detach(package:onetime, unload = TRUE)
   if (isNamespaceLoaded("onetime")) {
     skip("Couldn't unload onetime namespace")
   }
 
   withr::local_options(onetime.dir = NULL)
-  # don't use onetime_base_dir(), that will prematurely reload the namespace!
-  obd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
-  unlink(obd, recursive = TRUE)
-  basic_confirmation_file <- file.path(rappdirs::user_config_dir(),
-                                       "onetime-basic-confirmation")
-  unlink(basic_confirmation_file)
 
-  if (interactive()) {
-    loadNamespace("onetime")
-  } else {
-    expect_message(loadNamespace("onetime"))
+  if (! interactive()) {
     oo <<- options(onetime.ok_to_store = TRUE)
   }
+  loadNamespace("onetime")
 
   expect_true(dir.exists(obd))
   library(onetime)

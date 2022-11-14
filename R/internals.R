@@ -30,16 +30,20 @@ default_lockfile_dir <- function () {
 }
 
 onetime_base_dir <- function () {
-  lfd <- file.path(rappdirs::user_config_dir(), "onetime-lockfiles")
+  lfd <- file.path(
+    tools::R_user_dir(package = "onetime", which = "config"),
+    "onetime-lockfiles"
+  )
   getOption("onetime.dir", lfd)
 }
 
 
 options_info <- function (){
-  paste0("To avoid warning messages, either call ",
-         "options(\"onetime.ok_to_store\" = TRUE),\n",
-         "or set options(\"onetime.dir\") to store files ",
-         "in a non-standard directory where you have write access.")
+  paste0("To avoid warning messages, either:\n",
+         "* Call library(onetime) in an interactive session ",
+         "and confirm you are OK to store files on your computer\n",
+         "* Set options(\"onetime.ok_to_store\" = TRUE)\n",
+         "* Set options(\"onetime.dir\") to store files in a non-standard location")
 }
 
 .onLoad <- function (libname, pkgname) {
@@ -90,7 +94,7 @@ confirm_ok_to_store <- function () {
       omc_result <- onetime_message_confirm(
                       message         = msg,
                       id              = "onetime-basic-confirmation",
-                      path            = rappdirs::user_config_dir(),
+                      path            = tools::R_user_dir("onetime", "config"),
                       confirm_prompt  = prompt,
                       confirm_answers = c("Y", "y", "Yes", "yes", "YES"),
                       default_answer  = "Y"
@@ -100,13 +104,20 @@ confirm_ok_to_store <- function () {
       ok <- is.null(omc_result) || isTRUE(omc_result)
       return(ok)
     } else {
-      # always send message if it's not interactive
-      message("'onetime' package saving configuration files in '",
+      already_confirmed <- onetime_been_done(
+                             id   = "onetime-basic-confirmation",
+                             path = tools::R_user_dir("onetime", "config")
+                           )
+      # we don't use onetime_message() here because it's not enough
+      # to message the user once - they must explicitly confirm they are OK
+      # otherwise we keep asking
+      if (! already_confirmed) {
+        message("'onetime' package saving configuration files in '",
               lfd, "'.\n", options_info())
+      }
       return(TRUE)
     }
   }
-
 
   return(ok)
 }

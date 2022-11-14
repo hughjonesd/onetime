@@ -28,14 +28,14 @@ onetime_rlang_warn <- function (...,
         id     = calling_package(),
         path   = default_lockfile_dir(),
         expiry = NULL) {
-  if (requireNamespace("rlang", quietly = TRUE)) {
+  if (require_rlang()) {
     res <- onetime_do(
                       rlang::warn(...),
                       id = id, path = path, expiry = expiry
                      )
     return(! is.null(res))
   } else {
-    res <- onetime_warning(..., "\n", no_rlang_msg("`onetime_rlang_warn()`"),
+    res <- onetime_warning(..., "\n", no_rlang_message("`onetime_rlang_warn()`"),
                            id = id, path = path, expiry = expiry)
     return(res)
   }
@@ -48,7 +48,7 @@ onetime_rlang_inform <- function (...,
         id     = calling_package(),
         path   = default_lockfile_dir(),
         expiry = NULL) {
-  if (requireNamespace("rlang", quietly = TRUE)) {
+  if (require_rlang()) {
     res <- onetime_do(
                       rlang::inform(...),
                       id = id, path = path, expiry = expiry,
@@ -57,7 +57,7 @@ onetime_rlang_inform <- function (...,
                      )
     return(is.null(res)) # ... and return TRUE if you got NULL
   } else {
-    res <- onetime_message(..., "\n", no_rlang_msg("`onetime_rlang_inform()`"),
+    res <- onetime_message(..., "\n", no_rlang_message("`onetime_rlang_inform()`"),
                            id = id, path = path, expiry = expiry)
     return(res)
   }
@@ -68,3 +68,7 @@ no_rlang_message <- function (caller) {
   paste0("In addition: package \"rlang\" not installed in ", caller)
 }
 
+# for mocking purposes
+require_rlang <- function (){
+  requireNamespace("rlang", quietly = TRUE)
+}

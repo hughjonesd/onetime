@@ -27,4 +27,5 @@ Suggests:
     rlang,
     testthat (>= 2.1.0),
     withr,
-    covr
+    covr,
+    mockr

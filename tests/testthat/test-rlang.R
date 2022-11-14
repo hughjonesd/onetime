@@ -22,13 +22,31 @@ test_that("onetime_rlang_warn", {
 
 
 test_that("onetime_rlang_inform", {
-    expect_message(
+  expect_message(
           rv <- onetime_rlang_inform("foo", id = test_id("test-id-2")),
           "foo"
         )
   expect_true(rv)
   expect_silent(rv <- onetime_rlang_inform("foo", id = test_id("test-id-2")))
   expect_false(rv)
+})
+
+
+test_that("Fallbacks", {
+  mockr::local_mock(
+    require_rlang = function() FALSE
+  )
+
+  expect_message(
+          rv <- onetime_rlang_inform("foo", id = test_id("test-id-3")),
+          "rlang"
+        )
+  expect_true(rv)
+  expect_message(
+          rv <- onetime_rlang_inform("foo", id = test_id("test-id-4")),
+          "rlang"
+        )
+  expect_true(rv)
 })
 
 

@@ -1,10 +1,9 @@
 
 
-R_path <- file.path(R.home("bin"), "R")
-
 IDS <- character(0)
 
 test_id <- function (id) {
+  id <- paste0("basic-", id)
   IDS <<- c(IDS, id)
   IDS <<- unique(IDS)
   return(id)

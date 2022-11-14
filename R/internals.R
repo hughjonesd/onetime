@@ -1,12 +1,12 @@
 
 onetime_filepath <- function (id, path) {
-  stopifnot(length(id) == 1, nchar(id) > 0,
-        length(path) == 1, file.access(path, 2) == 0)
+  stopifnot(length(id) == 1L, nchar(id) > 0L,
+        length(path) == 1L, file.access(path, 2) == 0L)
   file.path(path, id)
 }
 
 
-calling_package <- function (n = 2) {
+calling_package <- function (n = 2L) {
   p <- parent.frame(n = n)
   tryCatch(
           getNamespaceName(topenv(p)),
@@ -50,7 +50,7 @@ options_info <- function (){
   if (isTRUE(ok)) {
     lfd <- onetime_base_dir()
     if (! dir.exists(lfd)) {
-      lfd_created <- dir.create(lfd)
+      lfd_created <- dir.create(lfd, recursive = TRUE)
       if (! lfd_created) {
         warning("Could not create onetime directory at '", lfd, "'. ",
                 "Some functions may not work as expected.\n",
@@ -116,8 +116,6 @@ confirm_ok_to_store <- function () {
       return(TRUE)
     }
   }
-
-  return(ok)
 }
 
 

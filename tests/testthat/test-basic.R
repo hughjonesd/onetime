@@ -125,6 +125,18 @@ test_that("onetime_reset", {
 })
 
 
+test_that("onetime_been_done", {
+  id <- test_id("test-id-been-done")
+  expect_false(
+    onetime_been_done(id = id)
+  )
+  onetime_do(1+1,  id = id)
+  expect_true(
+    onetime_been_done(id = id)
+  )
+})
+
+
 test_that("expiry", {
   expiry <- as.difftime(1, units = "secs")
   expect_message(

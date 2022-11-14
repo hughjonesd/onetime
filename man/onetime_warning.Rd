@@ -50,6 +50,8 @@ id <- sample(10000L, 1)
 for (n in 1:3) {
   onetime_warning("will be shown once", id = id)
 }
+
+onetime_reset(id = id)
 }
 }
 \seealso{

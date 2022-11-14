@@ -17,6 +17,8 @@
 #' for (n in 1:3) {
 #'   onetime_rlang_warn(c("rlang-style warning", i = "Extra info"), id = id)
 #' }
+#'
+#' onetime_reset(id = id)
 #' }
 #' @name onetime-rlang
 NULL
@@ -61,14 +63,4 @@ onetime_rlang_inform <- function (...,
                            id = id, path = path, expiry = expiry)
     return(res)
   }
-}
-
-
-no_rlang_message <- function (caller) {
-  paste0("In addition: package \"rlang\" not installed in ", caller)
-}
-
-# for mocking purposes
-require_rlang <- function (){
-  requireNamespace("rlang", quietly = TRUE)
 }

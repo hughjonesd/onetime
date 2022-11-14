@@ -86,3 +86,14 @@ onetime_base_dir <- function () {
             options_info)
   }
 }
+
+
+no_rlang_message <- function (caller) {
+  paste0("In addition: package \"rlang\" not installed in ", caller)
+}
+
+
+# for mocking purposes
+require_rlang <- function (){
+  requireNamespace("rlang", quietly = TRUE)
+}

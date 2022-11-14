@@ -53,5 +53,7 @@ By default, the message will be hidden if the user answers
 \dontrun{
 id <- sample(10000L, 1L)
 onetime_message_confirm("A message to show one or more times", id = id)
+
+onetime_reset(id = id)
 }
 }

@@ -24,5 +24,7 @@ onetime_do(print("will be shown"),  id = id)
 onetime_do(print("won't be shown"), id = id)
 onetime_reset(id = id)
 onetime_do(print("will be shown"),  id = id)
+
+onetime_reset(id = id)
 }
 }

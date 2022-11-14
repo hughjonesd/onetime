@@ -59,5 +59,7 @@ id <- sample(10000L, 1L)
 for (n in 1:3) {
   onetime_do(print("printed once"), id = id)
 }
+
+onetime_reset(id = id)
 }
 }

@@ -55,6 +55,8 @@ NULL
 #' for (n in 1:3) {
 #'   onetime_warning("will be shown once", id = id)
 #' }
+#'
+#' onetime_reset(id = id)
 #' }
 onetime_warning <- function(...,
         id     = calling_package(),
@@ -123,6 +125,8 @@ onetime_startup_message <- function (...,
 #' \dontrun{
 #' id <- sample(10000L, 1L)
 #' onetime_message_confirm("A message to show one or more times", id = id)
+#'
+#' onetime_reset(id = id)
 #' }
 onetime_message_confirm <- function (message,
   id              = calling_package(),
@@ -197,6 +201,8 @@ onetime_message_confirm <- function (message,
 #' for (n in 1:3) {
 #'   onetime_do(print("printed once"), id = id)
 #' }
+#'
+#' onetime_reset(id = id)
 #' }
 onetime_do <- function(
         expr,
@@ -282,6 +288,8 @@ onetime_only <- function (
 #' onetime_do(print("won't be shown"), id = id)
 #' onetime_reset(id = id)
 #' onetime_do(print("will be shown"),  id = id)
+#'
+#' onetime_reset(id = id)
 #' }
 onetime_reset <- function (
         id   = calling_package(),
@@ -296,4 +304,34 @@ onetime_reset <- function (
   on.exit(filelock::unlock(lck))
 
   invisible(file.remove(fp))
+}
+
+
+#' Check if a onetime call has already been made
+#'
+#' @inherit common-params
+#'
+#' @return `TRUE` if the lockfile recording the
+#' onetime call exists, `FALSE` otherwise.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' id <- sample(10000L, 1)
+#' onetime_been_done(id = id)
+#' onetime_do(cat("Creating an ID"),  id = id)
+#' onetime_been_done(id = id)
+#'
+#' onetime_reset(id = id)
+#' }
+onetime_been_done <- function (
+        id   = calling_package(),
+        path = default_lockfile_dir()
+) {
+  force(id)
+  force(path)
+  fp <- onetime_filepath(id, path)
+
+  file.exists(fp)
 }

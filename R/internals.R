@@ -1,7 +1,16 @@
 
-onetime_filepath <- function (id, path) {
-  stopifnot(length(id) == 1L, nchar(id) > 0L,
-        length(path) == 1L, file.access(path, 2) == 0L)
+onetime_filepath <- function (id, path, check_writable = TRUE) {
+  stopifnot(length(id) == 1L, nchar(id) > 0L, length(path) == 1L)
+  if (check_writable) {
+    isdir <- file.info(path)$isdir
+    # unname to work around earlier versions of isTRUE not liking names
+    if (! isTRUE(unname(isdir))) {
+      stop("'", path, "' is not a directory")
+    }
+    if (! file.access(path, 2) == 0L) {
+      stop("Could not write to '", path, "'")
+    }
+  }
   file.path(path, id)
 }
 

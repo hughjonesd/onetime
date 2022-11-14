@@ -343,7 +343,8 @@ onetime_been_done <- function (
 ) {
   force(id)
   force(path)
-  fp <- onetime_filepath(id, path)
+  # don't check it's writable
+  fp <- onetime_filepath(id = id, path = path, check_writable = FALSE)
 
   file.exists(fp)
 }

@@ -25,7 +25,8 @@ After this length of time, code will be run again.}
 \item{default}{Value to return if \code{expr} was not executed.}
 }
 \value{
-The value of \code{expr}, invisibly; or \code{default} if \code{expr} was not run.
+The value of \code{expr}, invisibly; or \code{default} if \code{expr} was not run
+because it had been run already.
 }
 \description{
 This function runs an expression just once. It then creates a lockfile
@@ -49,9 +50,10 @@ The default \code{path}, where lockfiles are stored, is
 within a package, then the default path is
 \code{file.path(rappdirs::user_config_dir(), "onetime-lockfiles", "NO_PACKAGE")}.
 
-If the lockfile cannot be written, then the call will still be run, so it
-may be run repeatedly. Conversely, if the call gives an error, the lockfile
-is still written.
+If the lockfile cannot be written (e.g. because the user has not given
+permission to store files on his or her computer), then the call will still
+be run, so it may be run repeatedly. Conversely, if the call gives an error,
+the lockfile is still written.
 }
 \examples{
 \dontrun{

@@ -9,8 +9,9 @@ test_id <- function (id) {
   return(id)
 }
 
-test_that(".onLoad", {
+oo <- NULL
 
+test_that(".onLoad", {
   # unloadNamespace(getNamespace("onetime"))
   detach(package:onetime, unload = TRUE)
   if (isNamespaceLoaded("onetime")) {
@@ -29,6 +30,7 @@ test_that(".onLoad", {
     loadNamespace("onetime")
   } else {
     expect_message(loadNamespace("onetime"))
+    oo <<- options(onetime.ok_to_store = TRUE)
   }
 
   expect_true(dir.exists(obd))
@@ -87,14 +89,14 @@ test_that("onetime_message_confirm", {
   } else {
     expect_message(
       rv <- onetime_message_confirm("Say Y",
-                                    confirm_prompt = "Please say Y",
+                                    confirm_prompt = "Please say y",
                                     id = test_id("test-id-omc"))
     )
     expect_false(rv) # because user did not confirm to hide the message
 
     expect_message(
       rv <- onetime_message_confirm("Say N",
-                                    confirm_prompt = "Now say N",
+                                    confirm_prompt = "Now say n",
                                     id = test_id("test-id-omc"))
     )
     expect_true(rv)
@@ -165,6 +167,7 @@ teardown({
   for (test_id in IDS) {
     suppressWarnings(onetime_reset(test_id))
   }
+  options(oo)
   # reset from new process to use NO_PACKAGE directory
   x <- callr::r(function (...) onetime::onetime_reset("test-id-8"))
 })

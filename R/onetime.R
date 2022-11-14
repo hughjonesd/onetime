@@ -10,6 +10,9 @@
 #' (once only) whether it has permission to write files to the
 #' configuration directory. In a non-interactive session, it warns
 #' the user that files will be written using [packageStartupMessage()].
+#' This warning can be turned off by confirming permission interactively,
+#' setting `options("onetime.dir")`, or setting
+#' `options("onetime.ok_to_store" = TRUE)`.
 #'
 #' @name onetime
 #' @docType package
@@ -186,12 +189,13 @@ onetime_message_confirm <- function (message,
 #' within a package, then the default path is
 #' `file.path(rappdirs::user_config_dir(), "onetime-lockfiles", "NO_PACKAGE")`.
 #'
-#' If the lockfile cannot be written, then the call will still be run, so it
-#' may be run repeatedly. Conversely, if the call gives an error, the lockfile
-#' is still written.
+#' If the lockfile cannot be written (e.g. because the user has not given
+#' permission to store files on his or her computer), then the call will still
+#' be run, so it may be run repeatedly. Conversely, if the call gives an error,
+#' the lockfile is still written.
 #'
-#'
-#' @return The value of `expr`, invisibly; or `default` if `expr` was not run.
+#' @return The value of `expr`, invisibly; or `default` if `expr` was not run
+#' because it had been run already.
 #'
 #' @export
 #'
@@ -213,6 +217,17 @@ onetime_do <- function(
       ) {
   force(id)
   force(path)
+  if (
+    # see confirm_ok_to_store()
+    is.null(getOption("onetime.dont.recurse"))
+  ) {
+    got_confirmation <- confirm_ok_to_store()
+    if (! got_confirmation) {
+      warning("Could not record onetime action.")
+      return(invisible(eval.parent(expr)))
+    }
+  }
+
   dir.create(path, showWarnings = FALSE, recursive = TRUE)
   fp <- onetime_filepath(id, path)
 

@@ -15,6 +15,9 @@ If loaded in an interactive session, the onetime package confirms
 (once only) whether it has permission to write files to the
 configuration directory. In a non-interactive session, it warns
 the user that files will be written using \code{\link[=packageStartupMessage]{packageStartupMessage()}}.
+This warning can be turned off by confirming permission interactively,
+setting \code{options("onetime.dir")}, or setting
+\code{options("onetime.ok_to_store" = TRUE)}.
 \itemize{
 \item \code{\link[=onetime_do]{onetime_do()}} runs arbitrary code only once.
 \item \code{\link[=onetime_warning]{onetime_warning()}} and friends print a warning or message only once.
@@ -44,16 +47,73 @@ for (i in 1:5) \{
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## Loop  1  of 5
+
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+
 ## You will only see this once.
 
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+
 ## Warning: This warning will only be shown once.
+
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
 
 ## This message will only be shown once.
 
 ## Loop  2  of 5
+
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+
 ## Loop  3  of 5
+
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+
 ## Loop  4  of 5
+
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+
 ## Loop  5  of 5
+
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
+## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
+## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Meanwhile, in a separate process:

@@ -94,9 +94,10 @@ onetime_startup_message <- function (...,
 #' @inherit common-params
 #'
 #' @return `NULL` if the message was not shown (shown already or non-interactive
-#' session). `TRUE` if the user confirmed (i.e. asked to hide the message).
-#' `FALSE` if the user did not confirm. Note that by default,
-#' `TRUE` is returned if the user answers "no" to "Show this message again?"
+#'   session). `TRUE` if the user confirmed (i.e. asked to hide the message).
+#'   `FALSE` if the message was shown but the user did not confirm. Note that by
+#'   default, `TRUE` is returned when the user answers "no" to "Show this message
+#'   again?"
 #'
 #' @export
 #'

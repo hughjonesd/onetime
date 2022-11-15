@@ -53,11 +53,6 @@ options_info <- function (){
 }
 
 
-no_rlang_message <- function (caller) {
-  paste0("In addition: package \"rlang\" not installed in ", caller)
-}
-
-
 # for mocking purposes
 check_rlang <- function () {
   loadNamespace("rlang")

@@ -24,6 +24,8 @@ test_that("ask_ok_to_store", {
     )
   }
 
+  suppressWarnings(onetime_reset("ok-to-store", onetime:::onetime_base_dir("")))
+
   if (interactive()) message("Please enter n at the next prompt")
   INPUT <- "n"
   expect_message(

@@ -42,8 +42,9 @@ permission to store files? \code{"warn"} runs the action with an extra warning;
 \value{
 \code{NULL} if the message was not shown (shown already or non-interactive
 session). \code{TRUE} if the user confirmed (i.e. asked to hide the message).
-\code{FALSE} if the user did not confirm. Note that by default,
-\code{TRUE} is returned if the user answers "no" to "Show this message again?"
+\code{FALSE} if the message was shown but the user did not confirm. Note that by
+default, \code{TRUE} is returned when the user answers "no" to "Show this message
+again?"
 }
 \description{
 This uses \code{\link[=readline]{readline()}} to ask the user if the message should

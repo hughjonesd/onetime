@@ -9,7 +9,7 @@ test_id <- function (id) {
   return(id)
 }
 
-oo <- options("onetime.ok_to_store" = TRUE)
+oo <- options("onetime.dir" = onetime:::onetime_base_dir())
 
 
 test_that("onetime_rlang_warn", {
@@ -31,26 +31,6 @@ test_that("onetime_rlang_inform", {
   expect_true(rv)
   expect_silent(rv <- onetime_rlang_inform("foo", id = test_id("test-id-2")))
   expect_false(rv)
-})
-
-
-test_that("Fallbacks", {
-  local({
-  mockr::local_mock(
-    require_rlang = function() FALSE
-  )
-
-  expect_message(
-          rv <- onetime_rlang_inform("foo", id = test_id("test-id-3")),
-          "rlang"
-        )
-  expect_true(rv)
-  expect_message(
-          rv <- onetime_rlang_inform("foo", id = test_id("test-id-4")),
-          "rlang"
-        )
-  expect_true(rv)
-  })
 })
 
 

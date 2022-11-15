@@ -9,13 +9,14 @@ onetime_message_confirm(
   id = calling_package(),
   path = default_lockfile_dir(),
   expiry = NULL,
-  confirm_prompt = "Show this message again? [yN]",
+  confirm_prompt = "Show this message again? [yN] ",
   confirm_answers = c("N", "n", "No", "no"),
-  default_answer = "N"
+  default_answer = "N",
+  without_permission = "warn"
 )
 }
 \arguments{
-\item{message}{Message to print}
+\item{message}{Message to display to the user.}
 
 \item{id}{Unique ID string. By default, name of the calling package.}
 
@@ -25,14 +26,18 @@ onetime_message_confirm(
 After this length of time, code will be run again.}
 
 \item{confirm_prompt}{Character string. Question to prompt the user to hide
-the message in future}
+the message in future.}
 
 \item{confirm_answers}{Character vector. Answers which will cause
-the message to be hidden in future. By default these are "no",
-because the question is phrased "Show this message again?".}
+the message to be hidden in future.}
 
 \item{default_answer}{Character string. Default answer if user
 simply presses return.}
+
+\item{without_permission}{Character string. What to do if the user hasn't given
+permission to store files? \code{"warn"} runs the action with an extra warning;
+\code{"run"} runs the action; \code{"pass"} does nothing and returns the default;
+\code{"stop"} throws an error.}
 }
 \value{
 \code{NULL} if the message was not shown (shown already or non-interactive

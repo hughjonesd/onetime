@@ -9,7 +9,8 @@ onetime_do(
   id = calling_package(),
   path = default_lockfile_dir(),
   expiry = NULL,
-  default = NULL
+  default = NULL,
+  without_permission = c("warn", "run", "stop", "pass")
 )
 }
 \arguments{
@@ -23,6 +24,11 @@ onetime_do(
 After this length of time, code will be run again.}
 
 \item{default}{Value to return if \code{expr} was not executed.}
+
+\item{without_permission}{Character string. What to do if the user hasn't given
+permission to store files? \code{"warn"} runs the action with an extra warning;
+\code{"run"} runs the action; \code{"pass"} does nothing and returns the default;
+\code{"stop"} throws an error.}
 }
 \value{
 The value of \code{expr}, invisibly; or \code{default} if \code{expr} was not run
@@ -44,12 +50,8 @@ package, then you \emph{must} set \code{id} explicitly. If you are working in a
 large project with many contributors, it is \emph{strongly recommended to set}
 \code{id } \emph{explicitly}.
 
-The default \code{path}, where lockfiles are stored, is
-\code{file.path(rappdirs::user_config_dir(), "onetime-lockfiles", mypackage)}.
-\code{mypackage} is the calling package. If the calling code is not
-within a package, then the default path is
-\code{file.path(rappdirs::user_config_dir(), "onetime-lockfiles", "NO_PACKAGE")}.
-
+The default \code{path}, where lockfiles are stored, is within
+\code{\link[rappdirs:user_data_dir]{rappdirs::user_config_dir()}} unless overridden by \code{options("onetime.dir")}.
 If the lockfile cannot be written (e.g. because the user has not given
 permission to store files on his or her computer), then the call will still
 be run, so it may be run repeatedly. Conversely, if the call gives an error,

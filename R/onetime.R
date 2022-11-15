@@ -6,13 +6,13 @@
 #' configuration directory as given by [rappdirs::user_config_dir()]. The
 #' user can set an alternative filepath using `options("onetime.dir")`.
 #'
-#' If loaded in an interactive session, the onetime package confirms
-#' (once only) whether it has permission to write files to the
-#' configuration directory. In a non-interactive session, it warns
-#' the user that files will be written using [packageStartupMessage()].
-#' This warning can be turned off by confirming permission interactively,
-#' setting `options("onetime.dir")`, or setting
-#' `options("onetime.ok_to_store" = TRUE)`. As a package author, you should
+#' It is package authors' responsibility to check for permission
+#' to store lockfiles. This may have been done already by another package if
+#' onetime was already installed. You can ask permission interactively on
+#' the command line by calling `check_ok_to_store(ask = TRUE)`.
+#'
+#' This warning can be turned off by confirming permission interactively, or
+#' setting `options("onetime.dir")`. As a package author, you should
 #' *only* set these options if you are sure you have the user's permission.
 #'
 #' @name onetime
@@ -28,6 +28,8 @@
 #'   and [rlang::inform()] respectively.
 #' * [onetime_only()] returns a function that runs only once.
 #' * [onetime_reset()] resets a onetime call using a string ID.
+#' * [check_ok_to_store()] and [ask_ok_to_store()] confirm whether the user
+#'   has granted permission to store lockfiles on his or her computer.
 NULL
 
 
@@ -36,6 +38,17 @@ NULL
 #' @param path Directory to store lockfiles.
 #' @param expiry [difftime()] or e.g. [lubridate::duration()] object.
 #'   After this length of time, code will be run again.
+#' @param message Message to display to the user.
+#' @param confirm_prompt Character string. Question to prompt the user to hide
+#'   the message in future.
+#' @param confirm_answers Character vector. Answers which will cause
+#'   the message to be hidden in future.
+#' @param default_answer Character string. Default answer if user
+#'   simply presses return.
+#' @param without_permission Character string. What to do if the user hasn't given
+#' permission to store files? `"warn"` runs the action with an extra warning;
+#' `"run"` runs the action; `"pass"` does nothing and returns the default;
+#' `"stop"` throws an error.
 NULL
 
 
@@ -65,10 +78,11 @@ NULL
 onetime_warning <- function(...,
         id     = calling_package(),
         path   = default_lockfile_dir(),
-        expiry = NULL
+        expiry = NULL,
+        without_permission = "warn"
       ) {
   ret_val <- onetime_do(warning(..., call. = FALSE), id = id, path = path, expiry = expiry,
-                  default = FALSE)
+                  default = FALSE, without_permission = without_permission)
   return(! isFALSE(ret_val))
 }
 
@@ -78,10 +92,11 @@ onetime_warning <- function(...,
 onetime_message <- function (...,
         id     = calling_package(),
         path   = default_lockfile_dir(),
-        expiry = NULL
+        expiry = NULL,
+        without_permission = "warn"
       ) {
   ret_val <- onetime_do(message(...),  id = id, path = path, expiry = expiry,
-                        default = FALSE)
+                        default = FALSE, without_permission = without_permission)
   return(! isFALSE(ret_val))
 }
 
@@ -89,12 +104,14 @@ onetime_message <- function (...,
 #' @rdname onetime_warning
 #' @export
 onetime_startup_message <- function (...,
-  id     = calling_package(),
-  path   = default_lockfile_dir(),
-  expiry = NULL
-) {
+        id     = calling_package(),
+        path   = default_lockfile_dir(),
+        expiry = NULL,
+        without_permission = "warn"
+      ) {
   ret_val <- onetime_do(packageStartupMessage(...), id = id, path = path,
-                        expiry = expiry, default = FALSE)
+                        expiry = expiry, default = FALSE,
+                        without_permission = without_permission)
   return(! isFALSE(ret_val))
 }
 
@@ -108,15 +125,7 @@ onetime_startup_message <- function (...,
 #' By default, the message will be hidden if the user answers
 #' "n", "No", or "N", or just presses return to the prompt question.
 #'
-#' @param message Message to print
 #' @inherit common-params
-#' @param confirm_prompt Character string. Question to prompt the user to hide
-#' the message in future
-#' @param confirm_answers Character vector. Answers which will cause
-#'   the message to be hidden in future. By default these are "no",
-#'   because the question is phrased "Show this message again?".
-#' @param default_answer Character string. Default answer if user
-#'   simply presses return.
 #'
 #' @return `NULL` if the message was not shown (shown already or non-interactive
 #' session). `TRUE` if the user confirmed (i.e. asked to hide the message).
@@ -136,21 +145,22 @@ onetime_message_confirm <- function (message,
   id              = calling_package(),
   path            = default_lockfile_dir(),
   expiry          = NULL,
-  confirm_prompt  = "Show this message again? [yN]",
+  confirm_prompt  = "Show this message again? [yN] ",
   confirm_answers = c("N", "n", "No", "no"),
-  default_answer  = "N"
+  default_answer  = "N",
+  without_permission = "warn"
 ) {
   if (! interactive()) return(NULL)
 
   # adding a space makes the readline nicer:
-  confirm_prompt <- paste0(confirm_prompt, " ")
   confirmation <- expression({
     message(message)
     answer <- readline(confirm_prompt)
     answer
   })
 
-  answer <- onetime_do(confirmation, id = id, path = path, expiry = expiry)
+  answer <- onetime_do(confirmation, id = id, path = path, expiry = expiry,
+                       without_permission = without_permission)
   if (is.null(answer)) return(NULL)
 
   if (answer == "") answer <- default_answer
@@ -210,18 +220,28 @@ onetime_do <- function(
         id      = calling_package(),
         path    = default_lockfile_dir(),
         expiry  = NULL,
-        default = NULL
+        default = NULL,
+        without_permission = c("warn", "run", "stop", "pass")
       ) {
   force(id)
   force(path)
+  without_permission = match.arg(without_permission)
   if (
-    # see confirm_ok_to_store()
+    # see ask_ok_to_store()
     is.null(getOption("onetime.dont.recurse"))
   ) {
-    got_confirmation <- confirm_ok_to_store()
+    got_confirmation <- check_ok_to_store()
     if (! got_confirmation) {
-      warning("Could not record onetime action.")
-      return(invisible(eval.parent(expr)))
+      switch(without_permission,
+        warn = {
+                 warning("Could not store onetime files.")
+                 warning(options_info())
+                 return(invisible(eval.parent(expr)))
+               },
+        run  = return(invisible(eval.parent(expr))),
+        stop = stop("Could not store onetime files."),
+        pass = return(default)
+      )
     }
   }
 
@@ -276,11 +296,14 @@ onetime_do <- function(
 onetime_only <- function (
         .f,
         id   = calling_package(),
-        path = default_lockfile_dir()
+        path = default_lockfile_dir(),
+        without_permission = "warn"
       ) {
   force(id)
   force(path)
-  function (...) onetime_do(.f(...), id = id, path = path)
+  force(without_permission)
+  function (...) onetime_do(.f(...), id = id, path = path,
+                            without_permission = without_permission)
 }
 
 

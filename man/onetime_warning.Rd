@@ -10,21 +10,24 @@ onetime_warning(
   ...,
   id = calling_package(),
   path = default_lockfile_dir(),
-  expiry = NULL
+  expiry = NULL,
+  without_permission = "warn"
 )
 
 onetime_message(
   ...,
   id = calling_package(),
   path = default_lockfile_dir(),
-  expiry = NULL
+  expiry = NULL,
+  without_permission = "warn"
 )
 
 onetime_startup_message(
   ...,
   id = calling_package(),
   path = default_lockfile_dir(),
-  expiry = NULL
+  expiry = NULL,
+  without_permission = "warn"
 )
 }
 \arguments{
@@ -36,6 +39,11 @@ onetime_startup_message(
 
 \item{expiry}{\code{\link[=difftime]{difftime()}} or e.g. \code{\link[lubridate:duration]{lubridate::duration()}} object.
 After this length of time, code will be run again.}
+
+\item{without_permission}{Character string. What to do if the user hasn't given
+permission to store files? \code{"warn"} runs the action with an extra warning;
+\code{"run"} runs the action; \code{"pass"} does nothing and returns the default;
+\code{"stop"} throws an error.}
 }
 \value{
 \code{TRUE} if the message/warning was shown, \code{FALSE} otherwise.

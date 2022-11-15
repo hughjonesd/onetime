@@ -4,7 +4,12 @@
 \alias{onetime_only}
 \title{Wrap a function to be called only once}
 \usage{
-onetime_only(.f, id = calling_package(), path = default_lockfile_dir())
+onetime_only(
+  .f,
+  id = calling_package(),
+  path = default_lockfile_dir(),
+  without_permission = "warn"
+)
 }
 \arguments{
 \item{.f}{A function}
@@ -12,6 +17,11 @@ onetime_only(.f, id = calling_package(), path = default_lockfile_dir())
 \item{id}{Unique ID string. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles.}
+
+\item{without_permission}{Character string. What to do if the user hasn't given
+permission to store files? \code{"warn"} runs the action with an extra warning;
+\code{"run"} runs the action; \code{"pass"} does nothing and returns the default;
+\code{"stop"} throws an error.}
 }
 \value{
 A wrapped function.

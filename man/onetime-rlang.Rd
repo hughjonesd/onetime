@@ -10,18 +10,20 @@ onetime_rlang_warn(
   ...,
   id = calling_package(),
   path = default_lockfile_dir(),
-  expiry = NULL
+  expiry = NULL,
+  without_permission = "warn"
 )
 
 onetime_rlang_inform(
   ...,
   id = calling_package(),
   path = default_lockfile_dir(),
-  expiry = NULL
+  expiry = NULL,
+  without_permission = "warn"
 )
 }
 \arguments{
-\item{...}{Passed to \code{\link[rlang:abort]{rlang::warn()}} or \code{\link[rlang:abort]{rlang::inform()}}}
+\item{...}{Passed to \code{\link[rlang:abort]{rlang::warn()}} or \code{\link[rlang:abort]{rlang::inform()}}.}
 
 \item{id}{Unique ID string. By default, name of the calling package.}
 
@@ -29,13 +31,17 @@ onetime_rlang_inform(
 
 \item{expiry}{\code{\link[=difftime]{difftime()}} or e.g. \code{\link[lubridate:duration]{lubridate::duration()}} object.
 After this length of time, code will be run again.}
+
+\item{without_permission}{Character string. What to do if the user hasn't given
+permission to store files? \code{"warn"} runs the action with an extra warning;
+\code{"run"} runs the action; \code{"pass"} does nothing and returns the default;
+\code{"stop"} throws an error.}
 }
 \value{
 \code{TRUE} if the message/warning was shown, \code{FALSE} otherwise.
 }
 \description{
-If rlang is not installed, these fall back to \code{\link[=onetime_warning]{onetime_warning()}} and
-\code{\link[=onetime_message]{onetime_message()}}, adding a note about rlang.
+If you use these you will need to add \code{"rlang"} to your package dependencies.
 }
 \examples{
 \dontrun{

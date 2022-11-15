@@ -11,13 +11,13 @@ configuration directory as given by \code{\link[rappdirs:user_data_dir]{rappdirs
 user can set an alternative filepath using \code{options("onetime.dir")}.
 }
 \details{
-If loaded in an interactive session, the onetime package confirms
-(once only) whether it has permission to write files to the
-configuration directory. In a non-interactive session, it warns
-the user that files will be written using \code{\link[=packageStartupMessage]{packageStartupMessage()}}.
-This warning can be turned off by confirming permission interactively,
-setting \code{options("onetime.dir")}, or setting
-\code{options("onetime.ok_to_store" = TRUE)}. As a package author, you should
+It is package authors' responsibility to check for permission
+to store lockfiles. This may have been done already by another package if
+onetime was already installed. You can ask permission interactively on
+the command line by calling \code{check_ok_to_store(ask = TRUE)}.
+
+This warning can be turned off by confirming permission interactively, or
+setting \code{options("onetime.dir")}. As a package author, you should
 \emph{only} set these options if you are sure you have the user's permission.
 \itemize{
 \item \code{\link[=onetime_do]{onetime_do()}} runs arbitrary code only once.
@@ -28,6 +28,8 @@ setting \code{options("onetime.dir")}, or setting
 and \code{\link[rlang:abort]{rlang::inform()}} respectively.
 \item \code{\link[=onetime_only]{onetime_only()}} returns a function that runs only once.
 \item \code{\link[=onetime_reset]{onetime_reset()}} resets a onetime call using a string ID.
+\item \code{\link[=check_ok_to_store]{check_ok_to_store()}} and \code{\link[=ask_ok_to_store]{ask_ok_to_store()}} confirm whether the user
+has granted permission to store lockfiles on his or her computer.
 }
 
 \code{onetime} provides convenience functions to run R code only once per
@@ -49,85 +51,160 @@ for (i in 1:5) \{
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## Loop  1  of 5
 
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## Warning in onetime_do(cat("You will only see this once.\n"), id = ids[1]): Could
+## not store onetime files.
+
+## Warning in onetime_do(cat("You will only see this once.\n"), id = ids[1]): To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
 
 ## You will only see this once.
 
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## Warning in onetime_do(warning(..., call. = FALSE), id = id, path = path, : Could
+## not store onetime files.
+
+## Warning in onetime_do(warning(..., call. = FALSE), id = id, path = path, : To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
 
 ## Warning: This warning will only be shown once.
 
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## Warning in onetime_do(message(...), id = id, path = path, expiry = expiry, :
+## Could not store onetime files.
+
+## Warning in onetime_do(message(...), id = id, path = path, expiry = expiry, : To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
 
 ## This message will only be shown once.
 
 ## Loop  2  of 5
 
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## Warning in onetime_do(cat("You will only see this once.\n"), id = ids[1]): Could
+## not store onetime files.
 
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## Warning in onetime_do(cat("You will only see this once.\n"), id = ids[1]): To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
+
+## You will only see this once.
+
+## Warning in onetime_do(warning(..., call. = FALSE), id = id, path = path, : Could
+## not store onetime files.
+
+## Warning in onetime_do(warning(..., call. = FALSE), id = id, path = path, : To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
+
+## Warning: This warning will only be shown once.
+
+## Warning in onetime_do(message(...), id = id, path = path, expiry = expiry, :
+## Could not store onetime files.
+
+## Warning in onetime_do(message(...), id = id, path = path, expiry = expiry, : To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
+
+## This message will only be shown once.
 
 ## Loop  3  of 5
 
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## Warning in onetime_do(cat("You will only see this once.\n"), id = ids[1]): Could
+## not store onetime files.
+
+## Warning in onetime_do(cat("You will only see this once.\n"), id = ids[1]): To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
+
+## You will only see this once.
+
+## Warning in onetime_do(warning(..., call. = FALSE), id = id, path = path, : Could
+## not store onetime files.
+
+## Warning in onetime_do(warning(..., call. = FALSE), id = id, path = path, : To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
+
+## Warning: This warning will only be shown once.
+
+## Warning in onetime_do(message(...), id = id, path = path, expiry = expiry, :
+## Could not store onetime files.
+
+## Warning in onetime_do(message(...), id = id, path = path, expiry = expiry, : To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
+
+## This message will only be shown once.
 
 ## Loop  4  of 5
 
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## Warning in onetime_do(cat("You will only see this once.\n"), id = ids[1]): Could
+## not store onetime files.
+
+## Warning in onetime_do(cat("You will only see this once.\n"), id = ids[1]): To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
+
+## You will only see this once.
+
+## Warning in onetime_do(warning(..., call. = FALSE), id = id, path = path, : Could
+## not store onetime files.
+
+## Warning in onetime_do(warning(..., call. = FALSE), id = id, path = path, : To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
+
+## Warning: This warning will only be shown once.
+
+## Warning in onetime_do(message(...), id = id, path = path, expiry = expiry, :
+## Could not store onetime files.
+
+## Warning in onetime_do(message(...), id = id, path = path, expiry = expiry, : To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
+
+## This message will only be shown once.
 
 ## Loop  5  of 5
 
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
-## 'onetime' package saving configuration files in '~/Library/Application Support/onetime-lockfiles'.
-## To avoid warning messages, either call options("onetime.ok_to_store" = TRUE),
-## or set options("onetime.dir") to store files in a non-standard directory where you have write access.
+## Warning in onetime_do(cat("You will only see this once.\n"), id = ids[1]): Could
+## not store onetime files.
+
+## Warning in onetime_do(cat("You will only see this once.\n"), id = ids[1]): To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
+
+## You will only see this once.
+
+## Warning in onetime_do(warning(..., call. = FALSE), id = id, path = path, : Could
+## not store onetime files.
+
+## Warning in onetime_do(warning(..., call. = FALSE), id = id, path = path, : To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
+
+## Warning: This warning will only be shown once.
+
+## Warning in onetime_do(message(...), id = id, path = path, expiry = expiry, :
+## Could not store onetime files.
+
+## Warning in onetime_do(message(...), id = id, path = path, expiry = expiry, : To avoid warning messages, either:
+##   * Call `onetime::ask_ok_to_score()` interactively and answer 'y' at the prompt
+##   * Set options("onetime.dir") to store files in a non-standard location
+
+## This message will only be shown once.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Meanwhile, in a separate process:
 library(callr)
-callr::r(function (ids) \{
-  onetime::onetime_do(cat("This message will not be shown."), id = ids[1])
-  onetime::onetime_do(cat("This message with a new id will be shown."), id = ids[4])
+result <- callr::r(function (ids) \{
+  onetime::onetime_message("This message with an existing ID will not be shown.", id = ids[1])
+  onetime::onetime_message("This message with a new ID will be shown.", id = ids[4])
 \}, show = TRUE, args = list(ids = ids))
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## This message with a new id will be shown.
-
-## NULL
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## This message with an existing ID will not be shown.
+## This message with a new ID will be shown.
 }\if{html}{\out{</div>}}
 }
 }

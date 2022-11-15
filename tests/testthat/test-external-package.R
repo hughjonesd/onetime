@@ -8,7 +8,8 @@ setup({
   })
 })
 
-oo <- options("onetime.ok_to_store" = TRUE)
+# to workaround not having confirmed
+oo <- options("onetime.dir" = onetime:::onetime_base_dir())
 
 
 test_that("Calling from external package", {

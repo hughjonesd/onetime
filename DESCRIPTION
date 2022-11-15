@@ -23,9 +23,9 @@ URL: https://github.com/hughjonesd/onetime
 BugReports: https://github.com/hughjonesd/onetime/issues
 Suggests:
     callr,
+    covr,
     devtools,
+    mockr,
     rlang,
     testthat (>= 2.1.0),
-    withr,
-    covr,
-    mockr
+    withr

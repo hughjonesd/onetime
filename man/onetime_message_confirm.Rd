@@ -34,10 +34,11 @@ the message to be hidden in future.}
 \item{default_answer}{Character string. Default answer if user
 simply presses return.}
 
-\item{without_permission}{Character string. What to do if the user hasn't given
-permission to store files? \code{"warn"} runs the action with an extra warning;
-\code{"run"} runs the action; \code{"pass"} does nothing and returns the default;
-\code{"stop"} throws an error.}
+\item{without_permission}{Character string. What to do if the user hasn't
+given permission to store files? \code{"warn"} runs the action with an extra
+warning; \code{"run"} runs the action; \code{"pass"} does nothing and returns the
+default; \code{"stop"} throws an error; \code{"ask"} asks for permission, after
+running the action but before recording it on disk.}
 }
 \value{
 \code{NULL} if the message was not shown (shown already or non-interactive

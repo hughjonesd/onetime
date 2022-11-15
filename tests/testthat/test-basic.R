@@ -81,21 +81,50 @@ test_that("without_permission", {
   )
 
   expect_equal(
-    onetime_do(1L, without_permission = "run"),
+    onetime_do(1L, without_permission = "run", id = test_id("wp1")),
     1L
   )
 
   expect_warning(
-    onetime_do(1L, without_permission = "warn")
+    onetime_do(1L, without_permission = "warn", id = test_id("wp2"))
   )
 
   expect_equal(
-    onetime_do(1L, without_permission = "pass", default = 0),
+    onetime_do(1L, without_permission = "pass", default = 0,
+               id = test_id("wp3")),
     0L
   )
 
   expect_error(
-    onetime_do(1L, without_permission = "stop")
+    onetime_do(1L, without_permission = "stop", id = test_id("wp4"))
+  )
+
+  if (interactive()) {
+    cat("... Please say n next")
+  } else {
+    mockr::local_mock(
+      ask_ok_to_store = function(...) FALSE
+    )
+  }
+
+  expect_equal(
+    onetime_do(1L, without_permission = "ask", default = 0L,
+               id = test_id("wp5")),
+    0L
+  )
+
+  if (interactive()) {
+    cat("... Please say y next")
+  } else {
+    mockr::local_mock(
+      ask_ok_to_store = function(...) TRUE
+    )
+  }
+
+  expect_equal(
+    onetime_do(1L, without_permission = "ask", default = 0L,
+               id = test_id("wp6")),
+    1L
   )
 })
 

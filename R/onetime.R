@@ -11,10 +11,11 @@
 #'   the message to be hidden in future.
 #' @param default_answer Character string. Default answer if user
 #'   simply presses return.
-#' @param without_permission Character string. What to do if the user hasn't given
-#' permission to store files? `"warn"` runs the action with an extra warning;
-#' `"run"` runs the action; `"pass"` does nothing and returns the default;
-#' `"stop"` throws an error.
+#' @param without_permission Character string. What to do if the user hasn't
+#'   given permission to store files? `"warn"` runs the action with an extra
+#'   warning; `"run"` runs the action; `"pass"` does nothing and returns the
+#'   default; `"stop"` throws an error; `"ask"` asks for permission, after
+#'   running the action but before recording it on disk.
 NULL
 
 
@@ -143,7 +144,6 @@ onetime_message_confirm <- function (message,
 #' This function runs an expression just once. It then creates a lockfile
 #' recording a unique ID which will prevent the expression being run again.
 #'
-#'
 #' @param expr The code to evaluate. An R statement or [expression()] object.
 #' @inherit common-params
 #' @param default Value to return if `expr` was not executed.
@@ -187,7 +187,7 @@ onetime_do <- function(
         path    = default_lockfile_dir(),
         expiry  = NULL,
         default = NULL,
-        without_permission = c("warn", "run", "stop", "pass")
+        without_permission = c("warn", "run", "stop", "pass", "ask")
       ) {
   force(id)
   force(path)
@@ -200,13 +200,19 @@ onetime_do <- function(
     if (! got_confirmation) {
       switch(without_permission,
         warn = {
-                 warning("Could not store onetime files.")
-                 warning(options_info())
-                 return(invisible(eval.parent(expr)))
-               },
+          warning("Could not store onetime files.")
+          warning(options_info())
+          return(invisible(eval.parent(expr)))
+        },
+        ask  = {
+          result <- ask_ok_to_store()
+          if (! result) return(default)
+        },
         run  = return(invisible(eval.parent(expr))),
         stop = stop("Could not store onetime files."),
-        pass = return(default)
+        pass = return(default),
+        # shouldn't ever get here
+        stop("Unrecognized value of `without_permission`: ", without_permission)
       )
     }
   }
@@ -226,6 +232,11 @@ onetime_do <- function(
   }
   if (! file_exists || file_expired) {
     file.create(fp)
+    filelock::unlock(lck) # it's fine to do this twice, and quicker if
+                          # `expr` is slow to evaluate. It's also OK
+                          # to unlock once we've created the file;
+                          # other callers will then hit file.exists()
+                          # above
     return(invisible(eval.parent(expr)))
   } else {
     return(default)

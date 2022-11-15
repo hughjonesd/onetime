@@ -32,10 +32,11 @@ onetime_rlang_inform(
 \item{expiry}{\code{\link[=difftime]{difftime()}} or e.g. \code{\link[lubridate:duration]{lubridate::duration()}} object.
 After this length of time, code will be run again.}
 
-\item{without_permission}{Character string. What to do if the user hasn't given
-permission to store files? \code{"warn"} runs the action with an extra warning;
-\code{"run"} runs the action; \code{"pass"} does nothing and returns the default;
-\code{"stop"} throws an error.}
+\item{without_permission}{Character string. What to do if the user hasn't
+given permission to store files? \code{"warn"} runs the action with an extra
+warning; \code{"run"} runs the action; \code{"pass"} does nothing and returns the
+default; \code{"stop"} throws an error; \code{"ask"} asks for permission, after
+running the action but before recording it on disk.}
 }
 \value{
 \code{TRUE} if the message/warning was shown, \code{FALSE} otherwise.

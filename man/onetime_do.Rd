@@ -10,7 +10,7 @@ onetime_do(
   path = default_lockfile_dir(),
   expiry = NULL,
   default = NULL,
-  without_permission = c("warn", "run", "stop", "pass")
+  without_permission = c("warn", "run", "stop", "pass", "ask")
 )
 }
 \arguments{
@@ -25,10 +25,11 @@ After this length of time, code will be run again.}
 
 \item{default}{Value to return if \code{expr} was not executed.}
 
-\item{without_permission}{Character string. What to do if the user hasn't given
-permission to store files? \code{"warn"} runs the action with an extra warning;
-\code{"run"} runs the action; \code{"pass"} does nothing and returns the default;
-\code{"stop"} throws an error.}
+\item{without_permission}{Character string. What to do if the user hasn't
+given permission to store files? \code{"warn"} runs the action with an extra
+warning; \code{"run"} runs the action; \code{"pass"} does nothing and returns the
+default; \code{"stop"} throws an error; \code{"ask"} asks for permission, after
+running the action but before recording it on disk.}
 }
 \value{
 The value of \code{expr}, invisibly; or \code{default} if \code{expr} was not run

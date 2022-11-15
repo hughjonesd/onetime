@@ -60,10 +60,10 @@ ask_ok_to_store <- function(
   on.exit(options(oo))
 
   obd <- onetime_base_dir("")
-  msg <- sprintf(msg, obd)
+  message <- sprintf(message, obd)
 
   omc_result <- onetime_message_confirm(
-                  message         = msg,
+                  message         = message,
                   id              = "ok-to-store",
                   path            = obd,
                   confirm_prompt  = confirm_prompt,

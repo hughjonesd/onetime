@@ -59,29 +59,36 @@ test_that("onetime_warning/message/startup_message", {
 
 
 test_that("onetime_message_confirm", {
+
   if (! interactive()) {
-    skip("Test needs interaction: run `devtools::test()` from the command line.")
-  } else {
-    expect_message(
-      rv <- onetime_message_confirm("Say Y",
-                                    confirm_prompt = "Please say y",
-                                    id = test_id("test-id-omc"))
+    mockr::local_mock(
+      my_interactive = function () TRUE,
+      my_readline = function (...) INPUT
     )
-    expect_false(rv) # because user did not confirm to hide the message
-
-    expect_message(
-      rv <- onetime_message_confirm("Say N",
-                                    confirm_prompt = "Now say n",
-                                    id = test_id("test-id-omc"))
-    )
-    expect_true(rv)
-
-    expect_silent(
-      rv <- onetime_message_confirm("Should be hidden",
-                                    id = test_id("test-id-omc"))
-    )
-    expect_null(rv)
   }
+
+  INPUT <- "y"
+  expect_message(
+    rv <- onetime_message_confirm("Say Y",
+                                  confirm_prompt = "Please say y",
+                                  id = test_id("test-id-omc"))
+  )
+  expect_false(rv) # because user did not confirm to hide the message
+
+  INPUT <- "n"
+  expect_message(
+    rv <- onetime_message_confirm("Say N",
+                                  confirm_prompt = "Now say n",
+                                  id = test_id("test-id-omc"))
+  )
+  expect_true(rv)
+
+  expect_silent(
+    rv <- onetime_message_confirm("Should be hidden",
+                                  id = test_id("test-id-omc"))
+  )
+  expect_null(rv)
+
 })
 
 

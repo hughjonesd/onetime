@@ -17,9 +17,35 @@ test_that("check_ok_to_store", {
 
 
 test_that("ask_ok_to_store", {
-  skip_if(! interactive())
-  ask_ok_to_store(msg = "Dir %s, Enter y ", confirm_prompt = "Please enter y ")
-  expect_true(
+  if(! interactive()) {
+    mockr::local_mock(
+      my_interactive = function () TRUE,
+      my_readline = function (...) INPUT
+    )
+  }
+
+  if (interactive()) message("Please enter n at the next prompt")
+  INPUT <- "n"
+  expect_message(
+    res <- check_ok_to_store(ask = TRUE)
+  )
+  expect_false(res)
+
+  INPUT <- "n"
+  expect_message(
+    res <- ask_ok_to_store(message = "Dir %s, Enter n ",
+                           confirm_prompt = "Please enter n ")
+  )
+  expect_false(res)
+  expect_false(
     check_ok_to_store()
   )
+
+  INPUT <- "y"
+  ask_ok_to_store(message = "Dir %s, Enter y ",
+                  confirm_prompt = "Please enter y ")
+  expect_silent(
+    res <- check_ok_to_store()
+  )
+  expect_true(res)
 })

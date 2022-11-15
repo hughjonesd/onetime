@@ -116,12 +116,11 @@ onetime_message_confirm <- function (message,
   default_answer  = "N",
   without_permission = "warn"
 ) {
-  if (! interactive()) return(NULL)
+  if (! my_interactive()) return(NULL)
 
-  # adding a space makes the readline nicer:
   confirmation <- expression({
     message(message)
-    answer <- readline(confirm_prompt)
+    answer <- my_readline(confirm_prompt)
     answer
   })
 

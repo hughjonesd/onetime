@@ -59,6 +59,17 @@ no_rlang_message <- function (caller) {
 
 
 # for mocking purposes
-check_rlang <- function (){
+check_rlang <- function () {
   loadNamespace("rlang")
+}
+
+
+# for mocking purposes
+my_interactive <- function () {
+  interactive()
+}
+
+
+my_readline <- function (...) {
+  readline(...)
 }

@@ -2,7 +2,6 @@
 # onetime
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- badges: start -->
 
 [![Lifecycle:
@@ -17,6 +16,9 @@ coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg
 `onetime` provides convenience functions to run R code only once per
 user. For example, you can show a startup message only the first time
 (ever) that a package is loaded.
+
+For more information, see the
+[website](https://hughjonesd.github.io/onetime).
 
 ## Example
 

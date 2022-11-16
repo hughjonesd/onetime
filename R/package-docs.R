@@ -9,14 +9,9 @@
 #' It is package authors' responsibility to check for permission
 #' to store lockfiles. This may have been done already by another package if
 #' onetime was already installed. You can ask permission interactively on
-#' the command line by calling `check_ok_to_store(ask = TRUE)`.
+#' the command line by calling [check_ok_to_store()] with `ask = TRUE`.
 #'
-#' This warning can be turned off by confirming permission interactively, or
-#' setting `options("onetime.dir")`. As a package author, you should
-#' *only* set these options if you are sure you have the user's permission.
-#'
-#'
-#' # Core functions
+#' Core functions include:
 #'
 #' * [onetime_do()] runs arbitrary code only once.
 #' * [onetime_warning()] and friends print a warning or message only once.
@@ -25,7 +20,6 @@
 #'   [onetime_rlang_warn()] and [onetime_rlang_inform()] call [rlang::warn()]
 #'   and [rlang::inform()] respectively.
 #' * [onetime_only()] returns a function that runs only once.
-#' * [onetime_reset()] resets a onetime call using a string ID.
 #' * [check_ok_to_store()] and [set_ok_to_store()] check for or grant
 #'   permission to store lockfiles on the user's computer.
 #'

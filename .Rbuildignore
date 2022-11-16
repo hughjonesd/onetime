@@ -10,3 +10,6 @@ onetimeTestPackage
 ^\.github$
 ^cran-comments\.md$
 ^README\.html$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

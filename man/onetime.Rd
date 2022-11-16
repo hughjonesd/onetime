@@ -14,11 +14,20 @@ user can set an alternative filepath using \code{options("onetime.dir")}.
 It is package authors' responsibility to check for permission
 to store lockfiles. This may have been done already by another package if
 onetime was already installed. You can ask permission interactively on
-the command line by calling \code{check_ok_to_store(ask = TRUE)}.
+the command line by calling \code{\link[=check_ok_to_store]{check_ok_to_store()}} with \code{ask = TRUE}.
 
-This warning can be turned off by confirming permission interactively, or
-setting \code{options("onetime.dir")}. As a package author, you should
-\emph{only} set these options if you are sure you have the user's permission.
+Core functions include:
+\itemize{
+\item \code{\link[=onetime_do]{onetime_do()}} runs arbitrary code only once.
+\item \code{\link[=onetime_warning]{onetime_warning()}} and friends print a warning or message only once.
+\item \code{\link[=onetime_message_confirm]{onetime_message_confirm()}} prints a message and asks
+"Show this message again?"
+\code{\link[=onetime_rlang_warn]{onetime_rlang_warn()}} and \code{\link[=onetime_rlang_inform]{onetime_rlang_inform()}} call \code{\link[rlang:abort]{rlang::warn()}}
+and \code{\link[rlang:abort]{rlang::inform()}} respectively.
+\item \code{\link[=onetime_only]{onetime_only()}} returns a function that runs only once.
+\item \code{\link[=check_ok_to_store]{check_ok_to_store()}} and \code{\link[=set_ok_to_store]{set_ok_to_store()}} check for or grant
+permission to store lockfiles on the user's computer.
+}
 
 \code{onetime} provides convenience functions to run R code only once per
 user. For example, you can show a startup message only the first time
@@ -62,18 +71,3 @@ result <- callr::r(function (ids) \{
 }\if{html}{\out{</div>}}
 }
 }
-\section{Core functions}{
-\itemize{
-\item \code{\link[=onetime_do]{onetime_do()}} runs arbitrary code only once.
-\item \code{\link[=onetime_warning]{onetime_warning()}} and friends print a warning or message only once.
-\item \code{\link[=onetime_message_confirm]{onetime_message_confirm()}} prints a message and asks
-"Show this message again?"
-\code{\link[=onetime_rlang_warn]{onetime_rlang_warn()}} and \code{\link[=onetime_rlang_inform]{onetime_rlang_inform()}} call \code{\link[rlang:abort]{rlang::warn()}}
-and \code{\link[rlang:abort]{rlang::inform()}} respectively.
-\item \code{\link[=onetime_only]{onetime_only()}} returns a function that runs only once.
-\item \code{\link[=onetime_reset]{onetime_reset()}} resets a onetime call using a string ID.
-\item \code{\link[=check_ok_to_store]{check_ok_to_store()}} and \code{\link[=set_ok_to_store]{set_ok_to_store()}} check for or grant
-permission to store lockfiles on the user's computer.
-}
-}
-

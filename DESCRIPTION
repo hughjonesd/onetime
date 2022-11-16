@@ -19,7 +19,8 @@ RoxygenNote: 7.2.1
 Imports: 
     rappdirs,
     filelock
-URL: https://github.com/hughjonesd/onetime
+URL: https://github.com/hughjonesd/onetime,
+    https://hughjonesd.github.io/onetime/
 BugReports: https://github.com/hughjonesd/onetime/issues
 Suggests:
     callr,

@@ -3,10 +3,6 @@ title: "Documentation"
 output: github_document
 ---
 
-`onetime` provides convenience functions to run R code only once per user. For
-example, you can show a startup message only the first time (ever) that a
-package is loaded.
-
 ## Example
 
 ```{r example}

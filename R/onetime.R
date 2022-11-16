@@ -353,6 +353,7 @@ onetime_been_done <- function (
   if (is.null(expiry)) {
     return(TRUE)
   } else {
-    return(file.mtime(fp) + expiry < Sys.time())
+    return(file.mtime(fp) + expiry >= Sys.time())
   }
+
 }

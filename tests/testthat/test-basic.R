@@ -56,6 +56,12 @@ test_that("onetime_been_done", {
   expect_true(
     onetime_been_done(id = id)
   )
+  
+  expiry <- as.difftime(1, units = "secs")
+  Sys.sleep(2)
+  expect_false(
+    onetime_been_done(id = id, expiry = expiry)
+  )
 })
 
 

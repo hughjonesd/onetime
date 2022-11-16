@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 [![Lifecycle:
@@ -33,12 +34,12 @@ ids  <- paste0("onetime-readme-", sample(1e9, 4))
 
 for (i in 1:5) {
   cat("Loop ", i, " of 5\n")
-  onetime_do(cat("You will only see this once.\n"), id = ids[1])
+  onetime_do(cat("This command will only be run once.\n"), id = ids[1])
   onetime_warning("This warning will only be shown once.", id = ids[2])
   onetime_message("This message will only be shown once.", id = ids[3])
 }
 #> Loop  1  of 5
-#> You will only see this once.
+#> This command will only be run once.
 #> Warning: This warning will only be shown once.
 #> This message will only be shown once.
 #> Loop  2  of 5

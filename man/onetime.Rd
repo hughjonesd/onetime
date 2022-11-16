@@ -37,14 +37,14 @@ ids  <- paste0("onetime-readme-", sample(1e9, 4))
 
 for (i in 1:5) \{
   cat("Loop ", i, " of 5\n")
-  onetime_do(cat("You will only see this once.\n"), id = ids[1])
+  onetime_do(cat("This command will only be run once.\n"), id = ids[1])
   onetime_warning("This warning will only be shown once.", id = ids[2])
   onetime_message("This message will only be shown once.", id = ids[3])
 \}
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## Loop  1  of 5
-## You will only see this once.
+## This command will only be run once.
 
 ## Warning: This warning will only be shown once.
 

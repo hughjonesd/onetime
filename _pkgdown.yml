@@ -1,4 +1,24 @@
 url: https://hughjonesd.github.io/onetime/
 template:
   bootstrap: 5
+reference:
+- title: "Package documentation"
+  contents:
+  - onetime
+- title: "Main functions"
+  contents:
+  - onetime_do
+  - onetime_message
+  - onetime_warning
+  - onetime_startup_message
+  - onetime_message_confirm
+  - onetime_rlang_warn
+  - onetime_rlang_inform
+  - onetime_only
+- title: "Utilities"
+  contents:
+  - onetime_reset
+  - onetime_been_done
+  - check_ok_to_store
+  - set_ok_to_store
 

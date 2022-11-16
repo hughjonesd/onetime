@@ -324,7 +324,8 @@ onetime_reset <- function (
 #' @inherit common-params
 #'
 #' @return `TRUE` if the lockfile recording the
-#' onetime call exists, `FALSE` otherwise.
+#' onetime call exists, `FALSE` otherwise. Note that
+#' this doesn't take `expiry` into account.
 #'
 #' @export
 #'

@@ -13,7 +13,8 @@ onetime_been_done(id = calling_package(), path = default_lockfile_dir())
 }
 \value{
 \code{TRUE} if the lockfile recording the
-onetime call exists, \code{FALSE} otherwise.
+onetime call exists, \code{FALSE} otherwise. Note that
+this doesn't take \code{expiry} into account.
 }
 \description{
 Check if a onetime call has already been made

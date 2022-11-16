@@ -26,8 +26,8 @@
 #'   and [rlang::inform()] respectively.
 #' * [onetime_only()] returns a function that runs only once.
 #' * [onetime_reset()] resets a onetime call using a string ID.
-#' * [check_ok_to_store()] and [ask_ok_to_store()] confirm whether the user
-#'   has granted permission to store lockfiles on his or her computer.
+#' * [check_ok_to_store()] and [set_ok_to_store()] check for or grant
+#'   permission to store lockfiles on the user's computer.
 #'
 #' @includeRmd example.Rmd
 #'

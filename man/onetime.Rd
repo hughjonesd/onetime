@@ -72,8 +72,8 @@ result <- callr::r(function (ids) \{
 and \code{\link[rlang:abort]{rlang::inform()}} respectively.
 \item \code{\link[=onetime_only]{onetime_only()}} returns a function that runs only once.
 \item \code{\link[=onetime_reset]{onetime_reset()}} resets a onetime call using a string ID.
-\item \code{\link[=check_ok_to_store]{check_ok_to_store()}} and \code{\link[=ask_ok_to_store]{ask_ok_to_store()}} confirm whether the user
-has granted permission to store lockfiles on his or her computer.
+\item \code{\link[=check_ok_to_store]{check_ok_to_store()}} and \code{\link[=set_ok_to_store]{set_ok_to_store()}} check for or grant
+permission to store lockfiles on the user's computer.
 }
 }
 

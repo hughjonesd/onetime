@@ -4,12 +4,27 @@
 \alias{check_ok_to_store}
 \title{Check if the package has permission to store files on the user's computer}
 \usage{
-check_ok_to_store(ask = FALSE, ...)
+check_ok_to_store(
+  ask = FALSE,
+  message = "The onetime package requests to store files in '\%s'.",
+  confirm_prompt = "Is this OK? [Yn] ",
+  confirm_answers = c("Y", "y", "Yes", "yes", "YES"),
+  default_answer = "Y"
+)
 }
 \arguments{
-\item{ask}{\code{TRUE} to call \code{\link[=ask_ok_to_store]{ask_ok_to_store()}} if necessary.}
+\item{ask}{\code{TRUE} to ask the user for permission.}
 
-\item{...}{Passed to \code{\link[=ask_ok_to_store]{ask_ok_to_store()}} if \code{ask} is \code{TRUE}.}
+\item{message}{Message to display to the user.}
+
+\item{confirm_prompt}{Character string. Question to prompt the user to hide
+the message in future.}
+
+\item{confirm_answers}{Character vector. Answers which will cause
+the message to be hidden in future.}
+
+\item{default_answer}{Character string. Default answer if user
+simply presses return.}
 }
 \value{
 \code{TRUE} if:
@@ -17,13 +32,30 @@ check_ok_to_store(ask = FALSE, ...)
 \item We already have permission;
 \item \code{ask} is \code{TRUE}, we are in an interactive session and the user
 gives us permission;
-\item \code{options("onetime.dir")} is set to a non-\code{NULL} value
+\item \code{options("onetime.dir")} is set to a non-\code{NULL} value.
 }
 
 Otherwise \code{FALSE}.
 }
 \description{
-Check if the package has permission to store files on the user's computer
+The onetime package works by storing lockfiles in
+\code{\link[rappdirs:user_data_dir]{rappdirs::user_config_dir()}}. It won't do so unless permission has been
+granted. Package authors should call \code{check_ok_to_store(ask = TRUE)} in
+an interactive session, in functions which are called directly from the
+command line.
+}
+\details{
+If your package is not used interactively, a workaround is to call
+\code{\link[=set_ok_to_store]{set_ok_to_store()}}. This grants permission and prints an informative
+message. Package owners should \emph{only} call this if they cannot ask
+explicitly.
+
+\code{ask = TRUE} asks the user, if he or she has not already given permission,
+and if the session is \code{\link[=interactive]{interactive()}}.
+
+Remaining parameters are passed to \code{\link[=onetime_message_confirm]{onetime_message_confirm()}} in this case,
+and ignored otherwise. A \code{"\%s"} in \code{message} will be replaced by the
+onetime storage directory.
 }
 \examples{
 \dontrun{

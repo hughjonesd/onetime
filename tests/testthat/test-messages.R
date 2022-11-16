@@ -52,7 +52,7 @@ test_that("onetime_message_confirm", {
   INPUT <- "y"
   expect_message(
     rv <- onetime_message_confirm("Say Y",
-                                  confirm_prompt = "Please say y",
+                                  confirm_prompt = "Please enter y ",
                                   id = test_id("test-id-omc"))
   )
   expect_false(rv) # because user did not confirm to hide the message
@@ -60,7 +60,7 @@ test_that("onetime_message_confirm", {
   INPUT <- "n"
   expect_message(
     rv <- onetime_message_confirm("Say N",
-                                  confirm_prompt = "Now say n",
+                                  confirm_prompt = "Please enter n ",
                                   id = test_id("test-id-omc"))
   )
   expect_true(rv)

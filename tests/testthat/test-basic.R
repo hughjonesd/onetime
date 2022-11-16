@@ -9,8 +9,7 @@ test_id <- function (id) {
   return(id)
 }
 
-# set explicitly from here on
-oo <- options("onetime.dir" = onetime:::onetime_base_dir())
+suppressWarnings(set_ok_to_store(TRUE))
 
 
 test_that("onetime_do", {
@@ -76,34 +75,35 @@ test_that("expiry", {
 
 
 test_that("without_permission", {
-  mockr::local_mock(
-    check_ok_to_store = function() FALSE
+  mockr::with_mock(
+    check_ok_to_store = function(...) FALSE,
+    {
+      expect_equal(
+        onetime_do(1L, without_permission = "run", id = test_id("wp1")),
+        1L
+      )
+      expect_warning(
+        onetime_do(1L, without_permission = "warn", id = test_id("wp2"))
+      )
+      expect_equal(
+        onetime_do(1L, without_permission = "pass", default = 0,
+                   id = test_id("wp3")),
+        0L
+      )
+      expect_error(
+        onetime_do(1L, without_permission = "stop", id = test_id("wp4"))
+      )
+    }
   )
 
-  expect_equal(
-    onetime_do(1L, without_permission = "run", id = test_id("wp1")),
-    1L
-  )
-
-  expect_warning(
-    onetime_do(1L, without_permission = "warn", id = test_id("wp2"))
-  )
-
-  expect_equal(
-    onetime_do(1L, without_permission = "pass", default = 0,
-               id = test_id("wp3")),
-    0L
-  )
-
-  expect_error(
-    onetime_do(1L, without_permission = "stop", id = test_id("wp4"))
-  )
+  set_ok_to_store(FALSE)
+  withr::defer(suppressWarnings(set_ok_to_store(TRUE)))
 
   if (interactive()) {
-    cat("... Please say n next")
+    cat("\nPlease say n next\n")
   } else {
     mockr::local_mock(
-      ask_ok_to_store = function(...) FALSE
+      check_ok_to_store = function(...) FALSE
     )
   }
 
@@ -114,13 +114,12 @@ test_that("without_permission", {
   )
 
   if (interactive()) {
-    cat("... Please say y next")
+    cat("\nPlease say y next\n")
   } else {
     mockr::local_mock(
-      ask_ok_to_store = function(...) TRUE
+      check_ok_to_store = function(...) TRUE
     )
   }
-
   expect_equal(
     onetime_do(1L, without_permission = "ask", default = 0L,
                id = test_id("wp6")),
@@ -155,5 +154,3 @@ for (id in IDS) {
   suppressWarnings(onetime_reset(id))
 }
 rm(IDS)
-
-options(oo)

@@ -1,22 +1,38 @@
-test_that("check_ok_to_store", {
 
-  suppressWarnings(onetime_reset("ok-to-store", onetime:::onetime_base_dir("")))
+test_that("set_ok_to_store", {
+  oo <- options("onetime.dir" = onetime_base_dir(""))
+  withr::defer({
+    options(oo)
+    suppressWarnings(set_ok_to_store(TRUE))
+  })
+
+  expect_message(set_ok_to_store(FALSE))
+  expect_null(getOption("onetime.dir"))
+  expect_message(set_ok_to_store(TRUE), "set_ok_to_store")
+})
+
+
+test_that("check_ok_to_store(ask = FALSE)", {
+  suppressWarnings(set_ok_to_store(FALSE))
+  withr::defer({
+    suppressWarnings(set_ok_to_store(TRUE))
+  })
 
   withr::with_options(list(onetime.dir = NULL), {
     expect_false(
-      check_ok_to_store()
+      check_ok_to_store(ask = FALSE)
     )
   })
 
   withr::with_options(list(onetime.dir = onetime:::onetime_base_dir()), {
     expect_true(
-      check_ok_to_store()
+      check_ok_to_store(ask = FALSE)
     )
   })
 })
 
 
-test_that("ask_ok_to_store", {
+test_that("check_ok_to_store(ask = TRUE)", {
   if(! interactive()) {
     mockr::local_mock(
       my_interactive = function () TRUE,
@@ -24,30 +40,29 @@ test_that("ask_ok_to_store", {
     )
   }
 
-  suppressWarnings(onetime_reset("ok-to-store", onetime:::onetime_base_dir("")))
+  suppressWarnings(set_ok_to_store(FALSE))
+  withr::defer({
+    suppressWarnings(set_ok_to_store(TRUE))
+  })
 
-  if (interactive()) message("Please enter n at the next prompt")
-  INPUT <- "n"
-  expect_message(
+  if (interactive()) {
+    expect_message(
+      res <- check_ok_to_store(ask = TRUE, confirm_prompt = "Please enter n ")
+    )
+  } else {
+    INPUT <- "n"
     res <- check_ok_to_store(ask = TRUE)
-  )
+  }
   expect_false(res)
 
-  INPUT <- "n"
-  expect_message(
-    res <- ask_ok_to_store(message = "Dir %s, Enter n ",
-                           confirm_prompt = "Please enter n ")
-  )
-  expect_false(res)
   expect_false(
-    check_ok_to_store()
+    check_ok_to_store(ask = FALSE)
   )
 
   INPUT <- "y"
-  ask_ok_to_store(message = "Dir %s, Enter y ",
-                  confirm_prompt = "Please enter y ")
+  check_ok_to_store(ask = TRUE, confirm_prompt = "Please enter y ")
   expect_silent(
-    res <- check_ok_to_store()
+    res <- check_ok_to_store(ask = FALSE)
   )
   expect_true(res)
 })

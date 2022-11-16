@@ -196,7 +196,7 @@ onetime_do <- function(
     # see ask_ok_to_store()
     is.null(getOption("onetime.dont.recurse"))
   ) {
-    got_confirmation <- check_ok_to_store()
+    got_confirmation <- check_ok_to_store(ask = FALSE)
     if (! got_confirmation) {
       switch(without_permission,
         warn = {
@@ -205,7 +205,7 @@ onetime_do <- function(
           return(invisible(eval.parent(expr)))
         },
         ask  = {
-          result <- ask_ok_to_store()
+          result <- check_ok_to_store(ask = TRUE)
           if (! result) return(default)
         },
         run  = return(invisible(eval.parent(expr))),

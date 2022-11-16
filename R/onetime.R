@@ -323,9 +323,8 @@ onetime_reset <- function (
 #'
 #' @inherit common-params
 #'
-#' @return `TRUE` if the lockfile recording the
-#' onetime call exists, `FALSE` otherwise. Note that
-#' this doesn't take `expiry` into account.
+#' @return `TRUE` if the call has been recorded (within the 
+#' `expiry` time, if given).
 #'
 #' @export
 #'
@@ -340,12 +339,20 @@ onetime_reset <- function (
 #' }
 onetime_been_done <- function (
         id   = calling_package(),
-        path = default_lockfile_dir()
+        path = default_lockfile_dir(),
+	expiry = NULL
 ) {
   force(id)
   force(path)
   # don't check it's writable
   fp <- onetime_filepath(id = id, path = path, check_writable = FALSE)
 
-  file.exists(fp)
+  if (! file.exists(fp)) {
+    return(FALSE)
+  }
+  if (is.null(expiry)) {
+    return(TRUE)
+  } else {
+    return(file.mtime(fp) + expiry < Sys.time())
+  }
 }

@@ -4,17 +4,23 @@
 \alias{onetime_been_done}
 \title{Check if a onetime call has already been made}
 \usage{
-onetime_been_done(id = calling_package(), path = default_lockfile_dir())
+onetime_been_done(
+  id = calling_package(),
+  path = default_lockfile_dir(),
+  expiry = NULL
+)
 }
 \arguments{
 \item{id}{Unique ID string. By default, name of the calling package.}
 
 \item{path}{Directory to store lockfiles.}
+
+\item{expiry}{\code{\link[=difftime]{difftime()}} or e.g. \code{\link[lubridate:duration]{lubridate::duration()}} object.
+After this length of time, code will be run again.}
 }
 \value{
-\code{TRUE} if the lockfile recording the
-onetime call exists, \code{FALSE} otherwise. Note that
-this doesn't take \code{expiry} into account.
+\code{TRUE} if the call has been recorded (within the
+\code{expiry} time, if given).
 }
 \description{
 Check if a onetime call has already been made

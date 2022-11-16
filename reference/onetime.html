@@ -65,15 +65,13 @@ the command line by calling <code><a href="check_ok_to_store.html">check_ok_to_s
 <p>Core functions include:</p><ul><li><p><code><a href="onetime_do.html">onetime_do()</a></code> runs arbitrary code only once.</p></li>
 <li><p><code><a href="onetime_warning.html">onetime_warning()</a></code> and friends print a warning or message only once.</p></li>
 <li><p><code><a href="onetime_message_confirm.html">onetime_message_confirm()</a></code> prints a message and asks
-"Show this message again?"
-<code><a href="onetime-rlang.html">onetime_rlang_warn()</a></code> and <code><a href="onetime-rlang.html">onetime_rlang_inform()</a></code> call <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::warn()</a></code>
-and <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::inform()</a></code> respectively.</p></li>
+"Show this message again?"</p></li>
+<li><p><code><a href="onetime-rlang.html">onetime_rlang_warn()</a></code> and <code><a href="onetime-rlang.html">onetime_rlang_inform()</a></code> print messages using
+functions from the rlang package.</p></li>
 <li><p><code><a href="onetime_only.html">onetime_only()</a></code> returns a function that runs only once.</p></li>
 <li><p><code><a href="check_ok_to_store.html">check_ok_to_store()</a></code> and <code><a href="set_ok_to_store.html">set_ok_to_store()</a></code> check for or grant
 permission to store lockfiles on the user's computer.</p></li>
-</ul><p><code>onetime</code> provides convenience functions to run R code only once per
-user. For example, you can show a startup message only the first time
-(ever) that a package is loaded.</p><div class="section">
+</ul><div class="section">
 <h3 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a></h3>
 
 

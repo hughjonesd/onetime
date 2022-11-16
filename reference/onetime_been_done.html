@@ -48,7 +48,11 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">onetime_been_done</span><span class="op">(</span>id <span class="op">=</span> <span class="fu">calling_package</span><span class="op">(</span><span class="op">)</span>, path <span class="op">=</span> <span class="fu">default_lockfile_dir</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">onetime_been_done</span><span class="op">(</span></span>
+<span>  id <span class="op">=</span> <span class="fu">calling_package</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  path <span class="op">=</span> <span class="fu">default_lockfile_dir</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  expiry <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -60,14 +64,18 @@
 <dt>path</dt>
 <dd><p>Directory to store lockfiles.</p></dd>
 
+
+<dt>expiry</dt>
+<dd><p><code><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime()</a></code> or e.g. <code>lubridate::duration()</code> object.
+After this length of time, code will be run again.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p><code>TRUE</code> if the lockfile recording the
-onetime call exists, <code>FALSE</code> otherwise. Note that
-this doesn't take <code>expiry</code> into account.</p>
+<p><code>TRUE</code> if the call has been recorded (within the
+<code>expiry</code> time, if given).</p>
     </div>
 
     <div class="section level2">

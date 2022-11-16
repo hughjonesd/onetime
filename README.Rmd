@@ -2,8 +2,6 @@
 output: github_document
 ---
 
-# onetime
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
@@ -23,6 +21,13 @@ knitr::opts_chunk$set(
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/hughjonesd/onetime?branch=master&svg=true)](https://ci.appveyor.com/project/hughjonesd/onetime)
 [![Codecov test coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg)](https://app.codecov.io/gh/hughjonesd/onetime?branch=master)
 <!-- badges: end -->
+
+# onetime
+
+> Listen very carefully. I shall say this only once.
+
+Michelle Dubois, *'Allo 'Allo*
+
 
 `onetime` provides convenience functions to run R code only once per user. For
 example, you can show a startup message only the first time (ever) that a

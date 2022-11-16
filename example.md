@@ -1,11 +1,9 @@
----
-title: "Documentation"
-output: github_document
----
+Documentation
+================
 
 ## Example
 
-```{r example}
+``` r
 library(onetime)
 ids  <- paste0("onetime-readme-", sample(1e9, 4))
 
@@ -16,7 +14,21 @@ for (i in 1:5) {
   onetime_warning("This warning will only be shown once.", id = ids[2])
   onetime_message("This message will only be shown once.", id = ids[3])
 }
+```
 
+    ## Loop  1  of 5
+    ## This command will only be run once.
+
+    ## Warning: This warning will only be shown once.
+
+    ## This message will only be shown once.
+
+    ## Loop  2  of 5
+    ## Loop  3  of 5
+    ## Loop  4  of 5
+    ## Loop  5  of 5
+
+``` r
 # Meanwhile, in a separate process:
 library(callr)
 result <- callr::r(function (ids) {
@@ -25,4 +37,4 @@ result <- callr::r(function (ids) {
 }, show = TRUE, args = list(ids = ids))
 ```
 
-
+    ## This message with a new ID will be shown.

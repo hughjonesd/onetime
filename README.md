@@ -1,6 +1,4 @@
 
-# onetime
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
@@ -12,6 +10,12 @@ status](https://ci.appveyor.com/api/projects/status/github/hughjonesd/onetime?br
 [![Codecov test
 coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg)](https://app.codecov.io/gh/hughjonesd/onetime?branch=master)
 <!-- badges: end -->
+
+# onetime
+
+> Listen very carefully. I shall say this only once.
+
+Michelle Dubois, *’Allo ’Allo*
 
 `onetime` provides convenience functions to run R code only once per
 user. For example, you can show a startup message only the first time

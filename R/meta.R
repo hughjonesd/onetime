@@ -81,9 +81,13 @@ check_ok_to_store <- function(
 
 #' Grant or revoke permission to store lockfiles on the user's computer
 #'
+#'End users may use this from the command line. Package authors should *only*
+#'call it if they cannot ask for permission interactively using
+#'`check_ok_to_store(ask = TRUE)`.
+#'
 #' @param ok `TRUE` to grant permission to store lockfiles, `FALSE` to revoke
-#'   it and unset `options("onetime.dir")`#'
-#' @return `TRUE` if the operation succeeded
+#'   it and unset `options("onetime.dir")`.
+#' @return `TRUE` if the operation succeeded.
 #' @export
 #'
 #' @examples

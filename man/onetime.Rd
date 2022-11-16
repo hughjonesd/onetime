@@ -22,16 +22,13 @@ Core functions include:
 \item \code{\link[=onetime_warning]{onetime_warning()}} and friends print a warning or message only once.
 \item \code{\link[=onetime_message_confirm]{onetime_message_confirm()}} prints a message and asks
 "Show this message again?"
-\code{\link[=onetime_rlang_warn]{onetime_rlang_warn()}} and \code{\link[=onetime_rlang_inform]{onetime_rlang_inform()}} call \code{\link[rlang:abort]{rlang::warn()}}
-and \code{\link[rlang:abort]{rlang::inform()}} respectively.
+\item \code{\link[=onetime_rlang_warn]{onetime_rlang_warn()}} and \code{\link[=onetime_rlang_inform]{onetime_rlang_inform()}} print messages using
+functions from the rlang package.
 \item \code{\link[=onetime_only]{onetime_only()}} returns a function that runs only once.
 \item \code{\link[=check_ok_to_store]{check_ok_to_store()}} and \code{\link[=set_ok_to_store]{set_ok_to_store()}} check for or grant
 permission to store lockfiles on the user's computer.
 }
 
-\code{onetime} provides convenience functions to run R code only once per
-user. For example, you can show a startup message only the first time
-(ever) that a package is loaded.
 \subsection{Example}{
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{library(onetime)

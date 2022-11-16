@@ -8,13 +8,15 @@ set_ok_to_store(ok = TRUE)
 }
 \arguments{
 \item{ok}{\code{TRUE} to grant permission to store lockfiles, \code{FALSE} to revoke
-it and unset \code{options("onetime.dir")}#'}
+it and unset \code{options("onetime.dir")}.}
 }
 \value{
-\code{TRUE} if the operation succeeded
+\code{TRUE} if the operation succeeded.
 }
 \description{
-Grant or revoke permission to store lockfiles on the user's computer
+End users may use this from the command line. Package authors should \emph{only}
+call it if they cannot ask for permission interactively using
+\code{check_ok_to_store(ask = TRUE)}.
 }
 \examples{
 \dontrun{

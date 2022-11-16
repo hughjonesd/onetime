@@ -17,8 +17,8 @@
 #' * [onetime_warning()] and friends print a warning or message only once.
 #' * [onetime_message_confirm()] prints a message and asks
 #'   "Show this message again?"
-#'   [onetime_rlang_warn()] and [onetime_rlang_inform()] call [rlang::warn()]
-#'   and [rlang::inform()] respectively.
+#' * [onetime_rlang_warn()] and [onetime_rlang_inform()] print messages using
+#'   functions from the rlang package.
 #' * [onetime_only()] returns a function that runs only once.
 #' * [check_ok_to_store()] and [set_ok_to_store()] check for or grant
 #'   permission to store lockfiles on the user's computer.

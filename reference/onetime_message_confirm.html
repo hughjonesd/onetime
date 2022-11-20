@@ -42,7 +42,7 @@ nothing."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/ma
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Print a message, and ask for confirmation to hide it in future</h1>
-      <small class="dont-index">Source: <a href="https://github.com/hughjonesd/onetime/blob/HEAD/R/onetime.R" class="external-link"><code>R/onetime.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/hughjonesd/onetime/blob/HEAD/R/messages.R" class="external-link"><code>R/messages.R</code></a></small>
       <div class="d-none name"><code>onetime_message_confirm.Rd</code></div>
     </div>
 
@@ -62,6 +62,7 @@ nothing.</p>
 <span>  confirm_prompt <span class="op">=</span> <span class="st">"Show this message again? [yN] "</span>,</span>
 <span>  confirm_answers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N"</span>, <span class="st">"n"</span>, <span class="st">"No"</span>, <span class="st">"no"</span><span class="op">)</span>,</span>
 <span>  default_answer <span class="op">=</span> <span class="st">"N"</span>,</span>
+<span>  require_permission <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  without_permission <span class="op">=</span> <span class="st">"warn"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -100,6 +101,12 @@ the message to be hidden in future.</p></dd>
 simply presses return.</p></dd>
 
 
+<dt>require_permission</dt>
+<dd><p>Logical. Ask permission to store files on the user's
+computer, if this hasn't been granted? Setting this to <code>FALSE</code>
+overrides <code>without_permission</code>.</p></dd>
+
+
 <dt>without_permission</dt>
 <dd><p>Character string. What to do if the user hasn't
 given permission to store files? <code>"warn"</code> runs the action with an extra
@@ -122,6 +129,12 @@ again?"</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>By default, the message will be hidden if the user answers
 "n", "No", or "N", or just presses return to the prompt question.</p>
+<p>Unlike other <code>onetime</code> functions, <code>onetime_message_confirm()</code> doesn't by
+default require permission to store files on the user's computer. The
+assumption is that saying "Don't show this message again" counts as
+granting permission (just for this one message). You can ask for broader
+permission by setting <code>require_permission = TRUE</code> and
+<code>without_permission = "ask"</code>.</p>
     </div>
 
     <div class="section level2">

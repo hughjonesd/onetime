@@ -1,4 +1,67 @@
 
+
+do_onetime_do <- function(
+        expr,
+        id      = calling_package(),
+        path    = default_lockfile_dir(),
+        expiry  = NULL,
+        default = NULL,
+        without_permission = c("warn", "run", "stop", "pass", "ask"),
+        require_permission = TRUE
+      ) {
+  force(id)
+  force(path)
+  without_permission = match.arg(without_permission)
+
+  if (require_permission) {
+    got_confirmation <- check_ok_to_store(ask = FALSE)
+    if (! got_confirmation) {
+      switch(without_permission,
+        warn = {
+          warning("Could not store onetime files.")
+          warning(options_info())
+          return(invisible(eval.parent(expr)))
+        },
+        ask  = {
+          result <- check_ok_to_store(ask = TRUE)
+          if (! result) return(default)
+        },
+        run  = return(invisible(eval.parent(expr))),
+        stop = stop("Could not store onetime files."),
+        pass = return(default),
+        # shouldn't ever get here
+        stop("Unrecognized value of `without_permission`: ", without_permission)
+      )
+    }
+  }
+
+  dir.create(path, showWarnings = FALSE, recursive = TRUE)
+  fp <- onetime_filepath(id, path)
+
+  lfp <- paste0(fp, ".lock")
+  lck <- filelock::lock(lfp)
+  on.exit(filelock::unlock(lck))
+
+  file_exists <- file.exists(fp)
+  file_expired <- if (file_exists && ! is.null(expiry)) {
+    file.mtime(fp) + expiry < Sys.time()
+  } else {
+    FALSE
+  }
+  if (! file_exists || file_expired) {
+    file.create(fp)
+    filelock::unlock(lck) # it's fine to do this twice, and quicker if
+                          # `expr` is slow to evaluate. It's also OK
+                          # to unlock once we've created the file;
+                          # other callers will then hit file.exists()
+                          # above
+    return(invisible(eval.parent(expr)))
+  } else {
+    return(default)
+  }
+}
+
+
 onetime_filepath <- function (id, path, check_writable = TRUE) {
   stopifnot(length(id) == 1L, nchar(id) > 0L, length(path) == 1L)
   if (check_writable) {

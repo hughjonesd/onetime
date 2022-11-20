@@ -70,6 +70,19 @@ test_that("onetime_message_confirm", {
                                   id = test_id("test-id-omc"))
   )
   expect_null(rv)
+
+  mockr::local_mock(
+    check_ok_to_store = function (...) FALSE,
+    my_readline = function (...) INPUT # don't know why I have to say this again
+                                       # but it seems I do...
+  )
+  INPUT <- "n"
+  expect_message(
+    rv <- onetime_message_confirm("Say N",
+                                 confirm_prompt = "Please enter n ",
+                                 id = test_id("test-id-omc-2"),
+                                 require_permission = FALSE)
+  )
 })
 
 

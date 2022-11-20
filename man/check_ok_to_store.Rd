@@ -40,15 +40,19 @@ Otherwise \code{FALSE}.
 \description{
 The onetime package works by storing lockfiles in
 \code{\link[rappdirs:user_data_dir]{rappdirs::user_config_dir()}}. It won't do so unless permission has been
-granted. Package authors should call \code{check_ok_to_store(ask = TRUE)} in
-an interactive session, in functions which are called directly from the
-command line.
+granted. Before using \code{onetime} functions, package authors should call
+\code{check_ok_to_store(ask = TRUE)} in an interactive session, in functions which
+are called directly from the command line.
 }
 \details{
 If your package is not used interactively, a workaround is to call
 \code{\link[=set_ok_to_store]{set_ok_to_store()}}. This grants permission and prints an informative
 message. Package owners should \emph{only} call this if they cannot ask
 explicitly.
+
+\code{\link[=onetime_message_confirm]{onetime_message_confirm()}} is an exception: by default it doesn't require
+global permission to store files, since the user accepting "Don't show this
+again" is considered sufficient.
 
 \code{ask = TRUE} asks the user, if he or she has not already given permission,
 and if the session is \code{\link[=interactive]{interactive()}}.

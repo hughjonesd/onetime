@@ -4,14 +4,18 @@
 #'
 #' The onetime package works by storing lockfiles in
 #' [rappdirs::user_config_dir()]. It won't do so unless permission has been
-#' granted. Package authors should call `check_ok_to_store(ask = TRUE)` in
-#' an interactive session, in functions which are called directly from the
-#' command line.
+#' granted. Before using `onetime` functions, package authors should call
+#' `check_ok_to_store(ask = TRUE)` in an interactive session, in functions which
+#' are called directly from the command line.
 #'
 #' If your package is not used interactively, a workaround is to call
 #' [set_ok_to_store()]. This grants permission and prints an informative
 #' message. Package owners should *only* call this if they cannot ask
 #' explicitly.
+#'
+#' [onetime_message_confirm()] is an exception: by default it doesn't require
+#' global permission to store files, since the user accepting "Don't show this
+#' again" is considered sufficient.
 #'
 #' @param ask `TRUE` to ask the user for permission.
 #' @inherit common-params
@@ -61,15 +65,14 @@ check_ok_to_store <- function(
     # or if we're non-interactive. Hence we check now for interactive()
     # and convert NULL to TRUE below.
     message <- sprintf(message, onetime_config_dir)
-    oo <- options("onetime.dont.recurse" = TRUE)
-    on.exit(options(oo))
     omc_result <- onetime_message_confirm(
                     message         = message,
                     id              = ok_to_store_id,
                     path            = onetime_config_dir,
                     confirm_prompt  = confirm_prompt,
                     confirm_answers = confirm_answers,
-                    default_answer  = default_answer
+                    default_answer  = default_answer,
+                    require_permission  = FALSE
                   )
 
     return(! isFALSE(omc_result))
@@ -110,10 +113,9 @@ set_ok_to_store <- function (ok = TRUE) {
     message("Lockfiles are stored beneath '", onetime_base_dir(), "'.")
     message("You can revoke permission by calling:")
     message("  onetime::set_ok_to_store(FALSE)")
-    oo <- options("onetime.dont.recurse" = TRUE)
-    on.exit(options(oo))
-    onetime_do(TRUE, id = ok_to_store_id, path = onetime_config_dir,
-               default = TRUE)
+
+    do_onetime_do(TRUE, id = ok_to_store_id, path = onetime_config_dir,
+                  default = TRUE, require_permission = FALSE)
   } else {
     stop("`ok` was not TRUE or FALSE")
   }

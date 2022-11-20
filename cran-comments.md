@@ -4,9 +4,15 @@
   - Local MacOS, R 4.2.0
   - github Windows/MacOS/Linux
   - Appveyor Windows
+  - CRAN Macbuilder
+  - CRAN Winbuilder
 
 0 errors | 0 warnings | 0 notes
 
+* Winbuilder has a note about "lockfiles" being misspelt. I say this is a false
+  positive. We all know what a lockfile is, and a "lock file" would sound 
+  confusing.
+  
 * This is a new release.
 
 The onetime package is designed for package authors to perform actions or show

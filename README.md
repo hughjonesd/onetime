@@ -1,6 +1,5 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- badges: start -->
 
 [![Lifecycle:
@@ -23,7 +22,7 @@ user. For example, you can show a startup message only the first time
 (ever) that a package is loaded.
 
 For more information, see the
-[website](https://hughjonesd.github.io/onetime).
+[website](https://hughjonesd.github.io/onetime/).
 
 ## Example
 

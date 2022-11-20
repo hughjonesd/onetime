@@ -33,7 +33,7 @@ Michelle Dubois, *'Allo 'Allo*
 example, you can show a startup message only the first time (ever) that a
 package is loaded.
 
-For more information, see the [website](https://hughjonesd.github.io/onetime).
+For more information, see the [website](https://hughjonesd.github.io/onetime/).
 
 ```{r, child = "example.Rmd"} 
 ```

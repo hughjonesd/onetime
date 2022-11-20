@@ -4,3 +4,5 @@
 .Ruserdata
 \.DS_store
 /README.html
+# docs is here because github builds pkgdown itself
+docs

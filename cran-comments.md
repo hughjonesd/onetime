@@ -9,16 +9,11 @@
 
 * This is a new release.
 
-* The onetime package uses configuration files in the user's configuration
-  directory to record if code has been run. 
-  
-When loaded in an interactive session, it asks (one time only!) for permission 
-to do this. When loaded in a non-interactive session, it tells the user that 
-it's using the directory, and explains how to change the default directory 
-using `options()`.
-
-This package is intended to be used by other package authors, not by users 
-directly, so `.onLoad()` seems more appropriate than `onAttach()`.
-
+The onetime package is designed for package authors to perform actions or show
+messages once only (ever). It uses lockfiles in the user's
+configuration directory to record if code has been run. Files won't be
+stored unless the user has given permission; package authors are encouraged
+to call `check_ok_to_store(ask = TRUE)` in an interactive session, which
+asks for permission to store lockfiles. 
 
 

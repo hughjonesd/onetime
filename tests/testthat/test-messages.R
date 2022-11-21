@@ -9,8 +9,7 @@ test_id <- function (id) {
   return(id)
 }
 
-# set explicitly from here on
-oo <- options("onetime.dir" = onetime:::onetime_base_dir())
+oo <- options(onetime.dir = tempdir(check = TRUE))
 
 
 test_that("onetime_warning/message/startup_message", {

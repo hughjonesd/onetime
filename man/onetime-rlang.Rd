@@ -45,12 +45,13 @@ running the action but before recording it on disk.}
 If you use these you will need to add \code{"rlang"} to your package dependencies.
 }
 \examples{
-\dontrun{
+oo <- options(onetime.dir = tempdir(check = TRUE))
 id <- sample(10000L, 1)
+
 for (n in 1:3) {
   onetime_rlang_warn(c("rlang-style warning", i = "Extra info"), id = id)
 }
 
 onetime_reset(id = id)
-}
+options(oo)
 }

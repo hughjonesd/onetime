@@ -9,7 +9,7 @@ test_id <- function (id) {
   return(id)
 }
 
-suppressWarnings(set_ok_to_store(TRUE))
+oo <- options(onetime.dir = tempdir(check = TRUE))
 
 
 test_that("onetime_do", {
@@ -56,7 +56,7 @@ test_that("onetime_been_done", {
   expect_true(
     onetime_been_done(id = id)
   )
-  
+
   expiry <- as.difftime(1, units = "secs")
   Sys.sleep(2)
   expect_false(
@@ -102,11 +102,11 @@ test_that("without_permission", {
     }
   )
 
-  set_ok_to_store(FALSE)
+  suppressWarnings(set_ok_to_store(FALSE))
   withr::defer(suppressWarnings(set_ok_to_store(TRUE)))
 
   if (interactive()) {
-    cat("\nPlease say n next\n")
+    print("Please say n next")
   } else {
     mockr::local_mock(
       check_ok_to_store = function(...) FALSE
@@ -120,7 +120,7 @@ test_that("without_permission", {
   )
 
   if (interactive()) {
-    cat("\nPlease say y next\n")
+    print("Please say y next")
   } else {
     mockr::local_mock(
       check_ok_to_store = function(...) TRUE
@@ -160,3 +160,4 @@ for (id in IDS) {
   suppressWarnings(onetime_reset(id))
 }
 rm(IDS)
+options(oo)

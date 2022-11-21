@@ -40,9 +40,9 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#'
 #' check_ok_to_store()
-#' }
+#'
 check_ok_to_store <- function(
     ask                = FALSE,
     message            = "The onetime package requests to store files in '%s'.",

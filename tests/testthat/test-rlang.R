@@ -9,8 +9,7 @@ test_id <- function (id) {
   return(id)
 }
 
-oo <- options("onetime.dir" = onetime:::onetime_base_dir())
-
+oo <- options(onetime.dir = tempdir(check = TRUE))
 
 test_that("onetime_rlang_warn", {
     expect_warning(

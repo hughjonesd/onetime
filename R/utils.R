@@ -10,15 +10,16 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1)
-#' onetime_do(print("will be shown"),  id = id)
-#' onetime_do(print("won't be shown"), id = id)
+#'
+#' onetime_message("will be shown",  id = id)
+#' onetime_message("won't be shown", id = id)
 #' onetime_reset(id = id)
-#' onetime_do(print("will be shown"),  id = id)
+#' onetime_message("will be shown",  id = id)
 #'
 #' onetime_reset(id = id)
-#' }
+#' options(oo)
 onetime_reset <- function (
         id   = calling_package(),
         path = default_lockfile_dir()
@@ -46,14 +47,15 @@ onetime_reset <- function (
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1)
+#'
 #' onetime_been_done(id = id)
-#' onetime_do(cat("Creating an ID"),  id = id)
+#' onetime_message("Creating an ID",  id = id)
 #' onetime_been_done(id = id)
 #'
 #' onetime_reset(id = id)
-#' }
+#' options(oo)
 onetime_been_done <- function (
         id   = calling_package(),
         path = default_lockfile_dir(),

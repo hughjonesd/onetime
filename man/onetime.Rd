@@ -64,7 +64,8 @@ result <- callr::r(function (ids) \{
 \}, show = TRUE, args = list(ids = ids))
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## This message with a new ID will be shown.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## This message with an existing ID will not be shown.
+## This message with a new ID will be shown.
 }\if{html}{\out{</div>}}
 }
 }

@@ -18,13 +18,14 @@ The result of \code{file.remove()}, invisibly.
 Reset a onetime call by ID
 }
 \examples{
-\dontrun{
+oo <- options(onetime.dir = tempdir(check = TRUE))
 id <- sample(10000L, 1)
-onetime_do(print("will be shown"),  id = id)
-onetime_do(print("won't be shown"), id = id)
+
+onetime_message("will be shown",  id = id)
+onetime_message("won't be shown", id = id)
 onetime_reset(id = id)
-onetime_do(print("will be shown"),  id = id)
+onetime_message("will be shown",  id = id)
 
 onetime_reset(id = id)
-}
+options(oo)
 }

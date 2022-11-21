@@ -1,21 +1,23 @@
 
 test_that("set_ok_to_store", {
-  oo <- options("onetime.dir" = onetime_base_dir(""))
+  oo <- options(onetime.dir = tempdir(check = TRUE))
   withr::defer({
     options(oo)
-    suppressWarnings(set_ok_to_store(TRUE))
   })
 
+  suppressWarnings(set_ok_to_store(TRUE))
   expect_message(set_ok_to_store(FALSE))
   expect_null(getOption("onetime.dir"))
+  oo <- options(onetime.dir = tempdir(check = TRUE))
   expect_message(set_ok_to_store(TRUE), "set_ok_to_store")
 })
 
 
 test_that("check_ok_to_store(ask = FALSE)", {
+  skip_on_cran()
   suppressWarnings(set_ok_to_store(FALSE))
   withr::defer({
-    suppressWarnings(set_ok_to_store(TRUE))
+    oo <- options(onetime.dir = tempdir(check = TRUE))
   })
 
   withr::with_options(list(onetime.dir = NULL), {

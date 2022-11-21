@@ -62,7 +62,7 @@ and ignored otherwise. A \code{"\%s"} in \code{message} will be replaced by the
 onetime storage directory.
 }
 \examples{
-\dontrun{
+
 check_ok_to_store()
-}
+
 }

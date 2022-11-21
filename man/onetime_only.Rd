@@ -34,15 +34,15 @@ multiple locations. This frees you from having to use the same \code{id} multipl
 times.
 }
 \examples{
-\dontrun{
+oo <- options(onetime.dir = tempdir(check = TRUE))
 id <- sample(10000L, 1)
 
-cat_once <- onetime_only(cat, id = id)
-cat_once("Purrr!")
-cat_once("Miaow!")
+sample_once <- onetime_only(sample, id = id)
+sample_once(1:10)
+sample_once(1:10)
 
 onetime_reset(id)
-}
+options(oo)
 }
 \seealso{
 \code{\link[=onetime_do]{onetime_do()}}

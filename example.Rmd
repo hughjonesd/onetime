@@ -5,6 +5,10 @@ output: github_document
 
 ## Example
 
+```{r setup, echo = FALSE}
+oo <- options(onetime.dir = tempdir(check = TRUE))
+```
+
 ```{r example}
 library(onetime)
 ids  <- paste0("onetime-readme-", sample(1e9, 4))
@@ -25,4 +29,8 @@ result <- callr::r(function (ids) {
 }, show = TRUE, args = list(ids = ids))
 ```
 
+
+```{r, echo = FALSE}
+options(oo)
+```
 

@@ -27,6 +27,5 @@
 #'
 #' @name onetime
 #' @docType package
-
 NULL
 

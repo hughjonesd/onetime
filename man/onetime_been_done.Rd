@@ -26,12 +26,13 @@ After this length of time, code will be run again.}
 Check if a onetime call has already been made
 }
 \examples{
-\dontrun{
+oo <- options(onetime.dir = tempdir(check = TRUE))
 id <- sample(10000L, 1)
+
 onetime_been_done(id = id)
-onetime_do(cat("Creating an ID"),  id = id)
+onetime_message("Creating an ID",  id = id)
 onetime_been_done(id = id)
 
 onetime_reset(id = id)
-}
+options(oo)
 }

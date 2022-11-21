@@ -13,14 +13,15 @@
 #' @seealso [onetime_do()]
 #'
 #' @examples
-#' \dontrun{
+#' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1)
+#'
 #' for (n in 1:3) {
 #'   onetime_warning("will be shown once", id = id)
 #' }
 #'
 #' onetime_reset(id = id)
-#' }
+#' options(oo)
 onetime_warning <- function(...,
         id     = calling_package(),
         path   = default_lockfile_dir(),
@@ -93,12 +94,13 @@ onetime_startup_message <- function (...,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1L)
+#'
 #' onetime_message_confirm("A message to show one or more times", id = id)
 #'
 #' onetime_reset(id = id)
-#' }
+#' options(oo)
 onetime_message_confirm <- function (message,
   id              = calling_package(),
   path            = default_lockfile_dir(),

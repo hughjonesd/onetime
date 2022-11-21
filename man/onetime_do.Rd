@@ -59,12 +59,13 @@ be run, so it may be run repeatedly. Conversely, if the call gives an error,
 the lockfile is still written.
 }
 \examples{
-\dontrun{
+oo <- options(onetime.dir = tempdir(check = TRUE))
 id <- sample(10000L, 1L)
+
 for (n in 1:3) {
   onetime_do(print("printed once"), id = id)
 }
 
 onetime_reset(id = id)
-}
+options(oo)
 }

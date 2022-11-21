@@ -69,10 +69,11 @@ permission by setting \code{require_permission = TRUE} and
 \code{without_permission = "ask"}.
 }
 \examples{
-\dontrun{
+oo <- options(onetime.dir = tempdir(check = TRUE))
 id <- sample(10000L, 1L)
+
 onetime_message_confirm("A message to show one or more times", id = id)
 
 onetime_reset(id = id)
-}
+options(oo)
 }

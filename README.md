@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 [![Lifecycle:
@@ -9,6 +10,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://ci.appveyor.com/api/projects/status/github/hughjonesd/onetime?branch=master&svg=true)](https://ci.appveyor.com/project/hughjonesd/onetime)
 [![Codecov test
 coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg)](https://app.codecov.io/gh/hughjonesd/onetime?branch=master)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/onetime)](https://CRAN.R-project.org/package=onetime)
 <!-- badges: end -->
 
 # onetime
@@ -52,6 +55,7 @@ result <- callr::r(function (ids) {
   onetime::onetime_message("This message with an existing ID will not be shown.", id = ids[1])
   onetime::onetime_message("This message with a new ID will be shown.", id = ids[4])
 }, show = TRUE, args = list(ids = ids))
+#> This message with an existing ID will not be shown.
 #> This message with a new ID will be shown.
 ```
 

@@ -31,7 +31,7 @@ knitr::opts_chunk$set(
 Michelle Dubois, *'Allo 'Allo*
 
 
-`onetime` provides convenience functions to run R code only once per user. For
+The onetime package provides convenience functions to run R code only once per user. For
 example, you can show a startup message only the first time (ever) that a
 package is loaded.
 
@@ -41,6 +41,12 @@ For more information, see the [website](https://hughjonesd.github.io/onetime/).
 ```
 
 ## Installation
+
+Onetime is now on CRAN. You can install it with:
+
+``` r
+install.packages("onetime")
+```
 
 You can install the development version from [GitHub](https://github.com/) with:
 

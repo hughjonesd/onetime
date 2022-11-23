@@ -21,9 +21,9 @@ coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg
 
 Michelle Dubois, *’Allo ’Allo*
 
-`onetime` provides convenience functions to run R code only once per
-user. For example, you can show a startup message only the first time
-(ever) that a package is loaded.
+The onetime package provides convenience functions to run R code only
+once per user. For example, you can show a startup message only the
+first time (ever) that a package is loaded.
 
 For more information, see the
 [website](https://hughjonesd.github.io/onetime/).
@@ -61,6 +61,12 @@ result <- callr::r(function (ids) {
 ```
 
 ## Installation
+
+Onetime is now on CRAN. You can install it with:
+
+``` r
+install.packages("onetime")
+```
 
 You can install the development version from
 [GitHub](https://github.com/) with:

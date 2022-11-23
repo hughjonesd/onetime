@@ -5,6 +5,7 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/onetime)](https://CRAN.R-project.org/package=onetime)
+[![R-universe](https://hughjonesd.r-universe.dev/badges/onetime)](https://hughjonesd.r-universe.dev/ui#package:onetime)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/hughjonesd/onetime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hughjonesd/onetime/actions/workflows/R-CMD-check.yaml)

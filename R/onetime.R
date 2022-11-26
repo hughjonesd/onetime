@@ -68,7 +68,7 @@ onetime_do <- function(
       ) {
   do_onetime_do(expr = expr, id = id, path = path, expiry = expiry,
                 default = default, without_permission = without_permission,
-                require_permission = TRUE)
+                require_permission = TRUE, invisible = TRUE)
 }
 
 
@@ -82,7 +82,8 @@ onetime_do <- function(
 #' @param .f A function
 #' @inherit common-params
 #'
-#' @return A wrapped function.
+#' @return A wrapped function. Note: the wrapper returns `NULL` if the
+#'   inner function was not called.
 #'
 #' @export
 #'
@@ -107,6 +108,9 @@ onetime_only <- function (
   force(id)
   force(path)
   force(without_permission)
-  function (...) onetime_do(.f(...), id = id, path = path,
-                            without_permission = without_permission)
+  function (...) {
+    do_onetime_do(.f(...), id = id, path = path,
+                            without_permission = without_permission,
+                            invisible = FALSE)
+  }
 }

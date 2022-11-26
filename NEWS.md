@@ -12,6 +12,8 @@
 
 * `onetime_message_confirm()` now returns its results invisibly. This is nicer
   for rmarkdown documents.
+
+* `onetime_only()` now respects the visibility of the wrapped function.
   
 # onetime 0.1.0
 

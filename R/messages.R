@@ -153,7 +153,7 @@ onetime_message_confirm <- function (
 
   answer <- do_onetime_do(confirmation, id = id, path = path, expiry = expiry,
                        without_permission = without_permission,
-                       require_permission = require_permission)
+                       require_permission = require_permission, invisible = TRUE)
   if (is.null(answer)) return(invisible(NULL))
 
   if (answer == "") answer <- default_answer

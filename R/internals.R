@@ -7,7 +7,8 @@ do_onetime_do <- function(
         expiry  = NULL,
         default = NULL,
         without_permission = c("warn", "run", "stop", "pass", "ask"),
-        require_permission = TRUE
+        require_permission = TRUE,
+        invisible = TRUE
       ) {
   force(id)
   force(path)
@@ -55,7 +56,9 @@ do_onetime_do <- function(
                           # to unlock once we've created the file;
                           # other callers will then hit file.exists()
                           # above
-    return(invisible(eval.parent(expr)))
+    result <- eval.parent(expr)
+    if (invisible) result <- invisible(result)
+    return(result)
   } else {
     return(default)
   }

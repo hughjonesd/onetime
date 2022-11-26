@@ -25,7 +25,8 @@ default; \code{"stop"} throws an error; \code{"ask"} asks for permission, after
 running the action but before recording it on disk.}
 }
 \value{
-A wrapped function.
+A wrapped function. Note: the wrapper returns \code{NULL} if the
+inner function was not called.
 }
 \description{
 This takes a function and returns the same function wrapped by \code{\link[=onetime_do]{onetime_do()}}.

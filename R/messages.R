@@ -97,6 +97,8 @@ onetime_startup_message <- function (...,
 #'   choose to hide the message, or non-interactive session and `noninteractive`
 #'   was not `NULL`).
 #'
+#' Results are returned invisibly.
+#'
 #' Note that by default, `TRUE` is returned when the user answers "no" to
 #' "Show this message again?" and `FALSE` is returned when the user answers
 #' "yes".
@@ -135,11 +137,11 @@ onetime_message_confirm <- function (
 
   if (! my_interactive()) {
     if (is.null(noninteractive)) {
-      return(NULL) # message not shown
+      return(invisible(NULL)) # message not shown
     } else {
       dots[length(dots) + 1:2] <- c("\n", noninteractive)
       do.call(base::message, dots)
-      return(FALSE) # user did not confirm
+      return(invisible(FALSE)) # user did not confirm
     }
   }
 
@@ -152,12 +154,12 @@ onetime_message_confirm <- function (
   answer <- do_onetime_do(confirmation, id = id, path = path, expiry = expiry,
                        without_permission = without_permission,
                        require_permission = require_permission)
-  if (is.null(answer)) return(NULL)
+  if (is.null(answer)) return(invisible(NULL))
 
   if (answer == "") answer <- default_answer
   if (! answer %in% confirm_answers) {
     onetime_reset(id, path)
   }
 
-  return(answer %in% confirm_answers)
+  return(invisible(answer %in% confirm_answers))
 }

@@ -59,10 +59,15 @@ result <- callr::r(function (ids) {
 #> This message with a new ID will be shown.
 
 
-# Printing a message with the ability to hide it in future
-# onetime_message_confirm("A message that the user might want to hide.
-#                         In non-interactive sessions, instructions will
-#                         be shown for hiding it manually.", id = ids[5])
+# Letting the user hide a message:
+onetime_message_confirm("A message that the user might want to hide.\n",
+                        "In non-interactive sessions, instructions will ",
+                        "be shown for hiding it manually.", id = ids[5])
+#> A message that the user might want to hide.
+#> In non-interactive sessions, instructions will be shown for hiding it manually.
+#> To hide this message in future, run:
+#>   onetime_mark_as_done(id = "onetime-readme-918731279")
+#> [1] FALSE
 ```
 
 ## Installation

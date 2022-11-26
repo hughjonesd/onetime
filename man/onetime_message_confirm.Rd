@@ -64,6 +64,8 @@ choose to hide the message, or non-interactive session and \code{noninteractive}
 was not \code{NULL}).
 }
 
+Results are returned invisibly.
+
 Note that by default, \code{TRUE} is returned when the user answers "no" to
 "Show this message again?" and \code{FALSE} is returned when the user answers
 "yes".

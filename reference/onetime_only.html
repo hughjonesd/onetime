@@ -94,7 +94,8 @@ running the action but before recording it on disk.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A wrapped function.</p>
+<p>A wrapped function. Note: the wrapper returns <code>NULL</code> if the
+inner function was not called.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -108,6 +109,7 @@ running the action but before recording it on disk.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sample_once</span> <span class="op">&lt;-</span> <span class="fu">onetime_only</span><span class="op">(</span><span class="va">sample</span>, id <span class="op">=</span> <span class="va">id</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">sample_once</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1  2  4  5  3  7  6  9 10  8</span>
 <span class="r-in"><span><span class="fu">sample_once</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-in"><span></span></span>

@@ -8,6 +8,7 @@ onetime_only(
   .f,
   id = calling_package(),
   path = default_lockfile_dir(),
+  default = NULL,
   without_permission = "warn"
 )
 }
@@ -18,6 +19,8 @@ onetime_only(
 
 \item{path}{Directory to store lockfiles.}
 
+\item{default}{Value to return from \code{.f} if function was not executed.}
+
 \item{without_permission}{Character string. What to do if the user hasn't
 given permission to store files? \code{"warn"} runs the action with an extra
 warning; \code{"run"} runs the action; \code{"pass"} does nothing and returns the
@@ -25,8 +28,8 @@ default; \code{"stop"} throws an error; \code{"ask"} asks for permission, after
 running the action but before recording it on disk.}
 }
 \value{
-A wrapped function. Note: the wrapper returns \code{NULL} if the
-inner function was not called.
+A wrapped function. The function itself returns the result of \code{.f},
+or  \code{default} if the inner function was not called.
 }
 \description{
 This takes a function and returns the same function wrapped by \code{\link[=onetime_do]{onetime_do()}}.

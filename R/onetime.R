@@ -81,9 +81,11 @@ onetime_do <- function(
 #'
 #' @param .f A function
 #' @inherit common-params
+#' @param default Value to return from `.f` if function was not executed.
 #'
-#' @return A wrapped function. Note: the wrapper returns `NULL` if the
-#'   inner function was not called.
+#' @return 
+#' A wrapped function. The function itself returns the result of `.f`,
+#' or  `default` if the inner function was not called.
 #'
 #' @export
 #'
@@ -103,6 +105,7 @@ onetime_only <- function (
         .f,
         id   = calling_package(),
         path = default_lockfile_dir(),
+	default = NULL,
         without_permission = "warn"
       ) {
   force(id)
@@ -111,6 +114,6 @@ onetime_only <- function (
   function (...) {
     do_onetime_do(.f(...), id = id, path = path,
                             without_permission = without_permission,
-                            invisible = FALSE)
+			    default = default, invisible = FALSE)
   }
 }

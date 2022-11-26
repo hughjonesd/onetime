@@ -13,7 +13,11 @@
 * `onetime_message_confirm()` now returns its results invisibly. This is nicer
   for rmarkdown documents.
 
+* `onetime_only()` gains a `default` argument which is returned by the
+  wrapper function if the inner function was not called. 
+
 * `onetime_only()` now respects the visibility of the wrapped function.
+
   
 # onetime 0.1.0
 

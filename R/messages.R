@@ -66,8 +66,7 @@ onetime_startup_message <- function (...,
 #' Print a message, and ask for confirmation to hide it in future
 #'
 #' This uses [readline()] to ask the user if the message should
-#' be shown again in future. In a non-interactive session, it does
-#' nothing.
+#' be shown again in future.
 #'
 #' By default, the message will be hidden if the user answers
 #' "n", "No", or "N", or just presses return to the prompt question.
@@ -81,15 +80,26 @@ onetime_startup_message <- function (...,
 #'
 #'
 #' @inherit common-params
+#' @param ... Passed to [message()].
 #' @param require_permission Logical. Ask permission to store files on the user's
 #'  computer, if this hasn't been granted? Setting this to `FALSE`
 #'  overrides `without_permission`.
+#' @param noninteractive String. Additional message to send in non-interactive
+#'  sessions. Set to `NULL` to do nothing in non-interactive sessions. The
+#'  default tells the user how to manually mark the message as done.
+#' @param message `r lifecycle::badge("deprecated")`
 #'
-#' @return `NULL` if the message was not shown (shown already or non-interactive
-#'   session). `TRUE` if the user confirmed (i.e. asked to hide the message).
-#'   `FALSE` if the message was shown but the user did not confirm. Note that by
-#'   default, `TRUE` is returned when the user answers "no" to "Show this message
-#'   again?"
+#' @return
+#' * `NULL` if the message was not shown (shown already or non-interactive
+#'   session and `noninteractive` was `NULL`).
+#' * `TRUE` if the user confirmed, i.e. chose to hide the message.
+#' * `FALSE` if the message was shown but the user did not confirm (did not
+#'   choose to hide the message, or non-interactive session and `noninteractive`
+#'   was not `NULL`).
+#'
+#' Note that by default, `TRUE` is returned when the user answers "no" to
+#' "Show this message again?" and `FALSE` is returned when the user answers
+#' "yes".
 #'
 #' @export
 #'
@@ -101,20 +111,40 @@ onetime_startup_message <- function (...,
 #'
 #' onetime_reset(id = id)
 #' options(oo)
-onetime_message_confirm <- function (message,
-  id              = calling_package(),
-  path            = default_lockfile_dir(),
-  expiry          = NULL,
-  confirm_prompt  = "Show this message again? [yN] ",
-  confirm_answers = c("N", "n", "No", "no"),
-  default_answer  = "N",
-  require_permission  = FALSE,
-  without_permission = "warn"
+onetime_message_confirm <- function (
+  ...,
+  id                 = calling_package(),
+  path               = default_lockfile_dir(),
+  expiry             = NULL,
+  confirm_prompt     = "Show this message again? [yN] ",
+  confirm_answers    = c("N", "n", "No", "no"),
+  default_answer     = "N",
+  require_permission = FALSE,
+  without_permission = "warn",
+  noninteractive     = paste0(
+    "To hide this message in future, run:\n",
+    "  onetime_mark_as_done(id = \"", id, "\")"),
+  message            = deprecated()
 ) {
-  if (! my_interactive()) return(NULL)
+  dots <- list(...)
+  if (lifecycle::is_present(message)) {
+    lifecycle::deprecate_soft("0.2.0", "onetime_message_confirm(message)",
+                   "onetime_message_confirm(...)")
+    dots <- list(message)
+  }
+
+  if (! my_interactive()) {
+    if (is.null(noninteractive)) {
+      return(NULL) # message not shown
+    } else {
+      dots[length(dots) + 1:2] <- c("\n", noninteractive)
+      do.call(base::message, dots)
+      return(FALSE) # user did not confirm
+    }
+  }
 
   confirmation <- expression({
-    message(message)
+    do.call(base::message, dots)
     answer <- my_readline(confirm_prompt)
     answer
   })

@@ -57,6 +57,11 @@ If the lockfile cannot be written (e.g. because the user has not given
 permission to store files on his or her computer), then the call will still
 be run, so it may be run repeatedly. Conversely, if the call gives an error,
 the lockfile is still written.
+
+\code{expiry} is backward-looking. That is, \code{expiry} is used at check time to see if
+the lockfile was written after \code{Sys.time() - expiry}. It is not used when
+the lockfile is created. So, you should set \code{expiry} to the same value whenever
+you call \code{onetime_do()}. See the example.
 }
 \examples{
 oo <- options(onetime.dir = tempdir(check = TRUE))
@@ -66,6 +71,16 @@ for (n in 1:3) {
   onetime_do(print("printed once"), id = id)
 }
 
+# expiry is "backward-looking":
+id2 <- sample(10000L, 1L)
+expiry <- as.difftime(1, units = "secs")
+onetime_do(print("Expires quickly, right?"), id = id2, expiry = expiry)
+Sys.sleep(2)
+onetime_do(print("This won't be shown..."), id = id2)
+onetime_do(print("... but this will"), id = id2, expiry = expiry)
+
+
 onetime_reset(id = id)
+onetime_reset(id = id2)
 options(oo)
 }

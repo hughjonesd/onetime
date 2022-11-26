@@ -5,7 +5,7 @@
 \title{Print a message, and ask for confirmation to hide it in future}
 \usage{
 onetime_message_confirm(
-  message,
+  ...,
   id = calling_package(),
   path = default_lockfile_dir(),
   expiry = NULL,
@@ -13,11 +13,14 @@ onetime_message_confirm(
   confirm_answers = c("N", "n", "No", "no"),
   default_answer = "N",
   require_permission = FALSE,
-  without_permission = "warn"
+  without_permission = "warn",
+  noninteractive = paste0("To hide this message in future, run:\\n",
+    "  onetime_mark_as_done(id = \\"", id, "\\")"),
+  message = deprecated()
 )
 }
 \arguments{
-\item{message}{Message to display to the user.}
+\item{...}{Passed to \code{\link[=message]{message()}}.}
 
 \item{id}{Unique ID string. By default, name of the calling package.}
 
@@ -44,18 +47,30 @@ given permission to store files? \code{"warn"} runs the action with an extra
 warning; \code{"run"} runs the action; \code{"pass"} does nothing and returns the
 default; \code{"stop"} throws an error; \code{"ask"} asks for permission, after
 running the action but before recording it on disk.}
+
+\item{noninteractive}{String. Additional message to send in non-interactive
+sessions. Set to \code{NULL} to do nothing in non-interactive sessions. The
+default tells the user how to manually mark the message as done.}
+
+\item{message}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
 \value{
-\code{NULL} if the message was not shown (shown already or non-interactive
-session). \code{TRUE} if the user confirmed (i.e. asked to hide the message).
-\code{FALSE} if the message was shown but the user did not confirm. Note that by
-default, \code{TRUE} is returned when the user answers "no" to "Show this message
-again?"
+\itemize{
+\item \code{NULL} if the message was not shown (shown already or non-interactive
+session and \code{noninteractive} was \code{NULL}).
+\item \code{TRUE} if the user confirmed, i.e. chose to hide the message.
+\item \code{FALSE} if the message was shown but the user did not confirm (did not
+choose to hide the message, or non-interactive session and \code{noninteractive}
+was not \code{NULL}).
+}
+
+Note that by default, \code{TRUE} is returned when the user answers "no" to
+"Show this message again?" and \code{FALSE} is returned when the user answers
+"yes".
 }
 \description{
 This uses \code{\link[=readline]{readline()}} to ask the user if the message should
-be shown again in future. In a non-interactive session, it does
-nothing.
+be shown again in future.
 }
 \details{
 By default, the message will be hidden if the user answers

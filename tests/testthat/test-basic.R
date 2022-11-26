@@ -65,6 +65,20 @@ test_that("onetime_been_done", {
 })
 
 
+test_that("onetime_mark_as_done", {
+  id <- test_id("test-id-mark-as-done")
+  expect_true(
+    onetime_mark_as_done(id = id)
+  )
+  expect_null(
+    onetime_do(TRUE, id = id)
+  )
+  expect_false(
+    onetime_mark_as_done(id = id)
+  )
+})
+
+
 test_that("expiry", {
   expiry <- as.difftime(1, units = "secs")
   expect_message(

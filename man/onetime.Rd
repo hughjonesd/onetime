@@ -32,7 +32,7 @@ permission to store lockfiles on the user's computer.
 \subsection{Example}{
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{library(onetime)
-ids  <- paste0("onetime-readme-", sample(1e9, 4))
+ids  <- paste0("onetime-readme-", sample(1e9, 5L))
 
 
 for (i in 1:5) \{
@@ -66,6 +66,12 @@ result <- callr::r(function (ids) \{
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## This message with an existing ID will not be shown.
 ## This message with a new ID will be shown.
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Printing a message with the ability to hide it in future
+# onetime_message_confirm("A message that the user might want to hide.
+#                         In non-interactive sessions, instructions will
+#                         be shown for hiding it manually.", id = ids[5])
 }\if{html}{\out{</div>}}
 }
 }

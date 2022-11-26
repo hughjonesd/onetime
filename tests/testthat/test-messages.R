@@ -70,6 +70,14 @@ test_that("onetime_message_confirm", {
   )
   expect_null(rv)
 
+  lifecycle::expect_deprecated(
+    onetime_message_confirm(message = "Should be ...",
+                            id = test_id("test-id-omc-deprecated"))
+  )
+})
+
+
+test_that("onetime_message_confirm require_permission", {
   mockr::local_mock(
     check_ok_to_store = function (...) FALSE,
     my_readline = function (...) INPUT # don't know why I have to say this again
@@ -81,6 +89,25 @@ test_that("onetime_message_confirm", {
                                  confirm_prompt = "Please enter n ",
                                  id = test_id("test-id-omc-2"),
                                  require_permission = FALSE)
+  )
+})
+
+
+test_that("onetime_message_confirm noninteractive", {
+  mockr::local_mock(
+    check_ok_to_store = function (...) TRUE,
+    my_interactive = function (...) FALSE,
+  )
+
+  expect_message(
+    onetime_message_confirm("onetime_message_confirm",
+                            id = test_id("test-id-omc-3")),
+    "onetime_mark_as_done"
+  )
+
+  expect_silent(
+    onetime_message_confirm("onetime_message_confirm", noninteractive = NULL,
+                            id = test_id("test-id-omc-4"))
   )
 })
 

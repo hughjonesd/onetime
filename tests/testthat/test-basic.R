@@ -31,9 +31,14 @@ test_that("onetime_do", {
 
 
 test_that("onetime_only", {
-  cat_once <- onetime_only(cat, id = test_id("test-id-6"))
+  cat_once <- onetime_only(cat, id = test_id("test-id-oo-1"))
   expect_output(cat_once("foo"), "foo")
   expect_silent(cat_once("foo"))
+
+  f <- function () TRUE
+  f_once <- onetime_only(f, id = test_id("test-id-oo-2"), default = FALSE)
+  expect_true(f_once())
+  expect_false(f_once())
 })
 
 

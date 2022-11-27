@@ -79,6 +79,10 @@
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hughjonesd/onetime" class="external-link">onetime</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Setup</span></span>
+<span><span class="va">otd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span>check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">oo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>onetime.dir <span class="op">=</span> <span class="va">otd</span><span class="op">)</span></span>
 <span><span class="va">ids</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"onetime-readme-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1e9</span>, <span class="fl">5L</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
@@ -99,11 +103,11 @@
 <span></span>
 <span><span class="co"># Meanwhile, in a separate process:</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://callr.r-lib.org" class="external-link">callr</a></span><span class="op">)</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">callr</span><span class="fu">::</span><span class="fu"><a href="https://callr.r-lib.org/reference/r.html" class="external-link">r</a></span><span class="op">(</span><span class="kw">function</span> <span class="op">(</span><span class="va">ids</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">callr</span><span class="fu">::</span><span class="fu"><a href="https://callr.r-lib.org/reference/r.html" class="external-link">r</a></span><span class="op">(</span><span class="kw">function</span> <span class="op">(</span><span class="va">ids</span>, <span class="va">otd</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>onetime.dir <span class="op">=</span> <span class="va">otd</span><span class="op">)</span></span>
 <span>  <span class="fu">onetime</span><span class="fu">::</span><span class="fu"><a href="reference/onetime_warning.html">onetime_message</a></span><span class="op">(</span><span class="st">"This message with an existing ID will not be shown."</span>, id <span class="op">=</span> <span class="va">ids</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span>  <span class="fu">onetime</span><span class="fu">::</span><span class="fu"><a href="reference/onetime_warning.html">onetime_message</a></span><span class="op">(</span><span class="st">"This message with a new ID will be shown."</span>, id <span class="op">=</span> <span class="va">ids</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span>, show <span class="op">=</span> <span class="cn">TRUE</span>, args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="va">ids</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; This message with an existing ID will not be shown.</span></span>
+<span><span class="op">}</span>, show <span class="op">=</span> <span class="cn">TRUE</span>, args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="va">ids</span>, otd <span class="op">=</span> <span class="va">otd</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; This message with a new ID will be shown.</span></span>
 <span></span>
 <span></span>
@@ -114,7 +118,7 @@
 <span><span class="co">#&gt; A message that the user might want to hide.</span></span>
 <span><span class="co">#&gt; In non-interactive sessions, instructions will be shown for hiding it manually.</span></span>
 <span><span class="co">#&gt; To hide this message in future, run:</span></span>
-<span><span class="co">#&gt;   onetime_mark_as_done(id = "onetime-readme-14433376")</span></span></code></pre></div>
+<span><span class="co">#&gt;   onetime_mark_as_done(id = "onetime-readme-786898700")</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>

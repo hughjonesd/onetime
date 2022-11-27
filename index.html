@@ -77,48 +77,47 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hughjonesd/onetime" class="external-link">onetime</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Setup</span></span>
-<span><span class="va">otd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span>check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">oo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>onetime.dir <span class="op">=</span> <span class="va">otd</span><span class="op">)</span></span>
-<span><span class="va">ids</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"onetime-readme-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1e9</span>, <span class="fl">5L</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Loop "</span>, <span class="va">i</span>, <span class="st">" of 5\n"</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="reference/onetime_do.html">onetime_do</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"This command will only be run once.\n"</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">ids</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="reference/onetime_warning.html">onetime_warning</a></span><span class="op">(</span><span class="st">"This warning will only be shown once."</span>, id <span class="op">=</span> <span class="va">ids</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="reference/onetime_warning.html">onetime_message</a></span><span class="op">(</span><span class="st">"This message will only be shown once."</span>, id <span class="op">=</span> <span class="va">ids</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="co">#&gt; Loop  1  of 5</span></span>
-<span><span class="co">#&gt; This command will only be run once.</span></span>
-<span><span class="co">#&gt; Warning: This warning will only be shown once.</span></span>
-<span><span class="co">#&gt; This message will only be shown once.</span></span>
-<span><span class="co">#&gt; Loop  2  of 5</span></span>
-<span><span class="co">#&gt; Loop  3  of 5</span></span>
-<span><span class="co">#&gt; Loop  4  of 5</span></span>
-<span><span class="co">#&gt; Loop  5  of 5</span></span>
-<span></span>
-<span><span class="co"># Meanwhile, in a separate process:</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://callr.r-lib.org" class="external-link">callr</a></span><span class="op">)</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">callr</span><span class="fu">::</span><span class="fu"><a href="https://callr.r-lib.org/reference/r.html" class="external-link">r</a></span><span class="op">(</span><span class="kw">function</span> <span class="op">(</span><span class="va">ids</span>, <span class="va">otd</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>onetime.dir <span class="op">=</span> <span class="va">otd</span><span class="op">)</span></span>
-<span>  <span class="fu">onetime</span><span class="fu">::</span><span class="fu"><a href="reference/onetime_warning.html">onetime_message</a></span><span class="op">(</span><span class="st">"This message with an existing ID will not be shown."</span>, id <span class="op">=</span> <span class="va">ids</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="fu">onetime</span><span class="fu">::</span><span class="fu"><a href="reference/onetime_warning.html">onetime_message</a></span><span class="op">(</span><span class="st">"This message with a new ID will be shown."</span>, id <span class="op">=</span> <span class="va">ids</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span>, show <span class="op">=</span> <span class="cn">TRUE</span>, args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="va">ids</span>, otd <span class="op">=</span> <span class="va">otd</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; This message with a new ID will be shown.</span></span>
-<span></span>
-<span></span>
-<span><span class="co"># Letting the user hide a message:</span></span>
-<span><span class="fu"><a href="reference/onetime_message_confirm.html">onetime_message_confirm</a></span><span class="op">(</span><span class="st">"A message that the user might want to hide.\n"</span>,</span>
-<span>                        <span class="st">"In non-interactive sessions, instructions will "</span>,</span>
-<span>                        <span class="st">"be shown for hiding it manually."</span>, id <span class="op">=</span> <span class="va">ids</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; A message that the user might want to hide.</span></span>
-<span><span class="co">#&gt; In non-interactive sessions, instructions will be shown for hiding it manually.</span></span>
-<span><span class="co">#&gt; To hide this message in future, run:</span></span>
-<span><span class="co">#&gt;   onetime_mark_as_done(id = "onetime-readme-601354160")</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(onetime)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>otd <span class="ot">&lt;-</span> <span class="fu">tempdir</span>(<span class="at">check =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>oo <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">onetime.dir =</span> otd)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>ids  <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"onetime-readme-"</span>, <span class="fu">sample</span>(<span class="fl">1e9</span>, 5L))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Loop "</span>, i, <span class="st">" of 5</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">onetime_do</span>(<span class="fu">cat</span>(<span class="st">"This command will only be run once.</span><span class="sc">\n</span><span class="st">"</span>), <span class="at">id =</span> ids[<span class="dv">1</span>])</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">onetime_warning</span>(<span class="st">"This warning will only be shown once."</span>, <span class="at">id =</span> ids[<span class="dv">2</span>])</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">onetime_message</span>(<span class="st">"This message will only be shown once."</span>, <span class="at">id =</span> ids[<span class="dv">3</span>])</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> Loop  <span class="dv">1</span>  of <span class="dv">5</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> This command will only be run once.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> Warning<span class="sc">:</span> This warning will only be shown once.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> This message will only be shown once.</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> Loop  <span class="dv">2</span>  of <span class="dv">5</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> Loop  <span class="dv">3</span>  of <span class="dv">5</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> Loop  <span class="dv">4</span>  of <span class="dv">5</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> Loop  <span class="dv">5</span>  of <span class="dv">5</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Meanwhile, in a separate process:</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(callr)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> callr<span class="sc">::</span><span class="fu">r</span>(<span class="cf">function</span> (ids, otd) {</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">onetime.dir =</span> otd)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  onetime<span class="sc">::</span><span class="fu">onetime_message</span>(<span class="st">"This message with an existing ID will not be shown."</span>, <span class="at">id =</span> ids[<span class="dv">1</span>])</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  onetime<span class="sc">::</span><span class="fu">onetime_message</span>(<span class="st">"This message with a new ID will be shown."</span>, <span class="at">id =</span> ids[<span class="dv">4</span>])</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>}, <span class="at">show =</span> <span class="cn">TRUE</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">ids =</span> ids, <span class="at">otd =</span> otd))</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> This message with a new ID will be shown.</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Letting the user hide a message:</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">onetime_message_confirm</span>(<span class="st">"A message that the user might want to hide.</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"In non-interactive sessions, instructions will "</span>,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"be shown for hiding it manually."</span>, <span class="at">id =</span> ids[<span class="dv">5</span>])</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> A message that the user might want to hide.</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> In non<span class="sc">-</span>interactive sessions, instructions will be shown <span class="cf">for</span> hiding it manually.</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> To hide this message <span class="cf">in</span> future, run<span class="sc">:</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span>   <span class="fu">onetime_mark_as_done</span>(<span class="at">id =</span> <span class="st">"onetime-readme-175772136"</span>)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>

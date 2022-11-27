@@ -1,6 +1,5 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- badges: start -->
 
 [![CRAN
@@ -32,6 +31,10 @@ For more information, see the
 
 ``` r
 library(onetime)
+
+# Setup
+otd <- tempdir(check = TRUE)
+oo <- options(onetime.dir = otd)
 ids  <- paste0("onetime-readme-", sample(1e9, 5L))
 
 
@@ -52,11 +55,11 @@ for (i in 1:5) {
 
 # Meanwhile, in a separate process:
 library(callr)
-result <- callr::r(function (ids) {
+result <- callr::r(function (ids, otd) {
+  options(onetime.dir = otd)
   onetime::onetime_message("This message with an existing ID will not be shown.", id = ids[1])
   onetime::onetime_message("This message with a new ID will be shown.", id = ids[4])
-}, show = TRUE, args = list(ids = ids))
-#> This message with an existing ID will not be shown.
+}, show = TRUE, args = list(ids = ids, otd = otd))
 #> This message with a new ID will be shown.
 
 
@@ -67,7 +70,7 @@ onetime_message_confirm("A message that the user might want to hide.\n",
 #> A message that the user might want to hide.
 #> In non-interactive sessions, instructions will be shown for hiding it manually.
 #> To hide this message in future, run:
-#>   onetime_mark_as_done(id = "onetime-readme-14433376")
+#>   onetime_mark_as_done(id = "onetime-readme-786898700")
 ```
 
 ## Installation

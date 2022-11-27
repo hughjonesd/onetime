@@ -70,7 +70,7 @@ onetime_message_confirm("A message that the user might want to hide.\n",
 #> A message that the user might want to hide.
 #> In non-interactive sessions, instructions will be shown for hiding it manually.
 #> To hide this message in future, run:
-#>   onetime_mark_as_done(id = "onetime-readme-786898700")
+#>   onetime_mark_as_done(id = "onetime-readme-601354160")
 ```
 
 ## Installation

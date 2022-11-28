@@ -6,7 +6,7 @@
 \usage{
 onetime_do(
   expr,
-  id = calling_package(),
+  id = deprecate_calling_package(),
   path = default_lockfile_dir(),
   expiry = NULL,
   default = NULL,
@@ -16,7 +16,9 @@ onetime_do(
 \arguments{
 \item{expr}{The code to evaluate. An R statement or \code{\link[=expression]{expression()}} object.}
 
-\item{id}{Unique ID string. By default, name of the calling package.}
+\item{id}{Unique ID string. If this is unset, the name of the calling
+package will be used. Since onetime 0.2.0, not setting \code{id} is
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} with a warning.}
 
 \item{path}{Directory to store lockfiles.}
 
@@ -32,8 +34,8 @@ default; \code{"stop"} throws an error; \code{"ask"} asks for permission, after
 running the action but before recording it on disk.}
 }
 \value{
-The value of \code{expr}, invisibly; or \code{default} if \code{expr} was not run
-because it had been run already.
+\code{onetime_do()} invisibly returns the value of \code{expr},
+or \code{default} if \code{expr} was not run because it had been run already.
 }
 \description{
 This function runs an expression just once. It then creates a lockfile
@@ -41,27 +43,17 @@ recording a unique ID which will prevent the expression being run again.
 }
 \details{
 Calls are identified by \code{id}. If you use the same value of \code{id} across
-different calls to \code{onetime_do()} and similar functions, only the first
-call will get made.
-
-By default, \code{id} is just the name of the calling package. This is for the
-common use case of a single call within a package (e.g. at first startup).
-If you want to use multiple calls, or if the calling code is not within a
-package, then you \emph{must} set \code{id} explicitly. If you are working in a
-large project with many contributors, it is \emph{strongly recommended to set}
-\code{id } \emph{explicitly}.
+different calls to onetime functions, only the first call will get made.
 
 The default \code{path}, where lockfiles are stored, is within
 \code{\link[rappdirs:user_data_dir]{rappdirs::user_config_dir()}} unless overridden by \code{options("onetime.dir")}.
-If the lockfile cannot be written (e.g. because the user has not given
-permission to store files on his or her computer), then the call will still
-be run, so it may be run repeatedly. Conversely, if the call gives an error,
-the lockfile is still written.
 
-\code{expiry} is backward-looking. That is, \code{expiry} is used at check time to see if
-the lockfile was written after \code{Sys.time() - expiry}. It is not used when
-the lockfile is created. So, you should set \code{expiry} to the same value whenever
-you call \code{onetime_do()}. See the example.
+If the call gives an error, the lockfile is still written.
+
+\code{expiry} is backward-looking. That is, \code{expiry} is used at check time to see
+if the lockfile was written after \code{Sys.time() - expiry}. It is not used when
+the lockfile is created. So, you should set \code{expiry} to the same value
+whenever you call \code{onetime_do()}. See the example.
 }
 \examples{
 oo <- options(onetime.dir = tempdir(check = TRUE))

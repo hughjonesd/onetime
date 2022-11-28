@@ -32,6 +32,10 @@ permission to store lockfiles on the user's computer.
 \subsection{Example}{
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{library(onetime)
+
+# Setup
+otd <- tempdir(check = TRUE)
+oo <- options(onetime.dir = otd)
 ids  <- paste0("onetime-readme-", sample(1e9, 5L))
 
 
@@ -58,14 +62,14 @@ for (i in 1:5) \{
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Meanwhile, in a separate process:
 library(callr)
-result <- callr::r(function (ids) \{
+result <- callr::r(function (ids, otd) \{
+  options(onetime.dir = otd)
   onetime::onetime_message("This message with an existing ID will not be shown.", id = ids[1])
   onetime::onetime_message("This message with a new ID will be shown.", id = ids[4])
-\}, show = TRUE, args = list(ids = ids))
+\}, show = TRUE, args = list(ids = ids, otd = otd))
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## This message with an existing ID will not be shown.
-## This message with a new ID will be shown.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## This message with a new ID will be shown.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Letting the user hide a message:
@@ -77,7 +81,7 @@ onetime_message_confirm("A message that the user might want to hide.\n",
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## A message that the user might want to hide.
 ## In non-interactive sessions, instructions will be shown for hiding it manually.
 ## To hide this message in future, run:
-##   onetime_mark_as_done(id = "onetime-readme-726457769")
+##   onetime_mark_as_done(id = "onetime-readme-899683207")
 }\if{html}{\out{</div>}}
 }
 }

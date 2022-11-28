@@ -21,7 +21,7 @@
 #' onetime_reset(id = id)
 #' options(oo)
 onetime_reset <- function (
-        id   = calling_package(),
+        id   = deprecate_calling_package(),
         path = default_lockfile_dir()
 ) {
   force(id)
@@ -64,7 +64,7 @@ onetime_reset <- function (
 #' onetime_reset(id = id)
 #' options(oo)
 onetime_mark_as_done <- function (
-        id   = calling_package(),
+        id   = deprecate_calling_package(),
         path = default_lockfile_dir()
 ) {
   force(id)
@@ -93,7 +93,7 @@ onetime_mark_as_done <- function (
 #' onetime_reset(id = id)
 #' options(oo)
 onetime_been_done <- function (
-        id   = calling_package(),
+        id   = deprecate_calling_package(),
         path = default_lockfile_dir(),
 	      expiry = NULL
 ) {

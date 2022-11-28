@@ -11,6 +11,13 @@ withr::with_libpaths("onetimeTestLibrary", {
 })
 
 
+test_that("onetime_do warns if no id given", {
+  lifecycle::expect_deprecated(
+    test_onetime_do(1 + 1)
+  )
+  test_onetime_reset()
+})
+
 
 test_that("onetime_only from external", {
   m <- test_onetime_only()

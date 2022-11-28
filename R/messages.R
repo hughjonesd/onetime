@@ -23,7 +23,7 @@
 #' onetime_reset(id = id)
 #' options(oo)
 onetime_warning <- function(...,
-        id     = calling_package(),
+        id     = deprecate_calling_package(),
         path   = default_lockfile_dir(),
         expiry = NULL,
         without_permission = "warn"
@@ -37,7 +37,7 @@ onetime_warning <- function(...,
 #' @rdname onetime_warning
 #' @export
 onetime_message <- function (...,
-        id     = calling_package(),
+        id     = deprecate_calling_package(),
         path   = default_lockfile_dir(),
         expiry = NULL,
         without_permission = "warn"
@@ -51,7 +51,7 @@ onetime_message <- function (...,
 #' @rdname onetime_warning
 #' @export
 onetime_startup_message <- function (...,
-        id     = calling_package(),
+        id     = deprecate_calling_package(),
         path   = default_lockfile_dir(),
         expiry = NULL,
         without_permission = "warn"
@@ -115,7 +115,7 @@ onetime_startup_message <- function (...,
 #' options(oo)
 onetime_message_confirm <- function (
   ...,
-  id                 = calling_package(),
+  id                 = deprecate_calling_package(),
   path               = default_lockfile_dir(),
   expiry             = NULL,
   confirm_prompt     = "Show this message again? [yN] ",
@@ -153,7 +153,7 @@ onetime_message_confirm <- function (
 
   answer <- do_onetime_do(confirmation, id = id, path = path, expiry = expiry,
                        without_permission = without_permission,
-                       require_permission = require_permission, invisible = TRUE)
+                       require_permission = require_permission, invisibly = TRUE)
   if (is.null(answer)) return(invisible(NULL))
 
   if (answer == "") answer <- default_answer

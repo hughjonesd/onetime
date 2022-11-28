@@ -8,7 +8,7 @@
 \usage{
 onetime_rlang_warn(
   ...,
-  id = calling_package(),
+  id = deprecate_calling_package(),
   path = default_lockfile_dir(),
   expiry = NULL,
   without_permission = "warn"
@@ -16,7 +16,7 @@ onetime_rlang_warn(
 
 onetime_rlang_inform(
   ...,
-  id = calling_package(),
+  id = deprecate_calling_package(),
   path = default_lockfile_dir(),
   expiry = NULL,
   without_permission = "warn"
@@ -25,7 +25,9 @@ onetime_rlang_inform(
 \arguments{
 \item{...}{Passed to \code{\link[rlang:abort]{rlang::warn()}} or \code{\link[rlang:abort]{rlang::inform()}}.}
 
-\item{id}{Unique ID string. By default, name of the calling package.}
+\item{id}{Unique ID string. If this is unset, the name of the calling
+package will be used. Since onetime 0.2.0, not setting \code{id} is
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} with a warning.}
 
 \item{path}{Directory to store lockfiles.}
 

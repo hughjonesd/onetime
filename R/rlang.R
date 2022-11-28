@@ -25,7 +25,7 @@ NULL
 #' @rdname onetime-rlang
 #' @export
 onetime_rlang_warn <- function (...,
-        id     = calling_package(),
+        id     = deprecate_calling_package(),
         path   = default_lockfile_dir(),
         expiry = NULL,
         without_permission = "warn"
@@ -43,7 +43,7 @@ onetime_rlang_warn <- function (...,
 #' @rdname onetime-rlang
 #' @export
 onetime_rlang_inform <- function (...,
-        id     = calling_package(),
+        id     = deprecate_calling_package(),
         path   = default_lockfile_dir(),
         expiry = NULL,
         without_permission = "warn"

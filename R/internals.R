@@ -8,11 +8,13 @@ do_onetime_do <- function(
         default = NULL,
         without_permission = c("warn", "run", "stop", "pass", "ask"),
         require_permission = TRUE,
-        invisible = TRUE
+        invisibly = TRUE
       ) {
   force(id)
   force(path)
   without_permission = match.arg(without_permission)
+
+  maybe_invisible <- if (invisibly) invisible else identity
 
   if (require_permission) {
     got_confirmation <- check_ok_to_store(ask = FALSE)
@@ -21,15 +23,15 @@ do_onetime_do <- function(
         warn = {
           warning("Could not store onetime files.")
           warning(options_info())
-          return(invisible(eval.parent(expr)))
+          return(maybe_invisible(eval.parent(expr)))
         },
         ask  = {
           result <- check_ok_to_store(ask = TRUE)
-          if (! result) return(default)
+          if (! result) return(maybe_invisible(default))
         },
-        run  = return(invisible(eval.parent(expr))),
+        run  = return(maybe_invisible(eval.parent(expr))),
         stop = stop("Could not store onetime files."),
-        pass = return(default),
+        pass = return(maybe_invisible(default)),
         # shouldn't ever get here
         stop("Unrecognized value of `without_permission`: ", without_permission)
       )
@@ -49,19 +51,20 @@ do_onetime_do <- function(
   } else {
     FALSE
   }
-  if (! file_exists || file_expired) {
-    file.create(fp)
-    filelock::unlock(lck) # it's fine to do this twice, and quicker if
-                          # `expr` is slow to evaluate. It's also OK
-                          # to unlock once we've created the file;
-                          # other callers will then hit file.exists()
-                          # above
-    result <- eval.parent(expr)
-    if (invisible) result <- invisible(result)
-    return(result)
-  } else {
-    return(default)
-  }
+
+  result <- if (! file_exists || file_expired) {
+              file.create(fp)
+              filelock::unlock(lck) # it's fine to do this twice, and quicker if
+                                    # `expr` is slow to evaluate. It's also OK
+                                    # to unlock once we've created the file;
+                                    # other callers will then hit file.exists()
+                                    # above
+              eval.parent(expr)
+            } else {
+              default
+            }
+
+  return(maybe_invisible(result))
 }
 
 
@@ -80,14 +83,21 @@ onetime_filepath <- function (id, path, check_writable = TRUE) {
   file.path(path, id)
 }
 
+deprecate_calling_package <- function () {
+  lifecycle::deprecate_soft("0.2.0", "calling_package()",
+            details = "Not setting an `id` in onetime functions is deprecated.")
+  calling_package(n = 3L)
+}
 
-calling_package <- function (n = 2L) {
+
+calling_package <- function (n = 3L) {
   p <- parent.frame(n = n)
   tryCatch(
           getNamespaceName(topenv(p)),
           error = function (e) {
             if (grepl("not a namespace", e$message)) {
-              stop("Could not identify calling package. Try setting `id` explicitly.")
+              stop("Could not identify calling package. ",
+                   "Try setting `id` explicitly.")
             } else {
               e
             }

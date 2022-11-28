@@ -79,6 +79,10 @@ permission to store lockfiles on the user's computer.</p></li>
 
 
 <p></p><div class="sourceCode r"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hughjonesd/onetime" class="external-link">onetime</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Setup</span></span>
+<span><span class="va">otd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span>check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">oo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>onetime.dir <span class="op">=</span> <span class="va">otd</span><span class="op">)</span></span>
 <span><span class="va">ids</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"onetime-readme-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1e9</span>, <span class="fl">5L</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
@@ -101,12 +105,12 @@ permission to store lockfiles on the user's computer.</p></li>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Loop  5  of 5</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode r"><pre><code><span><span class="co"># Meanwhile, in a separate process:</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://callr.r-lib.org" class="external-link">callr</a></span><span class="op">)</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">callr</span><span class="fu">::</span><span class="fu"><a href="https://callr.r-lib.org/reference/r.html" class="external-link">r</a></span><span class="op">(</span><span class="kw">function</span> <span class="op">(</span><span class="va">ids</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">callr</span><span class="fu">::</span><span class="fu"><a href="https://callr.r-lib.org/reference/r.html" class="external-link">r</a></span><span class="op">(</span><span class="kw">function</span> <span class="op">(</span><span class="va">ids</span>, <span class="va">otd</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>onetime.dir <span class="op">=</span> <span class="va">otd</span><span class="op">)</span></span>
 <span>  <span class="fu">onetime</span><span class="fu">::</span><span class="fu"><a href="../reference/onetime_warning.html">onetime_message</a></span><span class="op">(</span><span class="st">"This message with an existing ID will not be shown."</span>, id <span class="op">=</span> <span class="va">ids</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span>  <span class="fu">onetime</span><span class="fu">::</span><span class="fu"><a href="../reference/onetime_warning.html">onetime_message</a></span><span class="op">(</span><span class="st">"This message with a new ID will be shown."</span>, id <span class="op">=</span> <span class="va">ids</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span>, show <span class="op">=</span> <span class="cn">TRUE</span>, args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="va">ids</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## This message with an existing ID will not be shown.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## This message with a new ID will be shown.</span></span></code></pre><p></p></div>
+<span><span class="op">}</span>, show <span class="op">=</span> <span class="cn">TRUE</span>, args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="va">ids</span>, otd <span class="op">=</span> <span class="va">otd</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## This message with a new ID will be shown.</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode r"><pre><code><span><span class="co"># Letting the user hide a message:</span></span>
 <span><span class="fu"><a href="../reference/onetime_message_confirm.html">onetime_message_confirm</a></span><span class="op">(</span><span class="st">"A message that the user might want to hide.\n"</span>,</span>
 <span>                        <span class="st">"In non-interactive sessions, instructions will "</span>,</span>
@@ -114,7 +118,7 @@ permission to store lockfiles on the user's computer.</p></li>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## A message that the user might want to hide.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## In non-interactive sessions, instructions will be shown for hiding it manually.</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## To hide this message in future, run:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   onetime_mark_as_done(id = "onetime-readme-726457769")</span></span></code></pre><p></p></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   onetime_mark_as_done(id = "onetime-readme-899683207")</span></span></code></pre><p></p></div>
 </div>
 
     </div>

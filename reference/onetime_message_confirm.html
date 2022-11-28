@@ -56,7 +56,7 @@ be shown again in future.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">onetime_message_confirm</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
-<span>  id <span class="op">=</span> <span class="fu">calling_package</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  id <span class="op">=</span> <span class="fu">deprecate_calling_package</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  path <span class="op">=</span> <span class="fu">default_lockfile_dir</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  expiry <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  confirm_prompt <span class="op">=</span> <span class="st">"Show this message again? [yN] "</span>,</span>
@@ -77,7 +77,9 @@ be shown again in future.</p>
 
 
 <dt>id</dt>
-<dd><p>Unique ID string. By default, name of the calling package.</p></dd>
+<dd><p>Unique ID string. If this is unset, the name of the calling
+package will be used. Since onetime 0.2.0, not setting <code>id</code> is
+<a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> with a warning.</p></dd>
 
 
 <dt>path</dt>
@@ -165,10 +167,10 @@ permission by setting <code>require_permission = TRUE</code> and
 <span class="r-in"><span><span class="fu">onetime_message_confirm</span><span class="op">(</span><span class="st">"A message to show one or more times"</span>, id <span class="op">=</span> <span class="va">id</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> A message to show one or more times</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> To hide this message in future, run:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   onetime_mark_as_done(id = "1197")</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   onetime_mark_as_done(id = "4393")</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="onetime_reset.html">onetime_reset</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">id</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot remove file '/tmp/RtmpRcjH67/NO-PACKAGE/1197', reason 'No such file or directory'</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot remove file '/tmp/RtmpmxHRy9/NO-PACKAGE/4393', reason 'No such file or directory'</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="va">oo</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>

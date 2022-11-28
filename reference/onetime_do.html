@@ -56,7 +56,7 @@ recording a unique ID which will prevent the expression being run again.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">onetime_do</span><span class="op">(</span></span>
 <span>  <span class="va">expr</span>,</span>
-<span>  id <span class="op">=</span> <span class="fu">calling_package</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  id <span class="op">=</span> <span class="fu">deprecate_calling_package</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  path <span class="op">=</span> <span class="fu">default_lockfile_dir</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  expiry <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  default <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -71,7 +71,9 @@ recording a unique ID which will prevent the expression being run again.</p>
 
 
 <dt>id</dt>
-<dd><p>Unique ID string. By default, name of the calling package.</p></dd>
+<dd><p>Unique ID string. If this is unset, the name of the calling
+package will be used. Since onetime 0.2.0, not setting <code>id</code> is
+<a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> with a warning.</p></dd>
 
 
 <dt>path</dt>
@@ -99,30 +101,20 @@ running the action but before recording it on disk.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>The value of <code>expr</code>, invisibly; or <code>default</code> if <code>expr</code> was not run
-because it had been run already.</p>
+<p><code>onetime_do()</code> invisibly returns the value of <code>expr</code>,
+or <code>default</code> if <code>expr</code> was not run because it had been run already.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Calls are identified by <code>id</code>. If you use the same value of <code>id</code> across
-different calls to <code>onetime_do()</code> and similar functions, only the first
-call will get made.</p>
-<p>By default, <code>id</code> is just the name of the calling package. This is for the
-common use case of a single call within a package (e.g. at first startup).
-If you want to use multiple calls, or if the calling code is not within a
-package, then you <em>must</em> set <code>id</code> explicitly. If you are working in a
-large project with many contributors, it is <em>strongly recommended to set</em>
-<code>id </code> <em>explicitly</em>.</p>
+different calls to onetime functions, only the first call will get made.</p>
 <p>The default <code>path</code>, where lockfiles are stored, is within
-<code><a href="https://rappdirs.r-lib.org/reference/user_data_dir.html" class="external-link">rappdirs::user_config_dir()</a></code> unless overridden by <code>options("onetime.dir")</code>.
-If the lockfile cannot be written (e.g. because the user has not given
-permission to store files on his or her computer), then the call will still
-be run, so it may be run repeatedly. Conversely, if the call gives an error,
-the lockfile is still written.</p>
-<p><code>expiry</code> is backward-looking. That is, <code>expiry</code> is used at check time to see if
-the lockfile was written after <code>Sys.time() - expiry</code>. It is not used when
-the lockfile is created. So, you should set <code>expiry</code> to the same value whenever
-you call <code>onetime_do()</code>. See the example.</p>
+<code><a href="https://rappdirs.r-lib.org/reference/user_data_dir.html" class="external-link">rappdirs::user_config_dir()</a></code> unless overridden by <code>options("onetime.dir")</code>.</p>
+<p>If the call gives an error, the lockfile is still written.</p>
+<p><code>expiry</code> is backward-looking. That is, <code>expiry</code> is used at check time to see
+if the lockfile was written after <code>Sys.time() - expiry</code>. It is not used when
+the lockfile is created. So, you should set <code>expiry</code> to the same value
+whenever you call <code>onetime_do()</code>. See the example.</p>
     </div>
 
     <div class="section level2">
@@ -140,12 +132,9 @@ you call <code>onetime_do()</code>. See the example.</p>
 <span class="r-in"><span><span class="va">expiry</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">as.difftime</a></span><span class="op">(</span><span class="fl">1</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">onetime_do</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Expires quickly, right?"</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">id2</span>, expiry <span class="op">=</span> <span class="va">expiry</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Expires quickly, right?"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Expires quickly, right?"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">onetime_do</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"This won't be shown..."</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">id2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-in"><span><span class="fu">onetime_do</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"... but this will"</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">id2</span>, expiry <span class="op">=</span> <span class="va">expiry</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "... but this will"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "... but this will"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>

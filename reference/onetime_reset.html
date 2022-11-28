@@ -51,13 +51,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">onetime_reset</span><span class="op">(</span>id <span class="op">=</span> <span class="fu">calling_package</span><span class="op">(</span><span class="op">)</span>, path <span class="op">=</span> <span class="fu">default_lockfile_dir</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">onetime_reset</span><span class="op">(</span>id <span class="op">=</span> <span class="fu">deprecate_calling_package</span><span class="op">(</span><span class="op">)</span>, path <span class="op">=</span> <span class="fu">default_lockfile_dir</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>id</dt>
-<dd><p>Unique ID string. By default, name of the calling package.</p></dd>
+<dd><p>Unique ID string. If this is unset, the name of the calling
+package will be used. Since onetime 0.2.0, not setting <code>id</code> is
+<a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> with a warning.</p></dd>
 
 
 <dt>path</dt>

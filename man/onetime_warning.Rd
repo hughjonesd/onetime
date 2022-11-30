@@ -49,7 +49,8 @@ default; \code{"stop"} throws an error; \code{"ask"} asks for permission, after
 running the action but before recording it on disk.}
 }
 \value{
-\code{TRUE} if the message/warning was shown, \code{FALSE} otherwise.
+Invisible \code{TRUE} if the message/warning was shown, invisible
+\code{FALSE} otherwise.
 }
 \description{
 These functions use \code{\link[=onetime_do]{onetime_do()}} to print a warning or message just

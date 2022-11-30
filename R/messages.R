@@ -6,7 +6,8 @@
 #' @param ... Passed to [warning()], [message()] or [packageStartupMessage()].
 #' @inherit common-params
 #'
-#' @return `TRUE` if the message/warning was shown, `FALSE` otherwise.
+#' @return Invisible `TRUE` if the message/warning was shown, invisible
+#'   `FALSE` otherwise.
 #'
 #' @export
 #'
@@ -30,7 +31,7 @@ onetime_warning <- function(...,
       ) {
   ret_val <- onetime_do(warning(..., call. = FALSE), id = id, path = path, expiry = expiry,
                   default = FALSE, without_permission = without_permission)
-  return(! isFALSE(ret_val))
+  return(invisible(! isFALSE(ret_val)))
 }
 
 
@@ -44,7 +45,7 @@ onetime_message <- function (...,
       ) {
   ret_val <- onetime_do(message(...),  id = id, path = path, expiry = expiry,
                         default = FALSE, without_permission = without_permission)
-  return(! isFALSE(ret_val))
+  return(invisible(! isFALSE(ret_val)))
 }
 
 
@@ -59,7 +60,7 @@ onetime_startup_message <- function (...,
   ret_val <- onetime_do(packageStartupMessage(...), id = id, path = path,
                         expiry = expiry, default = FALSE,
                         without_permission = without_permission)
-  return(! isFALSE(ret_val))
+  return(invisible(! isFALSE(ret_val)))
 }
 
 

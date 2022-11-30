@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 [![CRAN
@@ -23,6 +24,11 @@ Michelle Dubois, *’Allo ’Allo*
 The onetime package provides convenience functions to run R code only
 once per user. For example, you can show a startup message only the
 first time (ever) that a package is loaded.
+
+Onetime is a lightweight package. It requires just two package
+dependencies, rappdirs and filelock, with no further indirect
+dependencies. The total size including these dependencies is less than
+50 Kb.
 
 For more information, see the
 [website](https://hughjonesd.github.io/onetime/).
@@ -70,7 +76,7 @@ onetime_message_confirm("A message that the user might want to hide.\n",
 #> A message that the user might want to hide.
 #> In non-interactive sessions, instructions will be shown for hiding it manually.
 #> To hide this message in future, run:
-#>   onetime_mark_as_done(id = "onetime-readme-123866395")
+#>   onetime_mark_as_done(id = "onetime-readme-39021073")
 ```
 
 ## Installation

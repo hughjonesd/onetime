@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">onetime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,22 +45,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="onetime-development-version">onetime (development version)<a class="anchor" aria-label="anchor" href="#onetime-development-version"></a></h2>
-<ul><li><p>Not setting <code>id</code> explicitly is now deprecated with a warning. Doing this is brittle: it can lead to silent errors when you use onetime functions in more than one place.</p></li>
-<li><p>New function <code><a href="../reference/onetime_mark_as_done.html">onetime_mark_as_done()</a></code> to manually mark an action as done.</p></li>
-<li><p><code><a href="../reference/onetime_message_confirm.html">onetime_message_confirm()</a></code> now prints its message by default in non-interactive sessions, along with instructions on how to hide the message using <code><a href="../reference/onetime_mark_as_done.html">onetime_mark_as_done()</a></code>.</p></li>
-<li><p><code><a href="../reference/onetime_message_confirm.html">onetime_message_confirm()</a></code> now passes multiple arguments to <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> using <code>...</code>. This makes it easier to pass long messages. Using a named <code>message</code> argument is soft-deprecated.</p></li>
-<li><p><code><a href="../reference/onetime_only.html">onetime_only()</a></code> gains a <code>default</code> argument which is returned by the wrapper function if the inner function was not called. The default <code>default</code> is <code>NULL</code>.</p></li>
-<li><p><code><a href="../reference/onetime_warning.html">onetime_message()</a></code>, <code><a href="../reference/onetime_warning.html">onetime_warning()</a></code>, <code><a href="../reference/onetime_warning.html">onetime_startup_message()</a></code> and <code><a href="../reference/onetime_message_confirm.html">onetime_message_confirm()</a></code> now return their results invisibly. This is nicer for rmarkdown documents.</p></li>
-<li><p><code><a href="../reference/onetime_only.html">onetime_only()</a></code> now respects the visibility of the wrapped function.</p></li>
-<li><p><code><a href="../reference/onetime_do.html">onetime_do()</a></code> now always returns invisibly, even when <code>default</code> is returned.</p></li>
-</ul></div>
-    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="onetime-010">onetime 0.1.0<a class="anchor" aria-label="anchor" href="#onetime-010"></a></h2><p class="text-muted">CRAN release: 2022-11-22</p>
 <ul><li>Initial release.</li>
 </ul></div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside></div>
+  </main></div>
 
 
     <footer><div class="pkgdown-footer-left">

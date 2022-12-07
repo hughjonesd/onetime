@@ -2,6 +2,9 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/onetime)](https://CRAN.R-project.org/package=onetime)
+[![R-universe](https://hughjonesd.r-universe.dev/badges/onetime)](https://hughjonesd.r-universe.dev/ui#package:onetime)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/hughjonesd/onetime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hughjonesd/onetime/actions/workflows/R-CMD-check.yaml)
@@ -17,9 +20,14 @@ coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg
 
 Michelle Dubois, *’Allo ’Allo*
 
-`onetime` provides convenience functions to run R code only once per
-user. For example, you can show a startup message only the first time
-(ever) that a package is loaded.
+The onetime package provides convenience functions to run R code only
+once per user. For example, you can show a startup message only the
+first time (ever) that a package is loaded.
+
+Onetime is a lightweight package. It requires just two package
+dependencies, rappdirs and filelock, with no further indirect
+dependencies. The total size including these dependencies is less than
+50 Kb.
 
 For more information, see the
 [website](https://hughjonesd.github.io/onetime/).
@@ -28,7 +36,11 @@ For more information, see the
 
 ``` r
 library(onetime)
-ids  <- paste0("onetime-readme-", sample(1e9, 4))
+
+# Setup
+otd <- tempdir(check = TRUE)
+oo <- options(onetime.dir = otd)
+ids  <- paste0("onetime-readme-", sample(1e9, 5L))
 
 
 for (i in 1:5) {
@@ -48,14 +60,31 @@ for (i in 1:5) {
 
 # Meanwhile, in a separate process:
 library(callr)
-result <- callr::r(function (ids) {
+result <- callr::r(function (ids, otd) {
+  options(onetime.dir = otd)
   onetime::onetime_message("This message with an existing ID will not be shown.", id = ids[1])
   onetime::onetime_message("This message with a new ID will be shown.", id = ids[4])
-}, show = TRUE, args = list(ids = ids))
+}, show = TRUE, args = list(ids = ids, otd = otd))
 #> This message with a new ID will be shown.
+
+
+# Letting the user hide a message:
+onetime_message_confirm("A message that the user might want to hide.\n",
+                        "In non-interactive sessions, instructions will ",
+                        "be shown for hiding it manually.", id = ids[5])
+#> A message that the user might want to hide.
+#> In non-interactive sessions, instructions will be shown for hiding it manually.
+#> To hide this message in future, run:
+#>   onetime_mark_as_done(id = "onetime-readme-341327087")
 ```
 
 ## Installation
+
+Onetime is now on CRAN. You can install it with:
+
+``` r
+install.packages("onetime")
+```
 
 You can install the development version from
 [GitHub](https://github.com/) with:

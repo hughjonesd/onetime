@@ -21,7 +21,6 @@ reference:
   contents:
   - onetime_reset
   - onetime_been_done
-  - onetime_mark_as_done
   - check_ok_to_store
   - set_ok_to_store
 

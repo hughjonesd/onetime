@@ -14,7 +14,8 @@ onetime_mark_as_done(
 package will be used. Since onetime 0.2.0, not setting \code{id} is
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} with a warning.}
 
-\item{path}{Directory to store lockfiles.}
+\item{path}{Directory to store lockfiles. Normally you should leave this as
+the default.}
 }
 \value{
 Invisible \code{TRUE} if the action represented

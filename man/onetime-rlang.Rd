@@ -29,7 +29,8 @@ onetime_rlang_inform(
 package will be used. Since onetime 0.2.0, not setting \code{id} is
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} with a warning.}
 
-\item{path}{Directory to store lockfiles.}
+\item{path}{Directory to store lockfiles. Normally you should leave this as
+the default.}
 
 \item{expiry}{\code{\link[=difftime]{difftime()}} or e.g. \code{\link[lubridate:duration]{lubridate::duration()}} object.
 After this length of time, code will be run again.}

@@ -182,47 +182,48 @@ As a package author, you have several options.
 * If your package is used directly from the command line, the simplest option
   is to call functions using `without_permission = "ask"`. This will ask the
   user for permission to store files if it has not been granted. If not, the
-  action won't be run
+  action won't be run.
   
+    
+  ```{r, eval = FALSE}
+  id <- "vignette-9"
+  onetime_message("Thank you for your kind applause.", 
+                  id = id,
+                  without_permission = "ask")
+  ```
   
-```{r, eval = FALSE}
-id <- "vignette-9"
-onetime_message("Thank you for your kind applause.", 
-                id = id,
-                without_permission = "ask")
-```
-
-```{r, echo = FALSE}
-message("The onetime package requests to store files in ",
-        "'~/Library/Application Support/onetime'.")
-cat("Is this OK? [Yn] ")
-```
+  ```{r, echo = FALSE}
+  message("The onetime package requests to store files in ",
+          "'~/Library/Application Support/onetime'.")
+  cat("Is this OK? [Yn] ")
+  message("Thank you for your kind applause.")
+  ```
 
 * If you want more control over when and how you ask users, you can call 
   `check_ok_to_store(ask = TRUE)` manually before using onetime functions.
+    
+  ```{r, eval = FALSE}
+  check_ok_to_store(
+    ask = TRUE, 
+    message = "Please let this package store files in your config directory '%s'.",
+    confirm_prompt = "OK? (Y/N)"
+    )
+  ```
   
-```{r, eval = FALSE}
-check_ok_to_store(
-  ask = TRUE, 
-  message = "Please let this package store files in your config directory '%s'.",
-  confirm_prompt = "OK? (Y/N)"
-  )
-```
-
-```{r, echo = FALSE}
-message("Please let this package store files in your config directory",
-        "'~/Library/Application Support/onetime'")
-cat("OK? (Y/N)")
-```
+  ```{r, echo = FALSE}
+  message("Please let this package store files in your config directory",
+          "'~/Library/Application Support/onetime'")
+  cat("OK? (Y/N)")
+  ```
 
 * In code which might be run non-interactively, or as part of a long-running
   command, you can manually call `set_ok_to_store(TRUE)` before you use other
   onetime functions. This will grant permission to store files, and will print
   a warning to the user explaining how they can change this:
-  
-```{r}
-set_ok_to_store(TRUE)
-```
+    
+  ```{r}
+  set_ok_to_store(TRUE)
+  ```
 
 * By default, configuration files are stored beneath `rappdirs::user_config_dir()`.
   If you want to store configuration files in a non-standard directory, set
@@ -245,17 +246,21 @@ onetime_been_done("vignette-1")
 onetime_been_done("vignette-unused")
 ```
 
-To reset a particular id (so that functions will be run again), use 
+To reset a particular id, so that functions will be run again, use 
 `onetime_reset()`:
 
 ```{r}
 onetime_reset(id = "vignette-1")
 onetime_message("I shall say this only once!", id = "vignette-1")
-
-# Clean up this vignette:
-ids <- paste0("vignette-", 1:8)
-for (id in ids) onetime_reset(id)
 ```
 
-Conversely, you can use `onetime_mark_as_done()` to manually mark a particular
-action as done by `id`. 
+
+From version 0.2.0 of the package, you can use `onetime_mark_as_done()` 
+to manually mark a particular action as done. 
+
+
+```{r, echo = FALSE, include = FALSE}
+# Clean up this vignette:
+ids <- paste0("vignette-", 1:9)
+for (id in ids) onetime_reset(id)
+```

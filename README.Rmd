@@ -38,7 +38,7 @@ Onetime is a lightweight package. It requires just two package dependencies,
 rappdirs and filelock, with no further indirect dependencies. The total 
 size including these dependencies is less than 50 Kb.
 
-* For more information, see the [vignette](https://hughjonesd.github.io/onetime/).
+* For more information, see the [vignette](https://hughjonesd.github.io/onetime/dev/articles/onetime.html).
 
 * Development documentation is at <https://hughjonesd.github.io/onetime/dev>.  
 

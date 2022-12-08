@@ -12,11 +12,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
-
-```{r setup}
+options(onetime.dir = tempdir(check = TRUE))
 library(onetime)
 ```
+
 
 # Introduction
 
@@ -54,6 +53,7 @@ check_ok_to_store(ask = TRUE)
 If you haven't used onetime before, you will be asked if it is OK to store
 files in onetime's configuration directory. Answer `Y`. Now you can try out
 onetime's functions.
+
 
 # Basic usage
 
@@ -181,8 +181,8 @@ As a package author, you have several options.
 
 * If your package is used directly from the command line, the simplest option
   is to call functions using `without_permission = "ask"`. This will ask the
-  user for permission to store files if it has not been granted. Note that the
-  user may say no; if so the action may be run more than once!
+  user for permission to store files if it has not been granted. If not, the
+  action won't be run
   
   
 ```{r, eval = FALSE}

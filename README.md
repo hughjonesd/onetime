@@ -61,16 +61,6 @@ for (i in 1:5) {
 #> Loop  4  of 5
 #> Loop  5  of 5
 
-# Meanwhile, in a separate process:
-library(callr)
-result <- callr::r(function (ids, otd) {
-  options(onetime.dir = otd)
-  onetime::onetime_message("This message with an existing ID will not be shown.", id = ids[1])
-  onetime::onetime_message("This message with a new ID will be shown.", id = ids[4])
-}, show = TRUE, args = list(ids = ids, otd = otd))
-#> This message with a new ID will be shown.
-
-
 # Letting the user hide a message:
 onetime_message_confirm("A message that the user might want to hide.\n",
                         "In non-interactive sessions, instructions will ",
@@ -78,7 +68,7 @@ onetime_message_confirm("A message that the user might want to hide.\n",
 #> A message that the user might want to hide.
 #> In non-interactive sessions, instructions will be shown for hiding it manually.
 #> To hide this message in future, run:
-#>   onetime_mark_as_done(id = "onetime-readme-652373289")
+#>   onetime_mark_as_done(id = "onetime-readme-618605395")
 ```
 
 ## Installation

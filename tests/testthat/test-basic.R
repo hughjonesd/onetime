@@ -11,6 +11,14 @@ test_id <- function (id) {
 
 oo <- options(onetime.dir = tempdir(check = TRUE))
 
+withr::defer({
+  for (id in IDS) {
+    suppressWarnings(onetime_reset(id))
+  }
+  rm(IDS)
+  options(oo)
+})
+
 
 test_that("onetime_do", {
   ctr <- 0
@@ -120,17 +128,16 @@ test_that("without_permission", {
       )
     }
   )
+})
 
+test_that("without_permission: ask", {
   suppressWarnings(set_ok_to_store(FALSE))
   withr::defer(suppressWarnings(set_ok_to_store(TRUE)))
 
-  if (interactive()) {
-    print("Please say n next")
-  } else {
-    mockr::local_mock(
-      check_ok_to_store = function(...) FALSE
-    )
-  }
+
+  mockr::local_mock(
+    check_ok_to_store = function(...) FALSE
+  )
 
   expect_equal(
     onetime_do(1L, without_permission = "ask", default = 0L,
@@ -138,13 +145,10 @@ test_that("without_permission", {
     0L
   )
 
-  if (interactive()) {
-    print("Please say y next")
-  } else {
-    mockr::local_mock(
-      check_ok_to_store = function(...) TRUE
-    )
-  }
+  mockr::local_mock(
+    check_ok_to_store = function(...) TRUE
+  )
+
   expect_equal(
     onetime_do(1L, without_permission = "ask", default = 0L,
                id = test_id("wp6")),
@@ -175,8 +179,3 @@ test_that("multiprocess", {
 })
 
 
-for (id in IDS) {
-  suppressWarnings(onetime_reset(id))
-}
-rm(IDS)
-options(oo)

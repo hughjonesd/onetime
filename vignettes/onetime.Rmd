@@ -259,6 +259,14 @@ From version 0.2.0 of the package, you can use `onetime_mark_as_done()`
 to manually mark a particular action as done. 
 
 
+# Going further
+
+More information is available on the onetime website:
+
+* [CRAN version](https://hughjonesd.github.io/onetime)
+* [Development version](https://hughjonesd.github.io/onetime/dev)
+
+
 ```{r, echo = FALSE, include = FALSE}
 # Clean up this vignette:
 ids <- paste0("vignette-", 1:9)

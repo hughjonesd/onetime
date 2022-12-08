@@ -25,6 +25,7 @@
 
 * `onetime_only()` now respects the visibility of the wrapped function.
 
+* New vignette.
   
 # onetime 0.1.0
 

@@ -18,13 +18,12 @@
   wrapper function if the inner function was not called. The default `default`
   is `NULL`.
 
-* `onetime_message()`, `onetime_warning()`, `onetime_startup_message()` and
-  `onetime_message_confirm()` now return their results invisibly. This is nicer
-  for rmarkdown documents.
+* `onetime_message()` and friends all now return their results invisibly. This 
+  is nicer for use in rmarkdown documents.
+  
+* `onetime_do()` now always returns invisibly, even when `default` is returned.
 
 * `onetime_only()` now respects the visibility of the wrapped function.
-
-* `onetime_do()` now always returns invisibly, even when `default` is returned.
 
   
 # onetime 0.1.0

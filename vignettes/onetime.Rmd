@@ -1,0 +1,261 @@
+---
+title: "Introduction to onetime"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to onetime}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(onetime)
+```
+
+# Introduction
+
+Sometimes package authors want to run code only once for a given
+user on a given computer. Not just "once per session", but "only once ever"
+or "only once per month" at most. Here are some use cases:
+
+* Tell users about new features in your package, without annoying them every
+  time they load it.
+* Show a message, with the option to hide it in future.
+* Perform cleanup actions only once after an upgrade.
+
+The onetime package lets you do this. 
+
+Onetime is a lightweight package, with just two
+package dependencies, rappdirs and filelock. Its total size including
+dependencies is less than 50 Kb. So it is cheap to include as a dependency in
+your own package.
+
+# Setup
+
+You can install onetime from CRAN like this:
+
+```{r, eval = FALSE}
+install.packages("onetime")
+```
+
+Next, on the R command line, run 
+
+```{r, eval = FALSE}
+library(onetime)
+check_ok_to_store(ask = TRUE)
+```
+
+If you haven't used onetime before, you will be asked if it is OK to store
+files in onetime's configuration directory. Answer `Y`. Now you can try out
+onetime's functions.
+
+# Basic usage
+
+Let's use `onetime_message()` to show a message just once. On the command line,
+enter:
+
+```{r}
+id <- "vignette-1"
+onetime_message("I shall say this only once!", id = id)
+```
+
+You should see the message, displayed using the base R `message()` function.
+
+Now if you enter the same code again:
+
+```{r}
+onetime_message("I shall say this only once!", id = id)
+```
+
+... you won't see anything! Even if you restart R and again run 
+`onetime_message()` with the same `id`, nothing will be shown. Onetime has
+stored a file on your computer to record that the message was already shown, and
+it doesn't show it again.
+
+You still won't see any message, even if you change the message itself:
+
+```{r}
+onetime_message("I repeat... I shall say this only once!", id = id)
+```
+
+That's because onetime identifies actions by their `id`. If you change the `id`,
+you can send a new message:
+
+```{r}
+id <- "vignette-2"
+onetime_message("Does nobody hear the cries of an poor old woman?", id = id)
+```
+
+You aren't limited to sending messages. You can also give warnings:
+
+
+```{r}
+id <- "vignette-3"
+onetime_warning("What are you doing with that woman?", id = id)
+```
+
+
+You can print package startup messages using `onetime_startup_message()`.
+If the rlang package is installed, you can also use `onetime_rlang_inform()`
+and `onetime_rlang_warn()` to print messages and warnings using rlang format:
+
+```{r}
+id <- "vignette-4"
+onetime_rlang_inform(c(
+                       "Let that be a lesson to you.", 
+                       i = "Never again will you burn my toast."
+                       ), 
+                     id = id)
+```
+
+Underlying all these functions is `onetime_do()`, which allows you to run
+arbitrary code just once:
+
+
+```{r}
+id <- "vignette-5"
+onetime_do(print(getRversion()), id = id)
+```
+
+
+# Allowing the user to hide a message
+
+Sometimes you may wish to show a message to the user but give them the option
+to hide it in future. You can do this with `onetime_message_confirm()`.
+
+In interactive sessions, this will ask the user if they want to show the message
+again:
+
+```{r, eval = FALSE}
+id <- "vignette-6"
+onetime_message_confirm(
+  "What are you doing with that serving girl in your arms?",
+  id = id)
+```
+
+```{r, echo = FALSE}
+message("What are you doing with that serving girl in your arms?")
+cat("Show this message again? [yN]")
+```
+
+In non-interactive sessions, it will tell the user how they can hide the
+message in future:
+
+
+```{r}
+id <- "vignette-7"
+onetime_message_confirm("Hans, have you got the weedkiller?", id = id)
+```
+
+
+# Setting an expiry time
+
+You can set an expiry time by passing a `difftime()` object to the `expiry`
+argument of these functions. For example, this will print a message, but only
+if it has not been printed in the past week:
+
+```{r}
+id <- "vignette-8"
+onetime_message("Good moaning!", 
+                id = id, 
+                expiry = as.difftime(1, "weeks")
+                )
+```
+
+
+# Using onetime in your package
+
+Onetime works by writing a file, typically to a folder in the user's
+configuration directory.  As a package author, it is your responsibility to
+check for permission to store lockfiles. CRAN policy demands that you do this.
+Onetime functions will check for this permission, and by default won't store
+the file until it has been granted. 
+
+As a package author, you have several options.
+
+* If your package is used directly from the command line, the simplest option
+  is to call functions using `without_permission = "ask"`. This will ask the
+  user for permission to store files if it has not been granted. Note that the
+  user may say no; if so the action may be run more than once!
+  
+  
+```{r, eval = FALSE}
+id <- "vignette-9"
+onetime_message("Thank you for your kind applause.", 
+                id = id,
+                without_permission = "ask")
+```
+
+```{r, echo = FALSE}
+message("The onetime package requests to store files in ",
+        "'~/Library/Application Support/onetime'.")
+cat("Is this OK? [Yn] ")
+```
+
+* If you want more control over when and how you ask users, you can call 
+  `check_ok_to_store(ask = TRUE)` manually before using onetime functions.
+  
+```{r, eval = FALSE}
+check_ok_to_store(
+  ask = TRUE, 
+  message = "Please let this package store files in your config directory '%s'.",
+  confirm_prompt = "OK? (Y/N)"
+  )
+```
+
+```{r, echo = FALSE}
+message("Please let this package store files in your config directory",
+        "'~/Library/Application Support/onetime'")
+cat("OK? (Y/N)")
+```
+
+* In code which might be run non-interactively, or as part of a long-running
+  command, you can manually call `set_ok_to_store(TRUE)` before you use other
+  onetime functions. This will grant permission to store files, and will print
+  a warning to the user explaining how they can change this:
+  
+```{r}
+set_ok_to_store(TRUE)
+```
+
+* By default, configuration files are stored beneath `rappdirs::user_config_dir()`.
+  If you want to store configuration files in a non-standard directory, set
+  `options(onetime.dir = <path to directory>)`. When this option is set, onetime
+  assumes that permission has been granted. So, you can also use this approach
+  to avoid raising the issue of permissions with the user - so long as you don't 
+  plan to submit your package to CRAN.
+  
+If onetime has already been installed by a different package, then it is likely that
+the user will have already granted file permissions, and onetime functions will 
+just work.
+
+
+# Utility functions
+
+`onetime_been_done()` checks whether an action has been performed:
+
+```{r}
+onetime_been_done("vignette-1")
+onetime_been_done("vignette-unused")
+```
+
+To reset a particular id (so that functions will be run again), use 
+`onetime_reset()`:
+
+```{r}
+onetime_reset(id = "vignette-1")
+onetime_message("I shall say this only once!", id = "vignette-1")
+
+# Clean up this vignette:
+ids <- paste0("vignette-", 1:8)
+for (id in ids) onetime_reset(id)
+```
+
+Conversely, you can use `onetime_mark_as_done()` to manually mark a particular
+action as done by `id`. 

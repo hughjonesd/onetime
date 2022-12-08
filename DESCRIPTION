@@ -27,7 +27,10 @@ Suggests:
     callr,
     covr,
     devtools,
+    knitr,
     mockr,
     rlang,
+    rmarkdown,
     testthat (>= 2.1.0),
     withr
+VignetteBuilder: knitr

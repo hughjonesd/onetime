@@ -30,16 +30,15 @@ knitr::opts_chunk$set(
 
 Michelle Dubois, *'Allo 'Allo*
 
-
-The onetime package provides convenience functions to run R code only once per user. For
-example, you can show a startup message only the first time (ever) that a
-package is loaded.
+The onetime package provides convenience functions to run R code only once per
+user. For example, you can show a startup message only the first time (ever)
+that a package is loaded.
 
 Onetime is a lightweight package. It requires just two package dependencies,
 rappdirs and filelock, with no further indirect dependencies. The total 
 size including these dependencies is less than 50 Kb.
 
-* For more information, see the [website](https://hughjonesd.github.io/onetime/).
+* For more information, see the [vignette](https://hughjonesd.github.io/onetime/).
 
 * Development documentation is at <https://hughjonesd.github.io/onetime/dev>.  
 

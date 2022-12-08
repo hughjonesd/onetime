@@ -38,7 +38,6 @@ do_onetime_do <- function(
     }
   }
 
-  dir.create(path, showWarnings = FALSE, recursive = TRUE)
   fp <- onetime_filepath(id, path)
 
   lfp <- paste0(fp, ".lock")
@@ -71,13 +70,14 @@ do_onetime_do <- function(
 onetime_filepath <- function (id, path, check_writable = TRUE) {
   stopifnot(length(id) == 1L, nchar(id) > 0L, length(path) == 1L)
   if (check_writable) {
+    dir.create(path, showWarnings = FALSE, recursive = TRUE)
     isdir <- file.info(path)$isdir
     # unname to work around earlier versions of isTRUE not liking names
     if (! isTRUE(unname(isdir))) {
-      stop("'", path, "' is not a directory")
+      stop("'", path, "' directory could not be created")
     }
     if (! file.access(path, 2) == 0L) {
-      stop("Could not write to '", path, "'")
+      stop("Could not write to '", path, "' directory")
     }
   }
   file.path(path, id)

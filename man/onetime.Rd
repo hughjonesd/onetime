@@ -11,11 +11,6 @@ configuration directory as given by \code{\link[rappdirs:user_data_dir]{rappdirs
 user can set an alternative filepath using \code{options("onetime.dir")}.
 }
 \details{
-It is package authors' responsibility to check for permission
-to store lockfiles. This may have been done already by another package if
-onetime was already installed. You can ask permission interactively on
-the command line by calling \code{\link[=check_ok_to_store]{check_ok_to_store()}} with \code{ask = TRUE}.
-
 Core functions include:
 \itemize{
 \item \code{\link[=onetime_do]{onetime_do()}} runs arbitrary code only once.
@@ -27,7 +22,13 @@ functions from the rlang package.
 \item \code{\link[=onetime_only]{onetime_only()}} returns a function that runs only once.
 \item \code{\link[=check_ok_to_store]{check_ok_to_store()}} and \code{\link[=set_ok_to_store]{set_ok_to_store()}} check for or grant
 permission to store lockfiles on the user's computer.
+It is package authors' responsibility to check for permission
+to store lockfiles. This may have been done already by another package if
+onetime was already installed. You can ask permission interactively on
+the command line by calling \code{\link[=check_ok_to_store]{check_ok_to_store()}} with \code{ask = TRUE}.
 }
+
+For more information, see \code{vignette("onetime")}.
 
 \subsection{Example}{
 
@@ -81,7 +82,7 @@ onetime_message_confirm("A message that the user might want to hide.\n",
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## A message that the user might want to hide.
 ## In non-interactive sessions, instructions will be shown for hiding it manually.
 ## To hide this message in future, run:
-##   onetime_mark_as_done(id = "onetime-readme-595862199")
+##   onetime_mark_as_done(id = "onetime-readme-523128795")
 }\if{html}{\out{</div>}}
 }
 }

@@ -6,11 +6,6 @@
 #' configuration directory as given by [rappdirs::user_config_dir()]. The
 #' user can set an alternative filepath using `options("onetime.dir")`.
 #'
-#' It is package authors' responsibility to check for permission
-#' to store lockfiles. This may have been done already by another package if
-#' onetime was already installed. You can ask permission interactively on
-#' the command line by calling [check_ok_to_store()] with `ask = TRUE`.
-#'
 #' Core functions include:
 #'
 #' * [onetime_do()] runs arbitrary code only once.
@@ -22,6 +17,13 @@
 #' * [onetime_only()] returns a function that runs only once.
 #' * [check_ok_to_store()] and [set_ok_to_store()] check for or grant
 #'   permission to store lockfiles on the user's computer.
+
+#' It is package authors' responsibility to check for permission
+#' to store lockfiles. This may have been done already by another package if
+#' onetime was already installed. You can ask permission interactively on
+#' the command line by calling [check_ok_to_store()] with `ask = TRUE`.
+#'
+#' For more information, see `vignette("onetime")`.
 #'
 #' @includeRmd example.Rmd
 #'

@@ -17,7 +17,8 @@
 #'   simply presses return.
 #' @param without_permission Character string. What to do if the user hasn't
 #'   given permission to store files? `"warn"` runs the action with an extra
-#'   warning; `"run"` runs the action; `"pass"` does nothing and returns the
-#'   default; `"stop"` throws an error; `"ask"` asks for permission, after
-#'   running the action but before recording it on disk.
+#'   warning; `"run"` runs the action with no warning; `"pass"` does nothing
+#'   and returns the default; `"stop"` throws an error; `"ask"` asks for
+#'   permission using [check_ok_to_store()], and returns the default if it is
+#'   not granted.
 NULL

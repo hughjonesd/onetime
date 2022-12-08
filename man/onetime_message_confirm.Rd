@@ -47,9 +47,10 @@ overrides \code{without_permission}.}
 
 \item{without_permission}{Character string. What to do if the user hasn't
 given permission to store files? \code{"warn"} runs the action with an extra
-warning; \code{"run"} runs the action; \code{"pass"} does nothing and returns the
-default; \code{"stop"} throws an error; \code{"ask"} asks for permission, after
-running the action but before recording it on disk.}
+warning; \code{"run"} runs the action with no warning; \code{"pass"} does nothing
+and returns the default; \code{"stop"} throws an error; \code{"ask"} asks for
+permission using \code{\link[=check_ok_to_store]{check_ok_to_store()}}, and returns the default if it is
+not granted.}
 
 \item{noninteractive}{String. Additional message to send in non-interactive
 sessions. Set to \code{NULL} to do nothing in non-interactive sessions. The

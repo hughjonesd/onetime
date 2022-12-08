@@ -82,7 +82,7 @@ onetime_message_confirm("A message that the user might want to hide.\n",
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## A message that the user might want to hide.
 ## In non-interactive sessions, instructions will be shown for hiding it manually.
 ## To hide this message in future, run:
-##   onetime_mark_as_done(id = "onetime-readme-523128795")
+##   onetime_mark_as_done(id = "onetime-readme-892631245")
 }\if{html}{\out{</div>}}
 }
 }

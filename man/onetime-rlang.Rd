@@ -41,7 +41,7 @@ default; \code{"stop"} throws an error; \code{"ask"} asks for permission, after
 running the action but before recording it on disk.}
 }
 \value{
-\code{TRUE} if the message/warning was shown, \code{FALSE} otherwise.
+Invisibly: \code{TRUE} if the message/warning was shown, \code{FALSE} otherwise.
 }
 \description{
 If you use these you will need to add \code{"rlang"} to your package dependencies.

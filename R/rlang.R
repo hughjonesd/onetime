@@ -6,7 +6,7 @@
 #' @param ... Passed to [rlang::warn()] or [rlang::inform()].
 #' @inherit common-params
 #'
-#' @return `TRUE` if the message/warning was shown, `FALSE` otherwise.
+#' @return Invisibly: `TRUE` if the message/warning was shown, `FALSE` otherwise.
 #'
 #' @examples
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
@@ -36,7 +36,7 @@ onetime_rlang_warn <- function (...,
                     id = id, path = path, expiry = expiry,
                     without_permission = without_permission
                    )
-  return(! is.null(res))
+  return(invisible(! is.null(res)))
 }
 
 
@@ -56,5 +56,5 @@ onetime_rlang_inform <- function (...,
                     default = "not null",
                     without_permission = without_permission
                    )
-  return(is.null(res)) # ... and return TRUE if you got NULL
+  return(invisible(is.null(res))) # ... and return TRUE if you got NULL
 }

@@ -20,7 +20,10 @@ once."><meta name="robots" content="noindex"><!-- mathjax --><script src="https:
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/onetime.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item">
@@ -92,7 +95,8 @@ package will be used. Since onetime 0.2.0, not setting <code>id</code> is
 
 
 <dt>path</dt>
-<dd><p>Directory to store lockfiles.</p></dd>
+<dd><p>Directory to store lockfiles. Normally you should leave this as
+the default.</p></dd>
 
 
 <dt>expiry</dt>
@@ -103,9 +107,10 @@ After this length of time, code will be run again.</p></dd>
 <dt>without_permission</dt>
 <dd><p>Character string. What to do if the user hasn't
 given permission to store files? <code>"warn"</code> runs the action with an extra
-warning; <code>"run"</code> runs the action; <code>"pass"</code> does nothing and returns the
-default; <code>"stop"</code> throws an error; <code>"ask"</code> asks for permission, after
-running the action but before recording it on disk.</p></dd>
+warning; <code>"run"</code> runs the action with no warning; <code>"pass"</code> does nothing
+and returns the default; <code>"stop"</code> throws an error; <code>"ask"</code> asks for
+permission using <code><a href="check_ok_to_store.html">check_ok_to_store()</a></code>, and returns the default if it is
+not granted.</p></dd>
 
 </dl></div>
     <div class="section level2">

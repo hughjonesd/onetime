@@ -30,7 +30,7 @@ dependencies. The total size including these dependencies is less than
 50 Kb.
 
 - For more information, see the
-  [website](https://hughjonesd.github.io/onetime/).
+  [vignette](https://hughjonesd.github.io/onetime/dev/articles/onetime.html).
 
 - Development documentation is at
   <https://hughjonesd.github.io/onetime/dev>.
@@ -78,7 +78,7 @@ onetime_message_confirm("A message that the user might want to hide.\n",
 #> A message that the user might want to hide.
 #> In non-interactive sessions, instructions will be shown for hiding it manually.
 #> To hide this message in future, run:
-#>   onetime_mark_as_done(id = "onetime-readme-807075411")
+#>   onetime_mark_as_done(id = "onetime-readme-652373289")
 ```
 
 ## Installation

@@ -87,7 +87,7 @@ it doesn't show it again.
 You still won't see any message, even if you change the message itself:
 
 ```{r}
-onetime_message("I repeat... I shall say this only once!", id = id)
+onetime_message("Does nobody hear the cries of an poor old woman?", id = id)
 ```
 
 That's because onetime identifies actions by their `id`. If you change the `id`,
@@ -95,18 +95,16 @@ you can send a new message:
 
 ```{r}
 id <- "vignette-2"
-onetime_message("Does nobody hear the cries of an poor old woman?", id = id)
+onetime_message("I repeat... I shall say this only once!", id = id)
 ```
 
 You aren't limited to sending messages. You can also give warnings:
-
 
 ```{r}
 id <- "vignette-3"
 onetime_warning("you cannot expect me to shoot everyone in the town. ",
                 "I'm unpopular enough as it is!", id = id)
 ```
-
 
 You can print package startup messages using `onetime_startup_message()`.
 If the rlang package is installed, you can also use `onetime_rlang_inform()`
@@ -123,7 +121,6 @@ onetime_rlang_inform(c(
 
 Underlying all these functions is `onetime_do()`, which allows you to run
 arbitrary code just once:
-
 
 ```{r}
 id <- "vignette-5"
@@ -146,7 +143,6 @@ results <- parallel::parSapply(cl, 1:20, otd = otd,
     onetime::onetime_message("I will say this only once!", id = "vignette-6")
   }
 )
-
 parallel::stopCluster(cl)
 
 table(results)
@@ -180,7 +176,8 @@ message in future:
 
 ```{r}
 id <- "vignette-8"
-onetime_message_confirm("Hans, have you got the weedkiller?", id = id)
+onetime_message_confirm("One drink and... all is quiet on the Western Front.", 
+			id = id)
 ```
 
 

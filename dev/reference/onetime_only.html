@@ -81,7 +81,7 @@ times.</p>
 <dt>id</dt>
 <dd><p>Unique ID string. If this is unset, the name of the calling
 package will be used. Since onetime 0.2.0, not setting <code>id</code> is
-<a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> with a warning.</p></dd>
+deprecated.</p></dd>
 
 
 <dt>path</dt>
@@ -121,7 +121,7 @@ or  <code>default</code> if the inner function was not called.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sample_once</span> <span class="op">&lt;-</span> <span class="fu">onetime_only</span><span class="op">(</span><span class="va">sample</span>, id <span class="op">=</span> <span class="va">id</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">sample_once</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  4  5  7  3  8  2 10  9  1  6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1  7  6  5  4 10  2  3  8  9</span>
 <span class="r-in"><span><span class="fu">sample_once</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-in"><span></span></span>

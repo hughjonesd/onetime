@@ -18,7 +18,8 @@ coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg
 
 > Listen very carefully. I shall say this only once.
 
-Michelle Dubois, *’Allo ’Allo*
+[Michelle Dubois, *’Allo
+’Allo*](https://www.youtube.com/watch?v=M-_5JJmNB6E)
 
 The onetime package provides convenience functions to run R code only
 once (ever) per user. For example, you can:

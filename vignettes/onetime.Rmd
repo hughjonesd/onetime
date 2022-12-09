@@ -147,6 +147,7 @@ results <- parallel::parSapply(cl, 1:20, otd = otd,
   }
 )
 
+parallel::stopCluster(cl)
 
 table(results)
 
@@ -298,7 +299,6 @@ More information is available on the onetime website:
 
 ```{r, echo = FALSE, include = FALSE}
 # Clean up this vignette:
-parallel::stopCluster(cl)
 ids <- paste0("vignette-", 1:10)
 for (id in ids) onetime_reset(id)
 file.remove("check.txt")

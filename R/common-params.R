@@ -3,7 +3,7 @@
 #' @name common-params
 #' @param id Unique ID string. If this is unset, the name of the calling
 #'   package will be used. Since onetime 0.2.0, not setting `id` is
-#'   `r lifecycle::badge("deprecated")` with a warning.
+#'   deprecated.
 #' @param path Directory to store lockfiles. Normally you should leave this as
 #'   the default.
 #' @param expiry [difftime()] or e.g. [lubridate::duration()] object.

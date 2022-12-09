@@ -34,43 +34,20 @@ For more information, see \code{vignette("onetime")}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{library(onetime)
 
-# Setup
-otd <- tempdir(check = TRUE)
-oo <- options(onetime.dir = otd)
-ids  <- paste0("onetime-readme-", sample(1e9, 5L))
-
+ids  <- paste0("onetime-readme-", 1:3) 
 
 for (i in 1:5) \{
-  cat("Loop ", i, " of 5\n")
   onetime_do(cat("This command will only be run once.\n"), id = ids[1])
   onetime_warning("This warning will only be shown once.", id = ids[2])
   onetime_message("This message will only be shown once.", id = ids[3])
 \}
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Loop  1  of 5
-## This command will only be run once.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## This command will only be run once.
 
 ## Warning: This warning will only be shown once.
 
 ## This message will only be shown once.
-
-## Loop  2  of 5
-## Loop  3  of 5
-## Loop  4  of 5
-## Loop  5  of 5
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Letting the user hide a message:
-onetime_message_confirm("A message that the user might want to hide.\n",
-                        "In non-interactive sessions, instructions will ",
-                        "be shown for hiding it manually.", id = ids[5])
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## A message that the user might want to hide.
-## In non-interactive sessions, instructions will be shown for hiding it manually.
-## To hide this message in future, run:
-##   onetime_mark_as_done(id = "onetime-readme-925181392")
 }\if{html}{\out{</div>}}
 }
 }

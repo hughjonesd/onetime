@@ -88,7 +88,7 @@ onetime_startup_message <- function (...,
 #' @param noninteractive String. Additional message to send in non-interactive
 #'  sessions. Set to `NULL` to do nothing in non-interactive sessions. The
 #'  default tells the user how to manually mark the message as done.
-#' @param message `r lifecycle::badge("deprecated")`
+#' @param message Deprecated. Use unnamed arguments `...` instead.
 #'
 #' @return
 #' * `NULL` if the message was not shown (shown already or non-interactive
@@ -127,12 +127,11 @@ onetime_message_confirm <- function (
   noninteractive     = paste0(
     "To hide this message in future, run:\n",
     "  onetime_mark_as_done(id = \"", id, "\")"),
-  message            = deprecated()
+  message            = .Deprecated()
 ) {
   dots <- list(...)
-  if (lifecycle::is_present(message)) {
-    lifecycle::deprecate_soft("0.2.0", "onetime_message_confirm(message)",
-                   "onetime_message_confirm(...)")
+  if (! missing(message)) {
+    .Deprecated("onetime_message_confirm(message = ...)", "onetime_message_confirm(...)")
     dots <- list(message)
   }
 

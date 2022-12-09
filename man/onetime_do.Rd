@@ -18,7 +18,7 @@ onetime_do(
 
 \item{id}{Unique ID string. If this is unset, the name of the calling
 package will be used. Since onetime 0.2.0, not setting \code{id} is
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} with a warning.}
+deprecated.}
 
 \item{path}{Directory to store lockfiles. Normally you should leave this as
 the default.}

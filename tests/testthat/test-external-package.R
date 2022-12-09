@@ -30,7 +30,7 @@ test_that("onetime_only from external", {
 test_that("Calling from external package", {
   oo <- options(onetime.dir = tempdir(check = TRUE))
   expect_message(test_onetime_echo("xxx"), "xxx")
-  expect_silent(test_onetime_echo("xxx"))
+  expect_output(test_onetime_echo("xxx"), NA)
   test_onetime_reset()
 
   ctr <- 0
@@ -49,16 +49,16 @@ test_that("Calling from external package", {
 
 test_that("onetime_warning/message from external", {
   oo <- options(onetime.dir = tempdir(check = TRUE))
-  expect_warning((test_onetime_warning("foo")), "foo")
-  expect_silent((test_onetime_warning("foo")))
+  expect_warning(test_onetime_warning("foo"), "foo")
+  expect_output(test_onetime_warning("foo"), NA)
   test_onetime_reset()
 
-  expect_message((test_onetime_message("foo")), "foo")
-  expect_silent((test_onetime_message("foo")))
+  expect_message(test_onetime_message("foo"), "foo")
+  expect_output(test_onetime_message("foo"), NA)
   test_onetime_reset()
 
-  expect_message((test_onetime_startup_message("foo")), "foo")
-  expect_silent((test_onetime_startup_message("foo")))
+  expect_message(test_onetime_startup_message("foo"), "foo")
+  expect_output(test_onetime_startup_message("foo"), NA)
   test_onetime_reset()
 })
 

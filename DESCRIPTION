@@ -17,7 +17,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.2
 Imports: 
-    lifecycle,
     rappdirs,
     filelock
 URL: https://github.com/hughjonesd/onetime,
@@ -28,6 +27,7 @@ Suggests:
     covr,
     devtools,
     knitr,
+    lifecycle,
     mockr,
     rlang,
     rmarkdown,

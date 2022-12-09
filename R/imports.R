@@ -1,3 +1,2 @@
 
-#' @importFrom lifecycle deprecated
 NULL

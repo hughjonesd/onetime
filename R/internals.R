@@ -84,8 +84,7 @@ onetime_filepath <- function (id, path, check_writable = TRUE) {
 }
 
 deprecate_calling_package <- function () {
-  lifecycle::deprecate_soft("0.2.0", "calling_package()",
-            details = "Not setting an `id` in onetime functions is deprecated.")
+  .Deprecated(msg = "Not setting an `id` in onetime functions is deprecated since version 0.2.0")
   calling_package(n = 3L)
 }
 

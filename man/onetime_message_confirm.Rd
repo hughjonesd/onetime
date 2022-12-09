@@ -16,7 +16,7 @@ onetime_message_confirm(
   without_permission = "warn",
   noninteractive = paste0("To hide this message in future, run:\\n",
     "  onetime_mark_as_done(id = \\"", id, "\\")"),
-  message = deprecated()
+  message = .Deprecated()
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ onetime_message_confirm(
 
 \item{id}{Unique ID string. If this is unset, the name of the calling
 package will be used. Since onetime 0.2.0, not setting \code{id} is
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} with a warning.}
+deprecated.}
 
 \item{path}{Directory to store lockfiles. Normally you should leave this as
 the default.}
@@ -56,7 +56,7 @@ not granted.}
 sessions. Set to \code{NULL} to do nothing in non-interactive sessions. The
 default tells the user how to manually mark the message as done.}
 
-\item{message}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+\item{message}{Deprecated. Use unnamed arguments \code{...} instead.}
 }
 \value{
 \itemize{

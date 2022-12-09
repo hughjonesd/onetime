@@ -164,6 +164,8 @@ allows you to run arbitrary code just once:</p>
 <code class="sourceCode R"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">"vignette-5"</span></span>
 <span><span class="fu"><a href="../reference/onetime_do.html">onetime_do</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric_version.html" class="external-link">getRversion</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">id</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] '4.2.2'</span></span></code></pre></div>
+<p>Onetime uses file locks to avoid race conditions. So even if you use
+multiple R processes, a onetime action will be run only once.</p>
 </div>
 <div class="section level2">
 <h2 id="allowing-the-user-to-hide-a-message">Allowing the user to hide a message<a class="anchor" aria-label="anchor" href="#allowing-the-user-to-hide-a-message"></a>
@@ -251,7 +253,7 @@ warning to the user explaining how they can change this:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/set_ok_to_store.html">set_ok_to_store</a></span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Granting the onetime package permission to store lockfiles on this computer.</span></span>
-<span><span class="co">#&gt; Lockfiles are stored beneath '/tmp/Rtmp18B2m6'.</span></span>
+<span><span class="co">#&gt; Lockfiles are stored beneath '/tmp/RtmpfoNp5t'.</span></span>
 <span><span class="co">#&gt; You can revoke permission by calling:</span></span>
 <span><span class="co">#&gt;   onetime::set_ok_to_store(FALSE)</span></span></code></pre></div>
 </li>

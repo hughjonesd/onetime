@@ -30,9 +30,12 @@ knitr::opts_chunk$set(
 
 Michelle Dubois, *'Allo 'Allo*
 
-The onetime package provides convenience functions to run R code only once per
-user. For example, you can show a startup message only the first time (ever)
-that a package is loaded.
+The onetime package provides convenience functions to run R code only once 
+(ever) per user. For example, you can:
+
+* Show a startup message only the first time (ever) that a package is loaded. 
+* Run cleanup code just once after an upgrade.
+* Show the user a message, with the option not to show it again.
 
 Onetime is a lightweight package. It requires just two package dependencies,
 rappdirs and filelock, with no further indirect dependencies. The total 
@@ -56,6 +59,7 @@ install.packages("onetime")
 You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("hughjonesd/onetime")
+# install.packages("remotes")
+remotes::install_github("hughjonesd/onetime")
 ```
+

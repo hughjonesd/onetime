@@ -123,6 +123,9 @@ id <- "vignette-5"
 onetime_do(print(getRversion()), id = id)
 ```
 
+Onetime uses file locks to avoid race conditions. So even if you 
+use multiple R processes, a onetime action will be run only once.
+
 
 # Allowing the user to hide a message
 

@@ -80,8 +80,10 @@ deprecated.</p></dd>
 
 
 <dt>path</dt>
-<dd><p>Directory to store lockfiles. Normally you should leave this as
-the default.</p></dd>
+<dd><p>Directory to store lockfiles. The default uses a unique
+directory corresponding to the calling package, beneath
+<code><a href="https://rappdirs.r-lib.org/reference/user_data_dir.html" class="external-link">rappdirs::user_config_dir()</a></code>. Normally you should leave this as the
+default.</p></dd>
 
 
 <dt>expiry</dt>

@@ -19,8 +19,10 @@ onetime_only(
 package will be used. Since onetime 0.2.0, not setting \code{id} is
 deprecated.}
 
-\item{path}{Directory to store lockfiles. Normally you should leave this as
-the default.}
+\item{path}{Directory to store lockfiles. The default uses a unique
+directory corresponding to the calling package, beneath
+\code{\link[rappdirs:user_data_dir]{rappdirs::user_config_dir()}}. Normally you should leave this as the
+default.}
 
 \item{default}{Value to return from \code{.f} if function was not executed.}
 

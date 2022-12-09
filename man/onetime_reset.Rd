@@ -11,8 +11,10 @@ onetime_reset(id = deprecate_calling_package(), path = default_lockfile_dir())
 package will be used. Since onetime 0.2.0, not setting \code{id} is
 deprecated.}
 
-\item{path}{Directory to store lockfiles. Normally you should leave this as
-the default.}
+\item{path}{Directory to store lockfiles. The default uses a unique
+directory corresponding to the calling package, beneath
+\code{\link[rappdirs:user_data_dir]{rappdirs::user_config_dir()}}. Normally you should leave this as the
+default.}
 }
 \value{
 The result of \code{file.remove()}, invisibly.

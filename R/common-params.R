@@ -4,8 +4,10 @@
 #' @param id Unique ID string. If this is unset, the name of the calling
 #'   package will be used. Since onetime 0.2.0, not setting `id` is
 #'   deprecated.
-#' @param path Directory to store lockfiles. Normally you should leave this as
-#'   the default.
+#' @param path Directory to store lockfiles. The default uses a unique
+#'   directory corresponding to the calling package, beneath 
+#'   [rappdirs::user_config_dir()]. Normally you should leave this as the 
+#'   default.
 #' @param expiry [difftime()] or e.g. [lubridate::duration()] object.
 #'   After this length of time, code will be run again.
 #' @param message Message to display to the user.

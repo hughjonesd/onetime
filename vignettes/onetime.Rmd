@@ -286,7 +286,15 @@ onetime_message("I shall say this only once!", id = "vignette-1")
 
 
 From version 0.2.0 of the package, you can use `onetime_mark_as_done()` 
-to manually mark a particular action as done. 
+to manually mark a particular action as done:
+
+```{r}
+id <- "vignette-11"
+onetime_mark_as_done(id)
+# Won't be shown:
+onetime_message("In my opinion, a whole Meccano set has fallen apart in there.",
+	       	id = id)
+```
 
 
 # Going further
@@ -297,9 +305,9 @@ More information is available on the onetime website:
 * [Development version](https://hughjonesd.github.io/onetime/dev)
 
 
-```{r, echo = FALSE, include = FALSE}
+```{r, include = FALSE}
 # Clean up this vignette:
-ids <- paste0("vignette-", 1:10)
+ids <- paste0("vignette-", 1:11)
 for (id in ids) onetime_reset(id)
 file.remove("check.txt")
 ```

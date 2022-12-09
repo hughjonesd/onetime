@@ -14,10 +14,17 @@ knitr::opts_chunk$set(
 )
 options(onetime.dir = tempdir(check = TRUE))
 library(onetime)
+
+light_the_candle_with_the_handle <- function () {
+  cat("If we kill him with the pill from the till",
+      "by making with it the drug in the jug, you need not",
+      "light the candle with the handle on the Gateau from the Chateau!",
+      sep = "\n")
+}
 ```
 
 
-# Introduction
+# Motivation
 
 Sometimes package authors want to run code only once for a given
 user on a given computer. Not just "once per session", but "only once ever"
@@ -30,10 +37,9 @@ or "only once per month" at most. Here are some use cases:
 
 The onetime package lets you do this. 
 
-Onetime is a lightweight package, with just two
-package dependencies, rappdirs and filelock. Its total size including
-dependencies is less than 50 Kb. So it is cheap to include as a dependency in
-your own package.
+Onetime is a lightweight package, with just two package dependencies, rappdirs
+and filelock. Its total size including dependencies is less than 50 Kb. So it is
+cheap to include as a dependency in your own package.
 
 # Setup
 
@@ -97,7 +103,8 @@ You aren't limited to sending messages. You can also give warnings:
 
 ```{r}
 id <- "vignette-3"
-onetime_warning("What are you doing with that woman?", id = id)
+onetime_warning("you cannot expect me to shoot everyone in the town. ",
+                "I'm unpopular enough as it is!", id = id)
 ```
 
 
@@ -120,12 +127,30 @@ arbitrary code just once:
 
 ```{r}
 id <- "vignette-5"
-onetime_do(print(getRversion()), id = id)
+onetime_do(light_the_candle_with_the_handle(), id = id)
 ```
 
 Onetime uses file locks to avoid race conditions. So even if you 
-use multiple R processes, a onetime action will be run only once.
+use multiple R processes, a onetime action will be run only once:
 
+```{r}
+
+cl <- parallel::makeCluster(2, outfile = "check.txt")
+otd <- getOption("onetime.dir")
+
+results <- parallel::parSapply(cl, 1:20, otd = otd,
+  function (x, otd) {
+    options(onetime.dir = otd)
+    onetime::onetime_message("I will say this only once!", id = "vignette-6")
+  }
+)
+
+
+table(results)
+
+readLines("check.txt")
+
+```
 
 # Allowing the user to hide a message
 
@@ -136,7 +161,7 @@ In interactive sessions, this will ask the user if they want to show the message
 again:
 
 ```{r, eval = FALSE}
-id <- "vignette-6"
+id <- "vignette-7"
 onetime_message_confirm(
   "What are you doing with that serving girl in your arms?",
   id = id)
@@ -152,7 +177,7 @@ message in future:
 
 
 ```{r}
-id <- "vignette-7"
+id <- "vignette-8"
 onetime_message_confirm("Hans, have you got the weedkiller?", id = id)
 ```
 
@@ -164,7 +189,7 @@ argument of these functions. For example, this will print a message, but only
 if it has not been printed in the past week:
 
 ```{r}
-id <- "vignette-8"
+id <- "vignette-9"
 onetime_message("Good moaning!", 
                 id = id, 
                 expiry = as.difftime(1, "weeks")
@@ -180,7 +205,7 @@ check for permission to store lockfiles. CRAN policy demands that you do this.
 Onetime functions will check for this permission, and by default won't store
 the file until it has been granted. 
 
-As a package author, you have several options.
+You have several options to handle this:
 
 * If your package is used directly from the command line, the simplest option
   is to call functions using `without_permission = "ask"`. This will ask the
@@ -189,7 +214,7 @@ As a package author, you have several options.
   
     
   ```{r, eval = FALSE}
-  id <- "vignette-9"
+  id <- "vignette-10"
   onetime_message("Thank you for your kind applause.", 
                   id = id,
                   without_permission = "ask")
@@ -272,6 +297,8 @@ More information is available on the onetime website:
 
 ```{r, echo = FALSE, include = FALSE}
 # Clean up this vignette:
-ids <- paste0("vignette-", 1:9)
+parallel::stopCluster(cl)
+ids <- paste0("vignette-", 1:10)
 for (id in ids) onetime_reset(id)
+file.remove("check.txt")
 ```

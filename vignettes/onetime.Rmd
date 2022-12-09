@@ -133,7 +133,9 @@ onetime_do(light_the_candle_with_the_handle(), id = id)
 Onetime uses file locks to avoid race conditions. So even if you 
 use multiple R processes, a onetime action will be run only once:
 
-```{r}
+```{r, eval = .Platform$OS.type != "windows"}
+
+# NB: This chunk will only be run on Unix-alikes
 
 cl <- parallel::makeCluster(2, outfile = "check.txt")
 otd <- getOption("onetime.dir")
@@ -149,7 +151,6 @@ results <- parallel::parSapply(cl, 1:20, otd = otd,
 table(results)
 
 readLines("check.txt")
-
 ```
 
 # Allowing the user to hide a message

@@ -259,6 +259,31 @@ You have several options to handle this:
   to avoid raising the issue of permissions with the user - so long as you don't 
   plan to submit your package to CRAN.
   
+  Use this mechanism with care. Package authors should *always* set 
+  `options(onetime.dir)` locally within their functions and set it back 
+  to its original value afterwards. Otherwise you risk changing the directory 
+  for other packages, or overwriting the user's preferred value. You can do this 
+  using `withr::local_options()`:
+  
+  ```{r, eval = FALSE}
+  my_func <- function () {
+    withr::local_options(onetime.dir = "path to preferred directory")
+    onetime_message("Hit it hard with your spoon.",
+                    "They always break in the end.",
+                    id = "flick-1")
+  }
+  ```
+  
+  or in base R:
+  
+  ```{r, eval = FALSE}
+  my_func <- function () {
+    oo <- options(onetime.dir = "path to preferred directory")
+    on.exit(options(oo))
+    ...
+  }
+  ```
+
 If onetime has already been installed by a different package, then it is likely that
 the user will have already granted file permissions, and onetime functions will 
 just work.

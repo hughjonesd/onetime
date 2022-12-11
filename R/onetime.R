@@ -1,5 +1,4 @@
 
-
 #' Run code only once
 #'
 #' This function runs an expression just once. It then creates a lockfile
@@ -13,8 +12,9 @@
 #' Calls are identified by `id`. If you use the same value of `id` across
 #' different calls to onetime functions, only the first call will get made.
 #'
-#' The default `path`, where lockfiles are stored, is within
-#' [rappdirs::user_config_dir()] unless overridden by `options("onetime.dir")`.
+#' The default `path`, where lockfiles are stored, is in a per-package directory
+#' beneath [rappdirs::user_config_dir()]. This can be overridden by 
+#' `options("onetime.dir")`.
 #'
 #' If the call gives an error, the lockfile is still written.
 #'

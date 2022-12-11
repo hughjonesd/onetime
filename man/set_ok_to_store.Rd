@@ -11,7 +11,7 @@ set_ok_to_store(ok = TRUE)
 it and unset \code{options("onetime.dir")}.}
 }
 \value{
-\code{TRUE} if the operation succeeded.
+Invisible \code{NULL}.
 }
 \description{
 End users may use this from the command line. Package authors should \emph{only}

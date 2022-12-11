@@ -49,8 +49,9 @@ recording a unique ID which will prevent the expression being run again.
 Calls are identified by \code{id}. If you use the same value of \code{id} across
 different calls to onetime functions, only the first call will get made.
 
-The default \code{path}, where lockfiles are stored, is within
-\code{\link[rappdirs:user_data_dir]{rappdirs::user_config_dir()}} unless overridden by \code{options("onetime.dir")}.
+The default \code{path}, where lockfiles are stored, is in a per-package directory
+beneath \code{\link[rappdirs:user_data_dir]{rappdirs::user_config_dir()}}. This can be overridden by
+\code{options("onetime.dir")}.
 
 If the call gives an error, the lockfile is still written.
 

@@ -90,7 +90,7 @@ check_ok_to_store <- function(
 #'
 #' @param ok `TRUE` to grant permission to store lockfiles, `FALSE` to revoke
 #'   it and unset `options("onetime.dir")`.
-#' @return `TRUE` if the operation succeeded.
+#' @return Invisible `NULL`.
 #' @export
 #'
 #' @examples

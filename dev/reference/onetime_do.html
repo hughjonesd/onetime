@@ -115,8 +115,9 @@ or <code>default</code> if <code>expr</code> was not run because it had been run
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Calls are identified by <code>id</code>. If you use the same value of <code>id</code> across
 different calls to onetime functions, only the first call will get made.</p>
-<p>The default <code>path</code>, where lockfiles are stored, is within
-<code><a href="https://rappdirs.r-lib.org/reference/user_data_dir.html" class="external-link">rappdirs::user_config_dir()</a></code> unless overridden by <code>options("onetime.dir")</code>.</p>
+<p>The default <code>path</code>, where lockfiles are stored, is in a per-package directory
+beneath <code><a href="https://rappdirs.r-lib.org/reference/user_data_dir.html" class="external-link">rappdirs::user_config_dir()</a></code>. This can be overridden by
+<code>options("onetime.dir")</code>.</p>
 <p>If the call gives an error, the lockfile is still written.</p>
 <p><code>expiry</code> is backward-looking. That is, <code>expiry</code> is used at check time to see
 if the lockfile was written after <code>Sys.time() - expiry</code>. It is not used when

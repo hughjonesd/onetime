@@ -106,10 +106,9 @@ calling_package <- function (n = 3L) {
 
 
 default_lockfile_dir <- function () {
-  lfd <- onetime_base_dir()
-  package <- try(calling_package(n = 3), silent = TRUE)
-  if (inherits(package, "try-error")) package <- "NO-PACKAGE"
-  lfd <- file.path(lfd, package)
+  subdir <- try(calling_package(n = 3), silent = TRUE)
+  if (inherits(subdir, "try-error")) subdir <- "NO-PACKAGE"
+  lfd <- onetime_dir(subdir)
   return(lfd)
 }
 

@@ -110,5 +110,31 @@ onetime_been_done <- function (
   } else {
     return(file.mtime(fp) + expiry >= Sys.time())
   }
+}
 
+
+#' Return a path to a directory beneath the onetime base directory
+#'
+#' By default lockfiles are stored beneath the onetime base directory,
+#' in a directory named after the calling package. You can use a different
+#' subdirectory by setting `path = onetime_dir("dirname")` in calls to
+#' onetime functions.
+#'
+#' `onetime_dir()` does not autocreate the directory (but it will get created
+#' during the call to  [onetime_do()]).
+#'
+#' @param dir String. Name of a single directory.
+#'
+#' @return The path.
+#' @export
+#'
+#' @examples
+#' onetime_dir("my-folder")
+#'
+#' oo <- options(onetime.dir = tempdir(check = TRUE))
+#' onetime_dir("my-folder")
+#' options(oo)
+onetime_dir <- function (dir) {
+  stopifnot(is.character(dir), length(dir) == 1L)
+  file.path(onetime_base_dir(), dir)
 }

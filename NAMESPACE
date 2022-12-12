@@ -2,6 +2,7 @@
 
 export(check_ok_to_store)
 export(onetime_been_done)
+export(onetime_dir)
 export(onetime_do)
 export(onetime_mark_as_done)
 export(onetime_message)

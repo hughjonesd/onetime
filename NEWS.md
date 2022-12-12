@@ -6,6 +6,9 @@
   
 * New function `onetime_mark_as_done()` to manually mark an action as done.
 
+* New function `onetime_dir("dirname")` returns a path to an arbitrary 
+  subdirectory of the onetime base directory for lockfiles.
+
 * `onetime_message_confirm()` now prints its message by default in 
   non-interactive sessions, along with instructions on how to hide the message 
   using `onetime_mark_as_done()`.

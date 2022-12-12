@@ -92,6 +92,14 @@ test_that("onetime_mark_as_done", {
 })
 
 
+test_that("onetime_dir", {
+  expect_equal(
+               onetime_dir("foobar"),
+               file.path(getOption("onetime.dir"), "foobar")
+              )
+})
+
+
 test_that("expiry", {
   expiry <- as.difftime(1, units = "secs")
   expect_message(

@@ -1,20 +1,28 @@
 
 #' Run code only once
 #'
-#' This function runs an expression just once. It then creates a lockfile
-#' recording a unique ID which will prevent the expression being run again.
+#' When first called, `onetime_do()` evaluates an expression. It then creates a
+#' lockfile recording a unique ID which will prevent the expression being run
+#' on subsequent calls.
+#'
 #'
 #' @param expr The code to evaluate. An R statement or [expression()] object.
 #' @inherit common-params
 #' @param default Value to return if `expr` was not executed.
 #'
 #' @details
+#' `onetime_do()` is the engine used by other onetime functions.
+#'
 #' Calls are identified by `id`. If you use the same value of `id` across
 #' different calls to onetime functions, only the first call will get made.
 #'
 #' The default `path`, where lockfiles are stored, is in a per-package directory
-#' beneath [rappdirs::user_config_dir()]. This can be overridden by 
-#' `options("onetime.dir")`.
+#' beneath [rappdirs::user_config_dir()]. To use a different subdirectory within
+#' the onetime base directory, set `path = onetime_dir("dirname")`.
+#'
+#' End users can also set `options(onetime.dir)` to change the base directory.
+#' Package authors should only set this option locally within package functions,
+#' if at all.
 #'
 #' If the call gives an error, the lockfile is still written.
 #'

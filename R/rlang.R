@@ -8,7 +8,7 @@
 #'
 #' @return Invisibly: `TRUE` if the message/warning was shown, `FALSE` otherwise.
 #'
-#' @examples
+#' @doctest
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1)
 #'

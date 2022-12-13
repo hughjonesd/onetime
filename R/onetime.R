@@ -36,7 +36,7 @@
 #'
 #' @export
 #'
-#' @examples
+#' @doctest
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1L)
 #'
@@ -89,7 +89,7 @@ onetime_do <- function(
 #'
 #' @seealso [onetime_do()]
 #'
-#' @examples
+#' @doctest
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1)
 #'

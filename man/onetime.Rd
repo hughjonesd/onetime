@@ -42,12 +42,5 @@ for (i in 1:5) \{
   onetime_message("This message will only be shown once.", id = ids[3])
 \}
 }\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## This command will only be run once.
-
-## Warning: This warning will only be shown once.
-
-## This message will only be shown once.
-}\if{html}{\out{</div>}}
 }
 }

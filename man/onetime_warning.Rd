@@ -60,6 +60,9 @@ Invisible \code{TRUE} if the message/warning was shown, invisible
 These functions use \code{\link[=onetime_do]{onetime_do()}} to print a warning or message just
 once.
 }
+\seealso{
+\code{\link[=onetime_do]{onetime_do()}}
+}
 \examples{
 oo <- options(onetime.dir = tempdir(check = TRUE))
 id <- sample(10000L, 1)
@@ -70,7 +73,4 @@ for (n in 1:3) {
 
 onetime_reset(id = id)
 options(oo)
-}
-\seealso{
-\code{\link[=onetime_do]{onetime_do()}}
 }

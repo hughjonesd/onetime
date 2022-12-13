@@ -13,7 +13,7 @@
 #'
 #' @seealso [onetime_do()]
 #'
-#' @examples
+#' @doctest
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1)
 #'
@@ -106,7 +106,7 @@ onetime_startup_message <- function (...,
 #'
 #' @export
 #'
-#' @examples
+#' @doctest
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1L)
 #'

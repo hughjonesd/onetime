@@ -43,6 +43,9 @@ Use it for code which should run only once, but which may be called from
 multiple locations. This frees you from having to use the same \code{id} multiple
 times.
 }
+\seealso{
+\code{\link[=onetime_do]{onetime_do()}}
+}
 \examples{
 oo <- options(onetime.dir = tempdir(check = TRUE))
 id <- sample(10000L, 1)
@@ -53,7 +56,4 @@ sample_once(1:10)
 
 onetime_reset(id)
 options(oo)
-}
-\seealso{
-\code{\link[=onetime_do]{onetime_do()}}
 }

@@ -39,7 +39,7 @@
 #'  Otherwise `FALSE`.
 #' @export
 #'
-#' @examples
+#' @doctest
 #'
 #' check_ok_to_store()
 #'

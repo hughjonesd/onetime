@@ -14,7 +14,8 @@ Description: Allows code to be run only once on a given computer, using
   package is loaded for the very first time.
 License: MIT + file LICENSE
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
+Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", 
+              "doctest::dt_roclet")) 
 RoxygenNote: 7.2.2
 Imports: 
     rappdirs,

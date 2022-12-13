@@ -9,7 +9,7 @@
 #'
 #' @export
 #'
-#' @examples
+#' @doctest
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1)
 #'
@@ -54,7 +54,7 @@ onetime_reset <- function (
 #' Invisible `FALSE` if it was already marked as done (and still is).
 #' @export
 #'
-#' @examples
+#' @doctest
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1)
 #'
@@ -82,7 +82,7 @@ onetime_mark_as_done <- function (
 #'
 #' @export
 #'
-#' @examples
+#' @doctest
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1)
 #'
@@ -128,7 +128,7 @@ onetime_been_done <- function (
 #' @return The path.
 #' @export
 #'
-#' @examples
+#' @doctest
 #' onetime_dir("my-folder")
 #'
 #' oo <- options(onetime.dir = tempdir(check = TRUE))

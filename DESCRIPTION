@@ -27,6 +27,7 @@ Suggests:
     callr,
     covr,
     devtools,
+    doctest (>= 0.1.0),
     knitr,
     lifecycle,
     mockr,
@@ -35,3 +36,5 @@ Suggests:
     testthat (>= 2.1.0),
     withr
 VignetteBuilder: knitr
+Remotes:  
+    hughjonesd/doctest

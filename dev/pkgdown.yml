@@ -3,7 +3,7 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   onetime: onetime.html
-last_built: 2022-12-12T13:34Z
+last_built: 2022-12-13T23:04Z
 urls:
   reference: https://hughjonesd.github.io/onetime/reference
   article: https://hughjonesd.github.io/onetime/articles

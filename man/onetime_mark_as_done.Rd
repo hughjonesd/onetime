@@ -37,7 +37,6 @@ computer, just like other onetime actions.
 \examples{
 oo <- options(onetime.dir = tempdir(check = TRUE))
 id <- sample(10000L, 1)
-
 onetime_mark_as_done(id = id)
 onetime_message("Won't be shown", id = id)
 

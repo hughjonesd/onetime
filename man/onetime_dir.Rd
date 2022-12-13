@@ -24,7 +24,6 @@ during the call to  \code{\link[=onetime_do]{onetime_do()}}).
 }
 \examples{
 onetime_dir("my-folder")
-
 oo <- options(onetime.dir = tempdir(check = TRUE))
 onetime_dir("my-folder")
 options(oo)

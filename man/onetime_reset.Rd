@@ -25,7 +25,6 @@ Reset a onetime call by ID
 \examples{
 oo <- options(onetime.dir = tempdir(check = TRUE))
 id <- sample(10000L, 1)
-
 onetime_message("will be shown",  id = id)
 onetime_message("won't be shown", id = id)
 onetime_reset(id = id)

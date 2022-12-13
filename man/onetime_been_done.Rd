@@ -33,7 +33,6 @@ Check if a onetime call has already been made
 \examples{
 oo <- options(onetime.dir = tempdir(check = TRUE))
 id <- sample(10000L, 1)
-
 onetime_been_done(id = id)
 onetime_message("Creating an ID",  id = id)
 onetime_been_done(id = id)

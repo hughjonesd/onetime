@@ -13,9 +13,12 @@
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1)
 #'
+#' @expect message("will")
 #' onetime_message("will be shown",  id = id)
+#' @expect silent()
 #' onetime_message("won't be shown", id = id)
 #' onetime_reset(id = id)
+#' @expect message("will")
 #' onetime_message("will be shown",  id = id)
 #'
 #' onetime_reset(id = id)
@@ -58,7 +61,9 @@ onetime_reset <- function (
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1)
 #'
+#' @expect true()
 #' onetime_mark_as_done(id = id)
+#' @expect silent()
 #' onetime_message("Won't be shown", id = id)
 #'
 #' onetime_reset(id = id)
@@ -86,8 +91,10 @@ onetime_mark_as_done <- function (
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1)
 #'
+#' @expect false()
 #' onetime_been_done(id = id)
 #' onetime_message("Creating an ID",  id = id)
+#' @expect true()
 #' onetime_been_done(id = id)
 #'
 #' onetime_reset(id = id)
@@ -129,8 +136,11 @@ onetime_been_done <- function (
 #' @export
 #'
 #' @doctest
+#'
+#' @expect match("my-folder$")
 #' onetime_dir("my-folder")
 #'
+#' @omit
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' onetime_dir("my-folder")
 #' options(oo)

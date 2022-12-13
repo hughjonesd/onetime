@@ -41,6 +41,7 @@
 #' id <- sample(10000L, 1L)
 #'
 #' for (n in 1:3) {
+#' @expect output(regexp = if (n == 1L) "once" else NA)
 #'   onetime_do(print("printed once"), id = id)
 #' }
 #'
@@ -49,7 +50,9 @@
 #' expiry <- as.difftime(1, units = "secs")
 #' onetime_do(print("Expires quickly, right?"), id = id2, expiry = expiry)
 #' Sys.sleep(2)
+#' @expect silent()
 #' onetime_do(print("This won't be shown..."), id = id2)
+#' @expect output("but this will")
 #' onetime_do(print("... but this will"), id = id2, expiry = expiry)
 #'
 #'
@@ -94,16 +97,18 @@ onetime_do <- function(
 #' id <- sample(10000L, 1)
 #'
 #' sample_once <- onetime_only(sample, id = id)
+#' @expect length(10)
 #' sample_once(1:10)
+#' @expect null()
 #' sample_once(1:10)
 #'
 #' onetime_reset(id)
 #' options(oo)
 onetime_only <- function (
         .f,
-        id   = deprecate_calling_package(),
+        id = deprecate_calling_package(),
         path = default_lockfile_dir(),
-	default = NULL,
+	      default = NULL,
         without_permission = "warn"
       ) {
   force(id)

@@ -18,6 +18,7 @@
 #' id <- sample(10000L, 1)
 #'
 #' for (n in 1:3) {
+#' @expect warning(regexp = if (n == 1L) "once" else NA)
 #'   onetime_warning("will be shown once", id = id)
 #' }
 #'
@@ -109,7 +110,7 @@ onetime_startup_message <- function (...,
 #' @doctest
 #' oo <- options(onetime.dir = tempdir(check = TRUE))
 #' id <- sample(10000L, 1L)
-#'
+#' @expect message("A message")
 #' onetime_message_confirm("A message to show one or more times", id = id)
 #'
 #' onetime_reset(id = id)

@@ -13,6 +13,7 @@
 #' id <- sample(10000L, 1)
 #'
 #' for (n in 1:3) {
+#' @expect warning(regexp = if (n == 1L) "rlang" else NA)
 #'   onetime_rlang_warn(c("rlang-style warning", i = "Extra info"), id = id)
 #' }
 #'

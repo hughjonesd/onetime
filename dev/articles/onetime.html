@@ -191,8 +191,8 @@ multiple R processes, a onetime action will be run only once:</p>
 <span><span class="co">#&gt;    19     1</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"check.txt"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "starting worker pid=7000 on localhost:11334 at 17:41:55.052"</span></span>
-<span><span class="co">#&gt; [2] "starting worker pid=7001 on localhost:11334 at 17:41:55.066"</span></span>
+<span><span class="co">#&gt; [1] "starting worker pid=8740 on localhost:11125 at 10:42:30.882"</span></span>
+<span><span class="co">#&gt; [2] "starting worker pid=8741 on localhost:11125 at 10:42:30.904"</span></span>
 <span><span class="co">#&gt; [3] "I will say this only once!"</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -218,7 +218,7 @@ the message in future:</p>
 <span>            id <span class="op">=</span> <span class="va">id</span><span class="op">)</span></span>
 <span><span class="co">#&gt; One drink and... all is quiet on the Western Front.</span></span>
 <span><span class="co">#&gt; To hide this message in future, run:</span></span>
-<span><span class="co">#&gt;   onetime_mark_as_done(id = "vignette-8")</span></span></code></pre></div>
+<span><span class="co">#&gt;   onetime::onetime_mark_as_done(id = "vignette-8")</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="setting-an-expiry-time">Setting an expiry time<a class="anchor" aria-label="anchor" href="#setting-an-expiry-time"></a>
@@ -282,7 +282,7 @@ warning to the user explaining how they can change this:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/set_ok_to_store.html">set_ok_to_store</a></span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Granting the onetime package permission to store lockfiles on this computer.</span></span>
-<span><span class="co">#&gt; Lockfiles are stored beneath '/tmp/RtmpSjEZbe'.</span></span>
+<span><span class="co">#&gt; Lockfiles are stored beneath '/tmp/Rtmp2WUoOj'.</span></span>
 <span><span class="co">#&gt; You can revoke permission by calling:</span></span>
 <span><span class="co">#&gt;   onetime::set_ok_to_store(FALSE)</span></span></code></pre></div>
 </li>

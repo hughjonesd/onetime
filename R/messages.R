@@ -127,7 +127,7 @@ onetime_message_confirm <- function (
   without_permission = "warn",
   noninteractive     = paste0(
     "To hide this message in future, run:\n",
-    "  onetime_mark_as_done(id = \"", id, "\")"),
+    "  onetime::onetime_mark_as_done(id = \"", id, "\")"),
   message            = .Deprecated()
 ) {
   dots <- list(...)

@@ -164,3 +164,33 @@ onetime_message_confirm <- function (
 
   return(invisible(answer %in% confirm_answers))
 }
+
+
+#' Title
+#'
+#' @param prompt String. Question to ask the user.
+#' @param choices Character. Possible choices.
+#' @param shortcuts Character. Names are shortcuts and values must be elements of
+#'   `choices`.
+#' @param open Logical flag. Allow user to enter a choice not given in choices?
+#' @inherit common-params
+#' @param require_permission
+#'
+#' @return The element of `choices` chosen by the user
+#' @export
+#'
+#' @examples
+onetime_choice <- function (
+  prompt,
+  choices,
+  shortcuts,
+  open               = FALSE,
+  id                 = deprecate_calling_package(),
+  path               = default_lockfile_dir(),
+  expiry             = NULL,
+  require_permission = FALSE,
+  without_permission = "warn"
+) {
+  # if it's been done, return the default value from
+  # otherwise ask the user
+}

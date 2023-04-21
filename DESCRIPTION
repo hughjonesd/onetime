@@ -30,6 +30,7 @@ Suggests:
     doctest (>= 0.1.0),
     knitr,
     lifecycle,
+    lubridate,
     mockr,
     rlang,
     rmarkdown,

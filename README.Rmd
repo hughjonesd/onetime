@@ -49,13 +49,20 @@ size including these dependencies is less than 50 Kb.
 
 ## Installation
 
-Onetime is now on CRAN. You can install it with:
+Install onetime from [r-universe](https://r-universe.dev):
+
+``` r
+install.packages("onetime", repos = c("https://hughjonesd.r-universe.dev", 
+                                      "https://cloud.r-project.org"))
+```
+
+Or on CRAN:
 
 ``` r
 install.packages("onetime")
 ```
 
-You can install the development version from [GitHub](https://github.com/) with:
+Or install the development version from github with:
 
 ``` r
 # install.packages("remotes")

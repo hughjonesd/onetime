@@ -1,6 +1,5 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- badges: start -->
 
 [![CRAN
@@ -23,21 +22,21 @@ coverage](https://codecov.io/gh/hughjonesd/onetime/branch/master/graph/badge.svg
 The onetime package provides convenience functions to run R code only
 once (ever) per user. For example, you can:
 
-  - Show a startup message only the first time (ever) that a package is
-    loaded.
-  - Run cleanup code just once after an upgrade.
-  - Show the user a message, with the option not to show it again.
+- Show a startup message only the first time (ever) that a package is
+  loaded.
+- Run cleanup code just once after an upgrade.
+- Show the user a message, with the option not to show it again.
 
 Onetime is a lightweight package. It requires just two package
 dependencies, rappdirs and filelock, with no further indirect
 dependencies. The total size including these dependencies is less than
 50 Kb.
 
-  - For more information, see the
-    [vignette](https://hughjonesd.github.io/onetime/dev/articles/onetime.html).
+- For more information, see the
+  [vignette](https://hughjonesd.github.io/onetime/dev/articles/onetime.html).
 
-  - Development documentation is at
-    <https://hughjonesd.github.io/onetime/dev>.
+- Development documentation is at
+  <https://hughjonesd.github.io/onetime/dev>.
 
 ## Example
 
@@ -58,8 +57,7 @@ for (i in 1:5) {
 
 ## Installation
 
-Install onetime from
-[r-universe](https://r-universe.dev):
+Install onetime from [r-universe](https://r-universe.dev):
 
 ``` r
 install.packages("onetime", repos = c("https://hughjonesd.r-universe.dev", 

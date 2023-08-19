@@ -29,5 +29,5 @@
 #'
 #' @name onetime
 #' @docType package
-NULL
+"_PACKAGE"
 

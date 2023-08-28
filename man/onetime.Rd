@@ -3,6 +3,7 @@
 \docType{package}
 \name{onetime}
 \alias{onetime}
+\alias{onetime-package}
 \title{Run code only once}
 \description{
 Onetime allows package authors to run code only once (ever) for a given
@@ -50,4 +51,17 @@ for (i in 1:5) \{
 ## This message will only be shown once.
 }\if{html}{\out{</div>}}
 }
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/hughjonesd/onetime}
+  \item \url{https://hughjonesd.github.io/onetime/}
+  \item Report bugs at \url{https://github.com/hughjonesd/onetime/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: David Hugh-Jones \email{davidhughjones@gmail.com}
+
 }

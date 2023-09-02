@@ -1,7 +1,7 @@
 Package: onetime
 Type: Package
 Title: Run Code Only Once
-Version: 0.1.0.9000
+Version: 0.2.0
 Authors@R:
     person(given = "David",
            family = "Hugh-Jones",

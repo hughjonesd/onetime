@@ -1,4 +1,4 @@
-# onetime (development version)
+# onetime 0.2.0
 
 * Not setting `id` explicitly is now deprecated with a warning. Doing this
   is brittle: it can lead to silent errors when you use onetime functions 

@@ -36,7 +36,7 @@ dependencies. The total size including these dependencies is less than
   [vignette](https://hughjonesd.github.io/onetime/dev/articles/onetime.html).
 
 - Development documentation is at
-  <https://hughjonesd.github.io/onetime/dev>.
+  <https://hughjonesd.github.io/onetime/dev/>.
 
 ## Example
 

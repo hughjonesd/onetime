@@ -42,7 +42,7 @@ size including these dependencies is less than 50 Kb.
 
 * For more information, see the [vignette](https://hughjonesd.github.io/onetime/dev/articles/onetime.html).
 
-* Development documentation is at <https://hughjonesd.github.io/onetime/dev>.  
+* Development documentation is at <https://hughjonesd.github.io/onetime/dev/>.  
 
 ```{r, child = "example.Rmd"} 
 ```

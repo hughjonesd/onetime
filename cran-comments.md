@@ -10,13 +10,12 @@ David
 ## R CMD check results
 
 * Checked on:
-  - Local MacOS, R 4.3.0
-  - github Windows/MacOS/Linux
-  - Appveyor Windows
-  - CRAN Macbuilder
-  - CRAN Winbuilder
+  - Local MacOS, R 4.3.0 OK
+  - github Windows/MacOS/Linux - 1 note, package "lubridate" unavailable for checking Rd.
+  - CRAN Macbuilder OK
+  - CRAN Winbuilder - 1 note about moved permanently which redirected from https to http.
+    I think this is a false positive. Other redirect notes were fixed.
 
-0 errors | 0 warnings | 0 notes
 
 * Winbuilder has a note about "lockfiles" being misspelt. I say this is a false
   positive. We all know what a lockfile is, and a "lock file" would sound 

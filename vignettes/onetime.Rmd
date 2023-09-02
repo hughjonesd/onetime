@@ -323,8 +323,8 @@ onetime_message("In my opinion, a whole Meccano set has fallen apart in there.",
 
 More information is available on the onetime website:
 
-* [CRAN version](https://hughjonesd.github.io/onetime)
-* [Development version](https://hughjonesd.github.io/onetime/dev)
+* [CRAN version](https://hughjonesd.github.io/onetime/)
+* [Development version](https://hughjonesd.github.io/onetime/dev/)
 
 
 ```{r, include = FALSE}

@@ -14,9 +14,5 @@ David
   - github Windows/MacOS/Linux - 1 note, package "lubridate" unavailable for checking Rd.
   - CRAN Macbuilder OK
   - CRAN Winbuilder - 1 note about moved permanently which redirected from https to http.
-    I think this is a false positive. Other redirect notes were fixed.
-
-
-* Winbuilder has a note about "lockfiles" being misspelt. I say this is a false
-  positive. We all know what a lockfile is, and a "lock file" would sound 
-  confusing.
+    I think this is a false positive. Other redirect notes were fixed. One note 
+    that "Remotes" is misspelled. No.

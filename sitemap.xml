@@ -10,13 +10,19 @@
     <loc>https://hughjonesd.github.io/onetime/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://hughjonesd.github.io/onetime/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://hughjonesd.github.io/onetime/articles/onetime.html</loc>
+  </url>
+  <url>
     <loc>https://hughjonesd.github.io/onetime/authors.html</loc>
   </url>
   <url>
-    <loc>https://hughjonesd.github.io/onetime/example.html</loc>
+    <loc>https://hughjonesd.github.io/onetime/index.html</loc>
   </url>
   <url>
-    <loc>https://hughjonesd.github.io/onetime/index.html</loc>
+    <loc>https://hughjonesd.github.io/onetime/news/index.html</loc>
   </url>
   <url>
     <loc>https://hughjonesd.github.io/onetime/reference/check_ok_to_store.html</loc>
@@ -34,7 +40,13 @@
     <loc>https://hughjonesd.github.io/onetime/reference/onetime_been_done.html</loc>
   </url>
   <url>
+    <loc>https://hughjonesd.github.io/onetime/reference/onetime_dir.html</loc>
+  </url>
+  <url>
     <loc>https://hughjonesd.github.io/onetime/reference/onetime_do.html</loc>
+  </url>
+  <url>
+    <loc>https://hughjonesd.github.io/onetime/reference/onetime_mark_as_done.html</loc>
   </url>
   <url>
     <loc>https://hughjonesd.github.io/onetime/reference/onetime_message_confirm.html</loc>

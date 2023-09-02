@@ -8,8 +8,8 @@ test_that("Doctest: onetime_warning", {
   oo <- options(onetime.dir = tempdir(check = TRUE))
   id <- sample(10000L, 1)
   for (n in 1:3) {
-    expect_warning(onetime_warning("will be shown once", id = id), regexp = if (
-    n == 1L) "once" else NA)
+    expect_warning(onetime_warning("will be shown once", id = id), regexp = if (n ==
+    1L) "once" else NA)
   }
   onetime_reset(id = id)
   options(oo)

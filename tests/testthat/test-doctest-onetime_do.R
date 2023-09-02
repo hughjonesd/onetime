@@ -8,16 +8,14 @@ test_that("Doctest: onetime_do", {
   oo <- options(onetime.dir = tempdir(check = TRUE))
   id <- sample(10000L, 1L)
   for (n in 1:3) {
-    expect_output(onetime_do(print("printed once"), id = id), regexp = if (n ==
-    1L) "once" else NA)
+    expect_output(onetime_do(print("printed once"), id = id), regexp = if (n == 1L) "once" else NA)
   }
   id2 <- sample(10000L, 1L)
   expiry <- as.difftime(1, units = "secs")
   onetime_do(print("Expires quickly, right?"), id = id2, expiry = expiry)
   Sys.sleep(2)
   expect_silent(onetime_do(print("This won't be shown..."), id = id2))
-  expect_output(onetime_do(print("... but this will"), id = id2, expiry = expiry),
-  "but this will")
+  expect_output(onetime_do(print("... but this will"), id = id2, expiry = expiry), "but this will")
   onetime_reset(id = id)
   onetime_reset(id = id2)
   options(oo)

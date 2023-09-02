@@ -8,8 +8,8 @@ test_that("Doctest: onetime-rlang", {
   oo <- options(onetime.dir = tempdir(check = TRUE))
   id <- sample(10000L, 1)
   for (n in 1:3) {
-    expect_warning(onetime_rlang_warn(c("rlang-style warning", i = "Extra info"),
-    id = id), regexp = if (n == 1L) "rlang" else NA)
+    expect_warning(onetime_rlang_warn(c("rlang-style warning", i = "Extra info"), id = id), regexp = if (
+    n == 1L) "rlang" else NA)
   }
   onetime_reset(id = id)
   options(oo)

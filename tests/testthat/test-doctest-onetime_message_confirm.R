@@ -7,8 +7,8 @@ test_that("Doctest: onetime_message_confirm", {
   # Source line: 110
   oo <- options(onetime.dir = tempdir(check = TRUE))
   id <- sample(10000L, 1L)
-  expect_message(onetime_message_confirm("A message to show one or more times", id = id),
-  "A message")
+  expect_message(onetime_message_confirm("A message to show one or more times",
+    id = id), "A message")
   onetime_reset(id = id)
   options(oo)
 })
